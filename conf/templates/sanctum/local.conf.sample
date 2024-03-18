@@ -5,7 +5,7 @@
 # of emulated machines available which can boot and run in the QEMU emulator:
 #
 # This sets the default machine to be qemuarm64 if no other machine is selected:
-MACHINE ??= "qemuarm64"
+MACHINE ??= "qemuarm64-a72"
 
 #
 # Where to place downloads
