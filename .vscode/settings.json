@@ -23,5 +23,5 @@
         "files.eol": "\n",
         "files.trimTrailingWhitespace": false
     },
-    "task.saveBeforeRun": "always"
+    "task.saveBeforeRun": "never"
 }
