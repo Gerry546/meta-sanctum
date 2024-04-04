@@ -19,7 +19,9 @@ RUN apt update && apt install -y \
     && apt -y autoremove \
     && rm -rf /var/lib/apt/lists/* \
     # Set the locales correct
-    && locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+    && locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
+    # Install python packages for devtool to be able to parse python packages
+    && python3 -m pip install tomli
 
 # Create a user
 ENV USER_NAME yocto
