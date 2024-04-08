@@ -32,6 +32,15 @@
             "args": "-v ${command:pickArgs} -u y -c n"
         },
         {
+            "name": "Parse Requirement, Upgrade Only, Integrations Only, No Clean",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
+            "python": ".venv/bin/python",
+            "console": "integratedTerminal",
+            "args": "-v ${command:pickArgs} -u y -c n -i y"
+        },
+        {
             "name": "Parse Requirement, No Clean",
             "type": "debugpy",
             "request": "launch",
@@ -39,6 +48,15 @@
             "python": ".venv/bin/python",
             "console": "integratedTerminal",
             "args": "-v ${command:pickArgs} -c n"
+        },
+        {
+            "name": "Parse Requirement, Integrations Only, No Clean",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
+            "python": ".venv/bin/python",
+            "console": "integratedTerminal",
+            "args": "-v ${command:pickArgs} -c n -i y"
         },
     ]
 }
