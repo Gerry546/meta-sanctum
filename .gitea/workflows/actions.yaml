@@ -1,6 +1,9 @@
 name: Gitea Actions Sanctum Project
 run-name: ${{ gitea.actor }} is building the sanctum project
-on: [push]
+on: 
+  push:
+  schedule:
+    - cron: '@weekly'
 
 jobs:
   Build-Core-Image-HomeAssistant-QemuArm64-A72:
@@ -17,3 +20,17 @@ jobs:
         run: |
           TEMPLATECONF=${{ gitea.workspace }}//conf/templates/sanctum . ${{ gitea.workspace }}/sources/poky/oe-init-build-env
           MACHINE=qemuarm64-a72 bitbake core-image-homeassistant-full
+
+  Clean-Up-Cache:
+    runs-on: yocto-builder
+    container:
+      volumes:
+        - /cache/:/cache/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Clean SState Cache
+        run: |
+          python3 ${{ gitea.workspace }}/sources/poky/scripts/sstate-cache-management.py --cache-dir=/cache/sstate -y -d -v
