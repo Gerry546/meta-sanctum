@@ -24,5 +24,9 @@
         "files.trimTrailingWhitespace": false
     },
     
-    "task.saveBeforeRun": "never"
+    "task.saveBeforeRun": "never",
+    "files.associations": {
+        "*.conf": "bitbake",
+        "*.inc": "bitbake"
+    }
 }
