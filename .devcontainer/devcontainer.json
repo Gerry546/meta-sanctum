@@ -1,0 +1,28 @@
+{
+	"name": "Sanctum",
+	"image": "gitea.estalor.com/${localEnv:USER}/yocto-builder:latest",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		2222,
+		5900,
+		8000
+	],
+
+	"mounts": [
+		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/root/.ssh,readonly",
+		"type=bind,source=/cache,target=/cache"
+	],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mads-hartmann.bash-ide-vscode",
+				"yocto-project.yocto-bitbake",
+				"ms-python.python",
+				"mhutchie.git-graph"
+			]
+		}
+	}
+}
