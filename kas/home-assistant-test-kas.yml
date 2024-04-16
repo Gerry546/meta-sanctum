@@ -1,0 +1,10 @@
+header:
+  version: 16
+  includes:
+  - kas/include/common-kas.yml
+
+# The machine as it is written into the `local.conf` of bitbake.
+machine: qemuarm64-a72
+
+target: 
+  - core-image-homeassistant-full
