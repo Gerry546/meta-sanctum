@@ -14,12 +14,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: Build QemuArm64-A72 Core Image Homeassistant
         run: |
-          TEMPLATECONF=${{ gitea.workspace }}//conf/templates/sanctum . ${{ gitea.workspace }}/sources/poky/oe-init-build-env
-          MACHINE=qemuarm64-a72 bitbake core-image-homeassistant-full
+          kas build kas/home-assistant-test-kas.yml
 
   Clean-Up-Cache:
     runs-on: yocto-builder
@@ -29,8 +26,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: Clean SState Cache
         run: |
+          kas checkout kas/home-assistant-test-kas.yml
           python3 ${{ gitea.workspace }}/sources/poky/scripts/sstate-cache-management.py --cache-dir=/cache/sstate -y -d -v
