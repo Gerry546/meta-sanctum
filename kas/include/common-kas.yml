@@ -24,7 +24,7 @@ repos:
     path: "sources/meta-openembedded"
 
   meta-homeassistant:
-    url: "https://gitea.estalor.com/tom/meta-homeassistant.git"
+    url: "git@gitea.estalor.com:tom/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
     branch: "2024.05"
     
