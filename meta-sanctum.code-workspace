@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "sources/meta-homeassistant"
+		},
+		{
+			"path": "sources/meta-openembedded"
+		},
+		{
+			"path": "sources/poky"
+		}
+	],
+	"settings": {
+		"bitbake.pathToBuildFolder": "${workspaceFolder}/build",
+		"bitbake.pathToEnvScript": "${workspaceFolder}/sources/poky/oe-init-build-env",
+		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/poky/bitbake",
+		"task.saveBeforeRun": "never",
+		"files.associations": {
+			"*.conf": "bitbake",
+			"*.inc": "bitbake"
+		},
+		"python.autoComplete.extraPaths": [
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib"
+		],
+		"[python]": {
+			"diffEditor.ignoreTrimWhitespace": false,
+			"gitlens.codeLens.symbolScopes": [
+				"!Module"
+			],
+			"files.trimTrailingWhitespace": false
+		},
+		"[shellscript]": {
+			"files.eol": "\n",
+			"files.trimTrailingWhitespace": false
+		}
+	}
+}
