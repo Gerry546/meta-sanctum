@@ -15,7 +15,7 @@ repos:
     path: "sources/poky"
 
   meta-openembedded:
-    url: "https://gitea.estalor.com/tom/meta-homeassistant.git"
+    url: "https://github.com/Gerry546/meta-openembedded.git"
     branch: master-dev
     layers:
       meta-oe:
