@@ -17,6 +17,23 @@ jobs:
       - name: Build QemuArm64-A72 Core Image Homeassistant
         run: |
           kas build kas/home-assistant-test-kas.yml
+      - name: Send mail
+        # if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v3
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+          priority: high
+          convert_markdown: true
+          html_body: |
+              ### Job ${{ job.status }}
+
+              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
   Clean-Up-Cache:
     runs-on: yocto-builder
