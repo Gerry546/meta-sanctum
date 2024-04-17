@@ -2,11 +2,9 @@
 	"name": "Sanctum",
 	"image": "gitea.estalor.com/${localEnv:USER}/yocto-builder:latest",
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		2222,
-		5900,
-		8000
+	"runArgs": [
+		"-p=2222:2222", 
+		"-p=8888:8888"
 	],
 
 	"mounts": [
