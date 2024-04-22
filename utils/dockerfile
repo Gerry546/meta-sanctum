@@ -25,7 +25,6 @@ RUN apt update && apt install -y \
     # and install kas
     kas
 
-
 # Create a user
 ENV USER_NAME yocto
 ARG host_uid=1000
@@ -42,4 +41,7 @@ RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER_NAME} &&
     && echo ${USER_NAME}:${USER_NAME} | chpasswd
 
 USER ${USER_NAME}
+# Install the dependency for linting
+RUN python3 -m pip install --user oelint-adv
+
 WORKDIR /

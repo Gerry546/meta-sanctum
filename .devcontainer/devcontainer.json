@@ -19,7 +19,8 @@
 				"mads-hartmann.bash-ide-vscode",
 				"yocto-project.yocto-bitbake",
 				"ms-python.python",
-				"mhutchie.git-graph"
+				"mhutchie.git-graph",
+				"kweihmann.oelint-vscode"
 			]
 		}
 	}
