@@ -1,0 +1,19 @@
+header:
+  version: 16
+
+local_conf_header:
+  test-image: |
+    #
+    # Runtime testing of images
+    #
+    IMAGE_CLASSES += "testimage"
+    TESTIMAGE_AUTO:qemuall = "1"
+    TEST_RUNQEMUPARAMS = "slirp"
+    TEST_SUITES = "\
+      ping \
+      date \
+      df \
+      ssh \
+      python \
+      systemd \
+    "

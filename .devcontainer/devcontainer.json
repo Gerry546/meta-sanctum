@@ -3,6 +3,8 @@
 	"image": "gitea.estalor.com/${localEnv:USER}/yocto-builder:latest",
 
 	"runArgs": [
+		"--name",
+		"yocto_devcontainer",
 		"-p=2222:2222", 
 		"-p=8888:8888"
 	],

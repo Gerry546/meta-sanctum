@@ -1,5 +1,7 @@
-IMAGE_FEATURES += "debug-tweaks"
+IMAGE_FEATURES += "\
+    debug-tweaks \
+"
 
-# EXTRA_IMAGE_FEATURES += "ptest-pkgs"
-
-# PACKAGE_EXCLUDE = "python3-atomicwrites"
+IMAGE_INSTALL += "\
+    openssh-sshd \
+"

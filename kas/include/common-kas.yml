@@ -96,16 +96,6 @@ local_conf_header:
     USER_CLASSES ?= "buildstats"
 
     #
-    # Runtime testing of images
-    #
-    # The build system can test booting virtual machine images under qemu (an emulator)
-    # after any root filesystems are created and run tests against those images. It can also
-    # run tests against any SDK that are built. To enable this uncomment these lines.
-    # See meta/classes-recipe/test{image,sdk}.bbclass for further details.
-    #IMAGE_CLASSES += "testimage testsdk"
-    #TESTIMAGE_AUTO:qemuall = "1"
-
-    #
     # Interactive shell configuration
     #
     # Under certain circumstances the system may need input from you and to do this it

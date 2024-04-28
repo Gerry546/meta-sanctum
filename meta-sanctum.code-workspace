@@ -28,6 +28,8 @@
 		],
 		"[python]": {
 			"diffEditor.ignoreTrimWhitespace": false,
+			"editor.formatOnType": true,
+			"editor.wordBasedSuggestions": "off",
 			"gitlens.codeLens.symbolScopes": [
 				"!Module"
 			],
@@ -36,6 +38,10 @@
 		"[shellscript]": {
 			"files.eol": "\n",
 			"files.trimTrailingWhitespace": false
-		}
+		},
+		"python.analysis.extraPaths": [
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib"
+		]
 	}
 }
