@@ -15,5 +15,6 @@ local_conf_header:
       df \
       ssh \
       python \
+      ptest \
       systemd \
     "
