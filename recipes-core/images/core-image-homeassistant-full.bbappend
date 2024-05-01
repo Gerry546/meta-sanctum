@@ -6,4 +6,5 @@ IMAGE_FEATURES += "\
 
 IMAGE_INSTALL += "\
     openssh-sshd \
+    openssh-scp \
 "
