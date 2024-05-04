@@ -36,7 +36,7 @@ jobs:
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
       - name: Send success mail
-        if: failure()
+        if: success()
         uses: https://github.com/dawidd6/action-send-mail@v3
         with:
           to: ${{ secrets.MAIL_TO }}
