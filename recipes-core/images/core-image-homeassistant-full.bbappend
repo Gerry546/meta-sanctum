@@ -7,4 +7,5 @@ IMAGE_FEATURES += "\
 IMAGE_INSTALL += "\
     openssh-sshd \
     openssh-scp \
+    python3-pip \
 "

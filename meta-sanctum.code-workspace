@@ -1,15 +1,19 @@
 {
 	"folders": [
 		{
+			"name": "meta-sanctum",
 			"path": "."
 		},
 		{
+			"name": "meta-homeassistant",
 			"path": "sources/meta-homeassistant"
 		},
 		{
+			"name": "meta-openembedded",
 			"path": "sources/meta-openembedded"
 		},
 		{
+			"name": "poky",
 			"path": "sources/poky"
 		}
 	],
