@@ -15,6 +15,10 @@
 		{
 			"name": "poky",
 			"path": "sources/poky"
+		},
+		{
+			"name": "meta-browser",
+			"path": "sources/meta-browser"
 		}
 	],
 	"settings": {

@@ -11,4 +11,6 @@ IMAGE_INSTALL += "\
     python3-pip \
     \
     weston \
+    \
+    chromium-ozone-wayland \
 "

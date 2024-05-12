@@ -27,7 +27,19 @@ repos:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
     branch: "2024.05"
-    
+
+  meta-browser:
+    url: "https://github.com/OSSystems/meta-browser/"
+    path: "sources/meta-browser"
+    layers:
+      meta-chromium:
+    branch: "master"
+  
+  meta-clang:
+    url: "https://github.com/kraj/meta-clang"
+    path: "sources/meta-clang"
+    branch: "master"
+
 local_conf_header:
   sanctum: |
     #
