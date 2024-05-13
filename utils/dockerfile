@@ -15,6 +15,8 @@ RUN apt update && apt install -y \
     libegl1-mesa libsdl1.2-dev python3-subunit \
     mesa-common-dev zstd liblz4-tool \
     file locales libacl1 \
+    # Several other packages to run
+    iproute2 \
     # Clean image
     && apt -y autoremove \
     && rm -rf /var/lib/apt/lists/* \

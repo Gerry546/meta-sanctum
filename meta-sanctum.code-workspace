@@ -19,6 +19,10 @@
 		{
 			"name": "meta-browser",
 			"path": "sources/meta-browser"
+		},
+		{
+			"name": "meta-clang",
+			"path": "sources/meta-clang"
 		}
 	],
 	"settings": {

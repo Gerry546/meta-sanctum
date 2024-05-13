@@ -12,5 +12,6 @@ IMAGE_INSTALL += "\
     \
     weston \
     \
-    chromium-ozone-wayland \
 "
+
+# chromium-ozone-wayland
