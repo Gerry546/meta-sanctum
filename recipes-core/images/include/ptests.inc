@@ -7,6 +7,7 @@ IMAGE_INSTALL += "\
     python3-bluetooth-adapters-ptest \
     python3-bluetooth-auto-recovery-ptest \
     python3-uart-devices-ptest \
+    python3-usb-devices-ptest \
     \
     python3-home-assistant-bluetooth-ptest \
     python3-psutil-home-assistant-ptest \

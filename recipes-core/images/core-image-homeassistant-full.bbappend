@@ -8,6 +8,8 @@ IMAGE_FEATURES += "\
 IMAGE_INSTALL += "\
     openssh-sshd \
     openssh-scp \
+    \
+    nano \
     python3-pip \
     \
     weston \
