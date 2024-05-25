@@ -16,7 +16,7 @@ repos:
 
   meta-openembedded:
     url: "https://github.com/Gerry546/meta-openembedded.git"
-    branch: add_pytest_recipes
+    branch: master
     layers:
       meta-oe:
       meta-python:
