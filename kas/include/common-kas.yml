@@ -39,6 +39,11 @@ repos:
     url: "https://github.com/kraj/meta-clang"
     path: "sources/meta-clang"
     branch: "master"
+  
+  meta-raspberrypi:
+    url: "git@github.com:Gerry546/meta-raspberrypi.git"
+    path: "sources/meta-raspberrypi"
+    branch: "master-dev"
 
 local_conf_header:
   sanctum: |
