@@ -26,7 +26,7 @@ repos:
   meta-homeassistant:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
-    branch: "add_ptest"
+    branch: "2024.6.0"
 
   meta-browser:
     url: "https://github.com/OSSystems/meta-browser/"
@@ -38,6 +38,11 @@ repos:
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
     path: "sources/meta-clang"
+    branch: "master"
+
+  meta-raspberrypi:
+    url: "git://git.yoctoproject.org/meta-raspberrypi"
+    path: "sources/meta-raspberrypi"
     branch: "master"
 
 local_conf_header:

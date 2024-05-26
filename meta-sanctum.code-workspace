@@ -23,6 +23,10 @@
 		{
 			"name": "meta-clang",
 			"path": "sources/meta-clang"
+		},
+		{
+			"name": "meta-raspberrypi",
+			"path": "sources/meta-raspberrypi"
 		}
 	],
 	"settings": {
