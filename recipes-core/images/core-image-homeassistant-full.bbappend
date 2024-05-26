@@ -10,10 +10,13 @@ IMAGE_INSTALL += "\
     openssh-scp \
     \
     nano \
-    python3-pip \
     \
     weston \
     \
+"
+
+IMAGE_INSTALL:ptest += "\
+    python3-pip \
 "
 
 # chromium-ozone-wayland

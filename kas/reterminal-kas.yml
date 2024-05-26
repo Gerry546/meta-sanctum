@@ -1,0 +1,16 @@
+header:
+  version: 16
+  includes:
+  - kas/include/common-kas.yml
+
+# The machine as it is written into the `local.conf` of bitbake.
+machine: raspberrypi4
+
+repos:
+  meta-raspberrypi:
+    url: "git://git.yoctoproject.org/meta-raspberrypi"
+    path: "sources/meta-raspberrypi"
+    branch: "master"
+
+target: 
+  - core-image-homeassistant-full

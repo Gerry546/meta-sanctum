@@ -1,4 +1,4 @@
-IMAGE_INSTALL += "\
+IMAGE_INSTALL:qemuarm64-a72 += "\
     ptest-runner \
     \
     python3-aiodiscover-ptest \
@@ -14,7 +14,3 @@ IMAGE_INSTALL += "\
     \
     python3-homeassistant-ptest \
 "
-
-# IMAGE_FEATURES += "\
-#     ptest-pkgs \
-# "
