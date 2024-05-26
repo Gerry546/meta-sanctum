@@ -1,4 +1,4 @@
-IMAGE_INSTALL:qemuarm64-a72 += "\
+IMAGE_INSTALL:append:qemuarm64-a72 = " \
     ptest-runner \
     \
     python3-aiodiscover-ptest \

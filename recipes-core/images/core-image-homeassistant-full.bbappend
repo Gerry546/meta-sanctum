@@ -1,11 +1,11 @@
 require include/ptests.inc
 
-IMAGE_FEATURES += "\
+IMAGE_FEATURES:append = " \
     debug-tweaks \
     weston \
 "
 
-IMAGE_INSTALL += "\
+IMAGE_INSTALL:append = " \
     openssh-sshd \
     openssh-scp \
     \
@@ -15,7 +15,7 @@ IMAGE_INSTALL += "\
     \
 "
 
-IMAGE_INSTALL:ptest += "\
+IMAGE_INSTALL:append:qemuarm64-a72 = " \
     python3-pip \
 "
 
