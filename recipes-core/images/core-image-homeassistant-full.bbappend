@@ -13,9 +13,10 @@ IMAGE_INSTALL:append = " \
     \
     weston \
     \
-    chromium-ozone-wayland \
 "
 
 IMAGE_INSTALL:append:qemuarm64-a72 = " \
     python3-pip \
 "
+
+#     chromium-ozone-wayland
