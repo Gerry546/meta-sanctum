@@ -5,7 +5,7 @@ header:
   - kas/include/raspberrypi-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
-machine: reterminal
+machine: qemuarm64-a72
 
 target: 
   - core-image-homeassistant-full

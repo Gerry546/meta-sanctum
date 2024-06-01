@@ -1,0 +1,9 @@
+# short-description: Create Qemu disk image
+# long-description: Creates a partitioned Qemu disk image consisting of
+# - boot partition
+# - rootfs partition
+
+bootloader --ptable gpt
+
+part /boot --source bootimg-partition --ondisk vda --fstype vfat --label boot --active --align 4096
+part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root --align 4096

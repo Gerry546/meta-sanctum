@@ -17,6 +17,7 @@ RUN apt update && apt install -y \
     file locales libacl1 \
     # Several other packages to run
     iproute2 \
+    tmux \
     # Clean image
     && apt -y autoremove \
     && rm -rf /var/lib/apt/lists/* \
