@@ -1,0 +1,16 @@
+# Load the device tree
+fdt addr ${fdt_addr}
+
+echo "Setting rootfs partition /dev/vda2"
+setenv bootargs "${bootargs} root=/dev/vda2"
+
+# Load the kernel
+echo "Loading kernel"
+ext4load virtio 0:2 ${kernel_addr_r} /boot/@@KERNEL_IMAGETYPE@@
+
+# Now actually boot the system
+echo "FDT Addr: ${fdt_addr}"
+echo "Kernel_addr_r: ${kernel_addr_r}"
+@@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
+
+reset

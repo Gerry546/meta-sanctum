@@ -1,0 +1,21 @@
+From 09e6f363114784ea985f581dfbf0ebffe12a2790 Mon Sep 17 00:00:00 2001
+From: Tom Geelen <t.f.g.geelen@gmail.com>
+Date: Mon, 3 Jun 2024 19:53:17 +0000
+Subject: [PATCH] Reorder qemuarm boot_target
+
+Upstream-Status: Pending
+Signed-off-by: Tom Geelen <t.f.g.geelen@gmail.com>
+---
+ board/emulation/qemu-arm/qemu-arm.env | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/board/emulation/qemu-arm/qemu-arm.env b/board/emulation/qemu-arm/qemu-arm.env
+index fb4adef281..1beb5854fc 100644
+--- a/board/emulation/qemu-arm/qemu-arm.env
++++ b/board/emulation/qemu-arm/qemu-arm.env
+@@ -12,4 +12,4 @@ scriptaddr=0x40200000
+ pxefile_addr_r=0x40300000
+ kernel_addr_r=0x40400000
+ ramdisk_addr_r=0x44000000
+-boot_targets=qfw usb scsi virtio nvme dhcp
++boot_targets=virtio qfw usb scsi nvme dhcp
