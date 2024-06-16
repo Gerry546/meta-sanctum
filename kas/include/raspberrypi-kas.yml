@@ -3,6 +3,7 @@ header:
 
 repos:
   meta-raspberrypi:
-    url: "https://github.com/Gerry546/meta-raspberrypi.git"
+    # url: "https://github.com/Gerry546/meta-raspberrypi.git"
+    url: "https://github.com/agherzan/meta-raspberrypi.git"
     path: "sources/meta-raspberrypi"
     branch: "master"
