@@ -12,12 +12,12 @@ RDEPENDS:${PN} += "weston-init"
 
 do_compile:append() {
     sed -e "s:@@URL@@:${URL}:" \
-    ${WORKDIR}/chromium.service.in > ${WORKDIR}/chromium.service
+    ${UNPACKDIR}/chromium.service.in > ${UNPACKDIR}/chromium.service
 }
 
 do_install:append() {
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/chromium.service ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/chromium.service ${D}${systemd_unitdir}/system
 }
 
 SYSTEMD_PACKAGES = "${PN}"

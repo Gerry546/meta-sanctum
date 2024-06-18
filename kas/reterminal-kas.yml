@@ -8,4 +8,4 @@ header:
 machine: reterminal
 
 target: 
-  - core-image-homeassistant-full
+  - reterminal-image
