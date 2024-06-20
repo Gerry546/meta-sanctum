@@ -9,3 +9,7 @@ machine: qemuarm64-a72
 
 target: 
   - reterminal-image
+
+local_conf_header:
+  debug-image: |
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"

@@ -23,7 +23,8 @@
 				"yocto-project.yocto-bitbake",
 				"ms-python.python",
 				"mhutchie.git-graph",
-				"kweihmann.oelint-vscode"
+				"kweihmann.oelint-vscode",
+				"janisdd.vscode-edit-csv"
 			]
 		}
 	}
