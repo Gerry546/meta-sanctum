@@ -1,6 +1,8 @@
 IMAGE_INSTALL:append:qemuarm64-a72 = " \
     ptest-runner \
     \
+    python3-sqlparse-ptest \
+    \
     python3-aiodiscover-ptest \
     python3-bleak-retry-connector-ptest \
     python3-bluetooth-adapters-ptest \
