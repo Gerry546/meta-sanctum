@@ -29,9 +29,10 @@ RUN apt update && apt install -y \
     kas
 
 # Create a user
-ENV USER_NAME yocto
+ENV USER_NAME=yocto
 ARG host_uid=1000
 ARG host_gid=1000
+ARG kvm_gid=108
 
 RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER_NAME} && \
     chmod 0440 /etc/sudoers.d/${USER_NAME} \
@@ -40,7 +41,7 @@ RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER_NAME} &&
     # group ID owning the host directories. The host_uid and group_uid are passed to the docker build
     # command with the --build-arg option. By default, they are both 1000. The docker image creates
     # a group with host_gid and a user with host_uid and adds the user to the group.
-    && groupadd -g $host_gid $USER_NAME && useradd -g $host_gid -m -s /bin/bash -u $host_uid $USER_NAME \
+    && groupadd -g $host_gid $USER_NAME && groupadd -g $kvm_gid kvm && useradd -g $host_gid -G $kvm_gid -m -s /bin/bash -u $host_uid $USER_NAME \
     && echo ${USER_NAME}:${USER_NAME} | chpasswd
 
 USER ${USER_NAME}

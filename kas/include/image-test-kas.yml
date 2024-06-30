@@ -9,6 +9,7 @@ local_conf_header:
     IMAGE_CLASSES += "testimage"
     TESTIMAGE_AUTO:qemuall = "1"
     TEST_RUNQEMUPARAMS = "slirp"
+    TEST_RUNQEMUPARAMS_APPEND:x86-64 = "kvm"
     TEST_SUITES = "\
       ping \
       date \
@@ -18,3 +19,6 @@ local_conf_header:
       ptest \
       scp \
     "
+    # Port forwarding settings
+    QB_SLIRP_OPT:qemuall ="-netdev user,id=net0,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp::8888-:8123"
+    QB_MEM:qemuall = "-m 4096"

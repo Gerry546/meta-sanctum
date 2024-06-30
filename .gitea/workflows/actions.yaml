@@ -6,7 +6,54 @@ on:
     - cron: '@weekly'
 
 jobs:
-  Build-Core-Image-HomeAssistant-QemuArm64-A72:
+  # Build-Core-Image-HomeAssistant-QemuArm64-A72:
+  #   runs-on: yocto-builder
+  #   container:
+  #     volumes:
+  #         - /cache/:/cache/
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v3
+  #     - name: Build QemuArm64-A72 Core Image Homeassistant Full
+  #       run: |
+  #         kas build kas/home-assistant-test-kas-aarch64.yml
+  #     - name: Send failure mail
+  #       if: failure()
+  #       uses: https://github.com/dawidd6/action-send-mail@v3
+  #       with:
+  #         to: ${{ secrets.MAIL_TO }}
+  #         from: Gitea <gitea@hostname>
+  #         server_address: smtp.gmail.com
+  #         server_port: 465
+  #         username: ${{ secrets.OUTLOOK_EMAIL }}
+  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
+  #         subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+  #         priority: high
+  #         attachments: build/tmp/work/qemuarm64_a72-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
+  #         convert_markdown: true
+  #         html_body: |
+  #             ### Job ${{ job.status }}
+
+  #             ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+  #     - name: Send success mail
+  #       if: success()
+  #       uses: https://github.com/dawidd6/action-send-mail@v3
+  #       with:
+  #         to: ${{ secrets.MAIL_TO }}
+  #         from: Gitea <gitea@hostname>
+  #         server_address: smtp.gmail.com
+  #         server_port: 465
+  #         username: ${{ secrets.OUTLOOK_EMAIL }}
+  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
+  #         subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+  #         priority: high
+  #         convert_markdown: true
+  #         html_body: |
+  #             ### Job ${{ job.status }}
+
+  #             ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+
+  Build-Core-Image-HomeAssistant-QemuX86-64:
     runs-on: yocto-builder
     container:
       volumes:
@@ -14,9 +61,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Build QemuArm64-A72 Core Image Homeassistant Full
+      - name: Build QemuX86-64 Core Image Homeassistant Full
         run: |
-          kas build kas/home-assistant-test-kas.yml
+          kas build kas/home-assistant-test-kas-x86-64.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
@@ -29,7 +76,7 @@ jobs:
           password: ${{ secrets.OUTLOOK_PASSWORD }}
           subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
           priority: high
-          attachments: build/tmp/work/qemuarm64_a72-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
+          attachments: build/tmp/work/qemux86_64-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
           convert_markdown: true
           html_body: |
               ### Job ${{ job.status }}
