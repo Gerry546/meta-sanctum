@@ -58,6 +58,7 @@ jobs:
     container:
       volumes:
           - /cache/:/cache/
+          - /dev/kvm:/dev/kvm/
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
