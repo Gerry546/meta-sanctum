@@ -10,6 +10,7 @@ repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     branch: master
+    commit: "3c1c56ec07d6f507077458faf5818ff4a88dce98"
     layers:
       meta:
     path: "sources/poky"
@@ -35,11 +36,13 @@ repos:
     layers:
       meta-chromium:
     branch: "master"
+    commit: "0a182ba7f646a3f7bf08afb4ff930b95f3e57751"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
     path: "sources/meta-clang"
     branch: "master"
+    commit: "23958f436e2feca1b4ecf72fd02e77c9d1ddbf98"
   
 local_conf_header:
   sanctum: |
