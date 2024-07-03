@@ -10,25 +10,26 @@ repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     branch: master
-    commit: "3c1c56ec07d6f507077458faf5818ff4a88dce98"
+    commit: "0df57c2c739c09f6c128515e03f0c2c8758ef905"
     layers:
       meta:
     path: "sources/poky"
 
   meta-openembedded:
-    url: "https://github.com/Gerry546/meta-openembedded.git"
-    # url: "https://github.com/openembedded/meta-openembedded.git"
-    branch: master-development
+    # url: "https://github.com/Gerry546/meta-openembedded.git"
+    url: "https://github.com/openembedded/meta-openembedded.git"
+    branch: master
     layers:
       meta-oe:
       meta-python:
       meta-networking:
     path: "sources/meta-openembedded"
+    commit: "9363162b5147e2ecc21796047aefc7a10e0d999a"
 
   meta-homeassistant:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
-    branch: "2024.6.0"
+    branch: "2024.7"
 
   meta-browser:
     url: "https://github.com/OSSystems/meta-browser/"
@@ -42,7 +43,7 @@ repos:
     url: "https://github.com/kraj/meta-clang"
     path: "sources/meta-clang"
     branch: "master"
-    commit: "23958f436e2feca1b4ecf72fd02e77c9d1ddbf98"
+    commit: "a2f67ce9d4f6f954fb59fa1f35c4be0878aa0db3"
   
 local_conf_header:
   sanctum: |
