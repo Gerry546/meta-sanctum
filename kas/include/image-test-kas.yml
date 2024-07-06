@@ -1,6 +1,13 @@
 header:
   version: 16
 
+repos:
+  meta-sca:
+    url: "https://github.com/priv-kweihmann/meta-sca.git"
+    branch: master
+    commit: "905587120cb4128f9c93540277998fa35ac41577"
+    path: "sources/meta-sca"
+
 local_conf_header:
   test-image: |
     #

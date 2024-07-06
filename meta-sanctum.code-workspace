@@ -27,6 +27,10 @@
 		{
 			"name": "meta-raspberrypi",
 			"path": "sources/meta-raspberrypi"
+		},
+		{
+			"name": "meta-sca",
+			"path": "sources/meta-sca"
 		}
 	],
 	"settings": {
