@@ -195,15 +195,15 @@ jobs:
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
-  Clean-Up-Cache:
-    runs-on: yocto-builder
-    container:
-      volumes:
-        - /cache/:/cache/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Clean SState Cache
-        run: |
-          kas checkout kas/home-assistant-test-kas-x86-64.yml
-          python3 ${{ gitea.workspace }}/sources/poky/scripts/sstate-cache-management.py --cache-dir=/cache/sstate -y -d -v
+  # Clean-Up-Cache:
+  #   runs-on: yocto-builder
+  #   container:
+  #     volumes:
+  #       - /cache/:/cache/
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v3
+  #     - name: Clean SState Cache
+  #       run: |
+  #         kas checkout kas/home-assistant-test-kas-x86-64.yml
+  #         python3 ${{ gitea.workspace }}/sources/poky/scripts/sstate-cache-management.py --cache-dir=/cache/sstate -y -d -v
