@@ -86,4 +86,5 @@ IMAGE_INSTALL = "\
     \
     chromium-ozone-wayland \
     nano \
+    rauc \
 "

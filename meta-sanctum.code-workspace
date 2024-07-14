@@ -31,6 +31,10 @@
 		{
 			"name": "meta-sca",
 			"path": "sources/meta-sca"
+		},
+		{
+			"name": "meta-rauc",
+			"path": "sources/meta-rauc"
 		}
 	],
 	"settings": {

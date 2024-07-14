@@ -44,6 +44,12 @@ repos:
     path: "sources/meta-clang"
     branch: "master"
     commit: "a2f67ce9d4f6f954fb59fa1f35c4be0878aa0db3"
+
+  meta-rauc:
+    url: "https://github.com/rauc/meta-rauc.git"
+    path: "sources/meta-rauc"
+    branch: "master"
+    commit: "8a699cc857fb817611f4769dc615cf47b1bde694"
   
 local_conf_header:
   sanctum: |

@@ -1,16 +1,60 @@
-# Load the device tree
-fdt addr ${fdt_addr}
+# Load U-boot environment
+if test -e virtio 0:1 uboot.env; then env load; fi;
 
-echo "Setting rootfs partition /dev/vda2"
-setenv bootargs "${bootargs} root=/dev/vda2"
+# Load the device tree
+fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
+
+test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "A B"
+test -n "${BOOT_A_LEFT}" || setenv BOOT_A_LEFT 3
+test -n "${BOOT_B_LEFT}" || setenv BOOT_B_LEFT 3
+
+setenv bootpart
+setenv raucslot
+
+for BOOT_SLOT in "${BOOT_ORDER}"; do
+  if test "x${bootpart}" != "x"; then
+    # skip remaining slots
+  elif test "x${BOOT_SLOT}" = "xA"; then
+    if itest ${BOOT_A_LEFT} -gt 0; then
+      setexpr BOOT_A_LEFT ${BOOT_A_LEFT} - 1
+      echo "Found valid RAUC slot A"
+      setenv bootpart "/dev/vda3"
+      setenv raucslot "A"
+      setenv BOOT_DEV "virtio 0:3"
+    fi
+  elif test "x${BOOT_SLOT}" = "xB"; then
+    if itest ${BOOT_B_LEFT} -gt 0; then
+      setexpr BOOT_B_LEFT ${BOOT_B_LEFT} - 1
+      echo "Found valid RAUC slot B"
+      setenv bootpart "/dev/vda4"
+      setenv raucslot "B"
+      setenv BOOT_DEV "virtio 0:4"
+    fi
+  fi
+done
+
+if test -n "${bootpart}"; then
+  setenv bootargs "${bootargs} root=${bootpart} rauc.slot=${raucslot}"
+  echo "Booting with boot args: ${bootargs}"
+  saveenv
+else
+  echo "No valid RAUC slot found. Resetting tries to 3"
+  setenv BOOT_A_LEFT 3
+  setenv BOOT_B_LEFT 3
+  saveenv
+  reset
+fi
 
 # Load the kernel
 echo "Loading kernel"
-ext4load virtio 0:2 ${kernel_addr_r} /boot/@@KERNEL_IMAGETYPE@@
+load ${BOOT_DEV} ${kernel_addr_r} /boot/@@KERNEL_IMAGETYPE@@
+
+if test ! -e virtio 0:1 uboot.env; then saveenv; fi;
 
 # Now actually boot the system
 echo "FDT Addr: ${fdt_addr}"
 echo "Kernel_addr_r: ${kernel_addr_r}"
 @@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
 
+echo "Something failed horribly, resetting"
 reset
