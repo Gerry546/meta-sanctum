@@ -12,3 +12,5 @@ RAUC_SLOT_rootfs = "reterminal-image"
 
 RAUC_KEY_FILE = "${THISDIR}/files/development-1.key.pem"
 RAUC_CERT_FILE = "${THISDIR}/files/development-1.cert.pem"
+
+BUNDLE_LINK_NAME = "${BUNDLE_BASENAME}"

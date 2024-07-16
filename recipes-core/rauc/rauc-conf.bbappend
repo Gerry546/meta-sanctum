@@ -13,4 +13,5 @@ RDEPENDS:${PN} += "\
     libubootenv \
     u-boot-env \
     u-boot-fw-utils \
+    e2fsprogs \
 "

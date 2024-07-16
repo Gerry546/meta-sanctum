@@ -1,5 +1,5 @@
 # Load U-boot environment
-if test -e virtio 0:1 uboot.env; then env load; fi;
+if test -e virtio 0:2 uboot.env; then env load; fi;
 
 # Load the device tree
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
@@ -49,7 +49,7 @@ fi
 echo "Loading kernel"
 load ${BOOT_DEV} ${kernel_addr_r} /boot/@@KERNEL_IMAGETYPE@@
 
-if test ! -e virtio 0:1 uboot.env; then saveenv; fi;
+if test ! -e virtio 0:2 uboot.env; then saveenv; fi;
 
 # Now actually boot the system
 echo "FDT Addr: ${fdt_addr}"
