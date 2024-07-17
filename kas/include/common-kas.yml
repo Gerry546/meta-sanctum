@@ -37,7 +37,7 @@ repos:
     layers:
       meta-chromium:
     branch: "master"
-    commit: "83cb90c618e24af9bc40fb25baab2a0acd47a560"
+    commit: "0a182ba7f646a3f7bf08afb4ff930b95f3e57751"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
