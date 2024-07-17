@@ -29,7 +29,7 @@ repos:
   meta-homeassistant:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
-    branch: "2024.7"
+    branch: "2024.8"
 
   meta-browser:
     url: "https://github.com/OSSystems/meta-browser/"
