@@ -1,5 +1,6 @@
 # short-description: Create Qemu disk image
 # long-description: Creates a partitioned Qemu disk image consisting of
+
 # - boot partition
 # - empty partition for the u-boot env
 # - 2x rootfs partition
@@ -7,8 +8,19 @@
 
 bootloader --ptable gpt
 
-part /boot --source bootimg-partition --ondisk vda --fstype vfat --label boot --active --align 4096 --fixed-size 50M
+# Boot partition
+part --source bootimg-partition --ondisk vda --fstype vfat --label boot --active --align 4096 --fixed-size 50M
+
+# Redundant boot partition
+part --ondisk vda --no-table --align 4096 --fixed-size 50M
+
+# Data storage for persistent data such as uboot environment
 part --fixed-size 10M --ondisk vda --align 4096 --label uboot-env --fstype vfat
+
+# Rootfs
 part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_a --align 4096
+
+# Redundant rootfs
 part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_b --align 4096
+
 part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data --align 4096
