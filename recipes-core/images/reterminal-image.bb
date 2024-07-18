@@ -84,7 +84,6 @@ IMAGE_INSTALL = "\
     python3-homeassistant-zeroconf \
     python3-homeassistant-zestimate \
     \
-    chromium-ozone-wayland \
     nano \
     rauc \
 "

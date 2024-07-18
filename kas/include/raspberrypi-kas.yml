@@ -7,4 +7,4 @@ repos:
     url: "https://github.com/agherzan/meta-raspberrypi.git"
     path: "sources/meta-raspberrypi"
     branch: "master"
-    commit: "6bf0b1874bc080941df1d6e55e01fcdc54c7a013"
+    commit: "434ed33c90b7659152b1e8d7c2d4d785db85105f"
