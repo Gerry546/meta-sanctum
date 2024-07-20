@@ -10,7 +10,7 @@ repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     branch: master
-    commit: "aca8acceb87e568115da9696732e915d91da9652"
+    # commit: "aca8acceb87e568115da9696732e915d91da9652"
     layers:
       meta:
     path: "sources/poky"
@@ -24,7 +24,7 @@ repos:
       meta-python:
       meta-networking:
     path: "sources/meta-openembedded"
-    commit: "f8342855a440fa5c4194fc57285e8db9e034fcaa"
+    # commit: "f8342855a440fa5c4194fc57285e8db9e034fcaa"
 
   meta-homeassistant:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
@@ -37,19 +37,19 @@ repos:
     layers:
       meta-chromium:
     branch: "master"
-    commit: "83cb90c618e24af9bc40fb25baab2a0acd47a560"
+    # commit: "83cb90c618e24af9bc40fb25baab2a0acd47a560"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
     path: "sources/meta-clang"
     branch: "master"
-    commit: "1fdde55d951b7a8f1e537ccf56aca2dc90c40091"
+    # commit: "1fdde55d951b7a8f1e537ccf56aca2dc90c40091"
 
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
     path: "sources/meta-rauc"
     branch: "master"
-    commit: "8a699cc857fb817611f4769dc615cf47b1bde694"
+    # commit: "8a699cc857fb817611f4769dc615cf47b1bde694"
   
 local_conf_header:
   sanctum: |

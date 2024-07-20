@@ -10,8 +10,15 @@ FILES:${PN}:append = " \
 
 # Additional dependencies required to run RAUC on the target
 RDEPENDS:${PN} += "\
+    e2fsprogs-mke2fs \
+"
+
+RDEPENDS:${PN}:x86-64 += "\
+    grub-editenv \
+"
+
+RDEPENDS:${PN}:arm64 += "\
     libubootenv \
     u-boot-env \
     u-boot-fw-utils \
-    e2fsprogs \
 "

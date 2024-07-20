@@ -1,0 +1,14 @@
+header:
+  version: 16
+  includes:
+  - kas/include/common-kas.yml
+
+# The machine as it is written into the `local.conf` of bitbake.
+machine: qemux86-64
+
+target: 
+  - reterminal-bundle-x86
+
+local_conf_header:
+  debug-image: |
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
