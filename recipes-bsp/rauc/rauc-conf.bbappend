@@ -17,7 +17,7 @@ RDEPENDS:${PN}:x86-64 += "\
     grub-editenv \
 "
 
-RDEPENDS:${PN}:arm64 += "\
+RDEPENDS:${PN}:aarch64 += "\
     libubootenv \
     u-boot-env \
     u-boot-fw-utils \
