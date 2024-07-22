@@ -4,7 +4,7 @@ header:
   - kas/include/common-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
-machine: qemux86-64
+machine: reterminal-qemux86-64
 
 target: 
   - reterminal-bundle-x86

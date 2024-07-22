@@ -5,7 +5,7 @@ header:
   - kas/include/raspberrypi-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
-machine: qemuarm64-a72
+machine: reterminal-qemuarm64-a72
 
 target: 
   - reterminal-bundle-arm
