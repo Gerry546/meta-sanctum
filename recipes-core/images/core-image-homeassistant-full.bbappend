@@ -12,6 +12,3 @@ IMAGE_INSTALL:append = " \
 IMAGE_INSTALL:append:qemuarm64-a72 = " \
     python3-pip \
 "
-
-# Sadly at the moment the full set of ptests is not robust enough and sporadically fails in random places
-PTEST_EXPECT_FAILURE = "1"
