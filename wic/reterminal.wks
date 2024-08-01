@@ -1,9 +1,8 @@
 # short-description: Create Reterminal disk image
 # long-description: Creates a partitioned Reterminal disk image consisting of
 # - boot partition
-# - empty partition for the u-boot env
-# - 2x rootfs partition
 # - data partition
+# - 2x rootfs partition
 
 # Bootloader configuratio
 bootloader --ptable gpt
@@ -15,5 +14,5 @@ part    --source bootimg-partition --fixed-size 100M    --ondisk mmcblk0 --fstyp
 part    --source rootfs            --fixed-size 100M    --ondisk mmcblk0 --fstype=ext4 --label data     --align 4096 --rootfs-dir=${IMAGE_ROOTFS}/data 
 
 # Rootfs & redudant rootfs
-part /  --source rootfs            --fixed-size 3G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096 --exclude-path=data/
-part /  --source rootfs            --fixed-size 3G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096 --exclude-path=data/
+part /  --source rootfs            --fixed-size 5G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096 --exclude-path=data/
+part /  --source rootfs            --fixed-size 5G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096 --exclude-path=data/
