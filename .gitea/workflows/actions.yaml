@@ -83,24 +83,24 @@ jobs:
               ### Job ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-      - name: Send success mail
-        if: success()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          attachments: build/tmp/work/qemux86_64-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
-          convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
+      # - name: Send success mail
+      #   if: success()
+      #   uses: https://github.com/dawidd6/action-send-mail@v3
+      #   with:
+      #     to: ${{ secrets.MAIL_TO }}
+      #     from: Gitea <gitea@hostname>
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{ secrets.OUTLOOK_EMAIL }}
+      #     password: ${{ secrets.OUTLOOK_PASSWORD }}
+      #     subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+      #     priority: high
+      #     attachments: build/tmp/work/qemux86_64-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
+      #     convert_markdown: true
+      #     html_body: |
+      #         ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+      #         ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
   Build-Reterminal-QemuArm64-A72:
     runs-on: yocto-builder
@@ -131,23 +131,23 @@ jobs:
               ### Job ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-      - name: Send success mail
-        if: success()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job ${{ job.status }}
+      # - name: Send success mail
+      #   if: success()
+      #   uses: https://github.com/dawidd6/action-send-mail@v3
+      #   with:
+      #     to: ${{ secrets.MAIL_TO }}
+      #     from: Gitea <gitea@hostname>
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{ secrets.OUTLOOK_EMAIL }}
+      #     password: ${{ secrets.OUTLOOK_PASSWORD }}
+      #     subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+      #     priority: high
+      #     convert_markdown: true
+      #     html_body: |
+      #         ### Job ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+      #         ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
   Build-Reterminal-QemuX86-64:
     runs-on: yocto-builder
@@ -178,23 +178,23 @@ jobs:
               ### Job ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-      - name: Send success mail
-        if: success()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job ${{ job.status }}
+      # - name: Send success mail
+      #   if: success()
+      #   uses: https://github.com/dawidd6/action-send-mail@v3
+      #   with:
+      #     to: ${{ secrets.MAIL_TO }}
+      #     from: Gitea <gitea@hostname>
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{ secrets.OUTLOOK_EMAIL }}
+      #     password: ${{ secrets.OUTLOOK_PASSWORD }}
+      #     subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+      #     priority: high
+      #     convert_markdown: true
+      #     html_body: |
+      #         ### Job ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+      #         ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
   Build-Reterminal-RaspberryPi4:
     runs-on: yocto-builder
@@ -225,23 +225,23 @@ jobs:
               ### Job ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-      - name: Send success mail
-        if: success()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job ${{ job.status }}
+      # - name: Send success mail
+      #   if: success()
+      #   uses: https://github.com/dawidd6/action-send-mail@v3
+      #   with:
+      #     to: ${{ secrets.MAIL_TO }}
+      #     from: Gitea <gitea@hostname>
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{ secrets.OUTLOOK_EMAIL }}
+      #     password: ${{ secrets.OUTLOOK_PASSWORD }}
+      #     subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+      #     priority: high
+      #     convert_markdown: true
+      #     html_body: |
+      #         ### Job ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+      #         ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
   # Clean-Up-Cache:
   #   runs-on: yocto-builder
