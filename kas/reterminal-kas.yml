@@ -8,4 +8,8 @@ header:
 machine: reterminal
 
 target: 
-  - reterminal-image
+  - reterminal-update-bundle
+
+local_conf_header:
+  debug-image: |
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
