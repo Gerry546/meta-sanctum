@@ -80,7 +80,7 @@ jobs:
           attachments: build/tmp/work/qemux86_64-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
           convert_markdown: true
           html_body: |
-              ### Job ${{ job.status }}
+              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
       # - name: Send success mail
@@ -128,7 +128,7 @@ jobs:
           # attachments: build/tmp/work/qemuarm64_a72-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
           convert_markdown: true
           html_body: |
-              ### Job ${{ job.status }}
+              ### Job QemuArm64-A72 Core Image Homeassistant Full${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
       # - name: Send success mail
@@ -175,7 +175,7 @@ jobs:
           # attachments: build/tmp/work/qemuarm64_a72-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
           convert_markdown: true
           html_body: |
-              ### Job ${{ job.status }}
+              ### Job QemuX86-64 Reterminal Image ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
       # - name: Send success mail
@@ -222,7 +222,7 @@ jobs:
           # attachments: build/tmp/work/qemuarm64_a72-oe-linux/core-image-homeassistant-full/1.0/temp/log.do_testimage.*
           convert_markdown: true
           html_body: |
-              ### Job ${{ job.status }}
+              ### Job Reterminal Image ${{ job.status }}
 
               ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
       # - name: Send success mail
