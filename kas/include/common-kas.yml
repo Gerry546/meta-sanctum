@@ -10,7 +10,7 @@ repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     branch: master
-    # commit: "aca8acceb87e568115da9696732e915d91da9652"
+    commit: "90aa4ff101d34e901fe4771b5a483f4eb2c57e63"
     layers:
       meta:
     path: "sources/poky"

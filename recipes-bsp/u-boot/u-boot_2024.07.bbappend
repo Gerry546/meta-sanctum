@@ -12,6 +12,10 @@ SRC_URI:append:qemuarm64 = " \
     file://fw_env.config \
 "
 
+SRC_URI:append:reterminal = " \
+    file://fragment.cfg \
+"
+
 do_configure:append:qemuarm64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' "${UNPACKDIR}/boot-qemu.cmd.in" > "${UNPACKDIR}/boot.cmd"
     mkimage -C none -A ${UBOOT_ARCH} -T script -d "${UNPACKDIR}/boot.cmd" boot.scr

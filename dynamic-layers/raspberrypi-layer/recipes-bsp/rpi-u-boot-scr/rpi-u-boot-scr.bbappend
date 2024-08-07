@@ -1,5 +1,6 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI:append = " \
-    file://boot-default.cmd.in \
-"
+SRC_URI:remove = "file://boot.cmd.in"
+
+SRC_URI += "file://boot.cmd.in;subdir=${S}"
+
