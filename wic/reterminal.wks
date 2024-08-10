@@ -14,5 +14,5 @@ part    --source bootimg-partition --fixed-size 100M    --ondisk mmcblk0 --fstyp
 part    --source rootfs            --fixed-size 1G    --ondisk mmcblk0 --fstype=ext4 --label data     --align 4096 --rootfs-dir=${IMAGE_ROOTFS}/data 
 
 # Rootfs & redundant rootfs
-part /  --source rootfs            --fixed-size 10G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096 --exclude-path=data/
-part /  --source rootfs            --fixed-size 10G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096 --exclude-path=data/
+part /  --source rootfs            --fixed-size 14G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096 --exclude-path=data/
+part /  --source rootfs            --fixed-size 14G      --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096 --exclude-path=data/

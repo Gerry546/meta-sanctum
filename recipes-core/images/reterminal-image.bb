@@ -84,8 +84,16 @@ IMAGE_INSTALL = "\
     python3-homeassistant-zeroconf \
     python3-homeassistant-zestimate \
     \
-    nano \
     rauc \
+    \
+    nano \
+    evtest \
+    i2c-tools \
+    \
+    weston \
+    weston-init \
+    liberation-fonts \
+    wayland-utils \
 "
 
 IMAGE_ROOTFS_ALIGNMENT = "4"
