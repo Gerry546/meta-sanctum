@@ -17,7 +17,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid RAUC slot A"
       setenv bootpart "/dev/mmcblk0p3"
       setenv raucslot "A"
-      setenv BOOT_DEV "mmc 0:3"
+      setenv BOOT_DEV "mmc 0:1"
     fi
   elif test "x${BOOT_SLOT}" = "xB"; then
     if itest ${BOOT_B_LEFT} -gt 0; then
@@ -25,7 +25,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid RAUC slot B"
       setenv bootpart "/dev/mmcblk0p4"
       setenv raucslot "B"
-      setenv BOOT_DEV "mmc 0:4"
+      setenv BOOT_DEV "mmc 0:2"
     fi
   fi
 done
@@ -41,6 +41,6 @@ else
   reset
 fi
 
-load ${BOOT_DEV} ${kernel_addr_r} boot/@@KERNEL_IMAGETYPE@@
-if test ! -e mmc 0:1 uboot.env; then saveenv; fi;
+load ${BOOT_DEV} ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
+if test ! -e ${BOOT_DEV} uboot.env; then saveenv; fi;
 @@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
