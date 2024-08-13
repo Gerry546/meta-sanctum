@@ -8,8 +8,8 @@
 bootloader --ptable gpt
 
 # Boot partition
-part /boot --source bootimg-partition --fixed-size 100M --ondisk mmcblk0 --fstype=vfat --label boot_A --align 4096 --active
-part    --source rawcopy      --fixed-size 100M     --ondisk mmcblk0 --fstype=vfat --label boot_B   --align 4096          --sourceparams="file=boot-part.vfat"
+part --source bootimg-partition --fixed-size 100M --ondisk mmcblk0 --fstype=vfat --label boot_A --align 4096 --active
+part --source bootimg-partition --fixed-size 100M --ondisk mmcblk0 --fstype=vfat --label boot_B --align 4096
 
 # Data partition
 part --source rootfs --fixed-size 1G --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --rootfs-dir=${IMAGE_ROOTFS}/data 
