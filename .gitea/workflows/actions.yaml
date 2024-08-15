@@ -3,7 +3,7 @@ run-name: ${{ gitea.actor }} is building the sanctum project
 on: 
   push:
   schedule:
-    - cron: '@daily'
+    - cron: '@weekly'
 
 jobs:
   # Build-Core-Image-HomeAssistant-QemuArm64-A72:
