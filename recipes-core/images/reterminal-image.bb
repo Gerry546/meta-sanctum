@@ -94,6 +94,8 @@ IMAGE_INSTALL = "\
     weston-init \
     liberation-fonts \
     wayland-utils \
+    \
+    kernel-modules \
 "
 
 IMAGE_ROOTFS_ALIGNMENT = "4"
