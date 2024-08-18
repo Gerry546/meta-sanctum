@@ -8,7 +8,7 @@ header:
 machine: reterminal
 
 target: 
-  - reterminal-update-bundle
+  - reterminal-bundle
 
 local_conf_header:
   debug-image: |
