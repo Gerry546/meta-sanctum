@@ -10,5 +10,3 @@ do_install:append() {
 
     install -D -p -m0644 ${UNPACKDIR}/weston.ini ${D}${sysconfdir}/xdg/weston/weston.ini
 }
-
-SYSTEMD_AUTO_ENABLE_${PN} = "enable"
