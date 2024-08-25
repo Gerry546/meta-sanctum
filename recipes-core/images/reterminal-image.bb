@@ -90,12 +90,13 @@ IMAGE_INSTALL = "\
     evtest \
     i2c-tools \
     \
-    weston \
-    weston-init \
-    liberation-fonts \
-    wayland-utils \
-    \
     kernel-modules \
+    \
+    chromium-ozone-wayland \
+"
+
+IMAGE_FEATURES += "\
+    weston \
 "
 
 IMAGE_ROOTFS_ALIGNMENT = "4"
