@@ -9,6 +9,7 @@ IMAGE_INSTALL = "\
     \
     python3-homeassistant \
     python3-homeassistant-acer-projector \
+    python3-homeassistant-accuweather \
     python3-homeassistant-airthings-ble \
     python3-homeassistant-amazon-polly \
     python3-homeassistant-aruba \
@@ -87,6 +88,8 @@ IMAGE_INSTALL = "\
     python3-homeassistant-vlc \
     python3-homeassistant-zeroconf \
     python3-homeassistant-zestimate \
+    python3-homeassistant-zwave-js \
+    python3-homeassistant-zwave-me \
     \
     rauc \
     \
