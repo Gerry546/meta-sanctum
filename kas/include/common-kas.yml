@@ -18,7 +18,7 @@ repos:
   meta-openembedded:
     # url: "https://github.com/Gerry546/meta-openembedded.git"
     url: "https://github.com/openembedded/meta-openembedded.git"
-    branch: master
+    branch: master-dev
     layers:
       meta-oe:
       meta-python:
