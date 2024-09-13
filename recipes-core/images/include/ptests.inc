@@ -15,7 +15,6 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-s3transfer-ptest \
     python3-uart-devices-ptest \
     python3-usb-devices-ptest \
-    python3-zm-py-ptest \
     \
     python3-bleak-ptest \
     python3-sqlparse-ptest \
