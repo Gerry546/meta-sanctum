@@ -100,6 +100,8 @@ IMAGE_INSTALL = "\
     kernel-modules \
     \
     chromium-ozone-wayland \
+    chromium-starter \
+    button-handler \
 "
 
 IMAGE_FEATURES += "\

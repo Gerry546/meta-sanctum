@@ -1,3 +1,4 @@
+echo "Reterminal boot script version 1"
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
 
 test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "A B"
@@ -29,6 +30,9 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
     fi
   fi
 done
+
+# Inject kernel command line to decrease audit logs
+setenv bootargs "${bootargs} loglevel=4"
 
 if test -n "${bootpart}"; then
   setenv bootargs "${bootargs} root=${bootpart} rauc.slot=${raucslot}"

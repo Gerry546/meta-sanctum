@@ -11,7 +11,7 @@ PAMName=login
 Environment=WAYLAND_DISPLAY=/run/user/1000/wayland-1
 Environment=XDG_RUNTIME_DIR=/run/user/1000
 ExecStartPre=/bin/sleep 5
-ExecStart=/usr/bin/chromium @@URL@@ --force-dark-mode --enable-wayland-ime --enable-logging=stderr --kiosk
+ExecStart=/usr/bin/chromium @@URL@@ --force-dark-mode --enable-wayland-ime --enable-logging=stderr --kiosk --no-first-run
 #Restart=on-failure
 #RestartSec=1
 
