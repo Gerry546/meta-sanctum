@@ -96,12 +96,14 @@ IMAGE_INSTALL = "\
     nano \
     evtest \
     i2c-tools \
+    curl \
     \
     kernel-modules \
     \
     chromium-ozone-wayland \
     chromium-starter \
     button-handler \
+    reterminal-homeassistant-config \
 "
 
 IMAGE_FEATURES += "\
