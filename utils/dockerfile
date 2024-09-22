@@ -1,5 +1,7 @@
 FROM catthehacker/ubuntu:act-22.04
 
+RUN rm /bin/sh && ln -s bash /bin/sh
+
 # Set environment variables for locale
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
