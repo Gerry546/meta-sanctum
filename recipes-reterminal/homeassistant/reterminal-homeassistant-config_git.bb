@@ -3,7 +3,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=86d3f3a95c324c9479bd8986968f4327"
 
 SRC_URI = "gitsm://github.com/Gerry546/Reterminal-Homeassistant.git;branch=main;protocol=https"
-SRCREV = "9c580172873f99673818bbe2c4b2bedb7cdc6c09"
+# SRCREV = "c41d7873aaa1ac39d87d5357044474637e7ac794"
+SRCREV = "${AUTOREV}"
 
 inherit useradd
 
