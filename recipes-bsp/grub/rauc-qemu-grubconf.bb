@@ -26,7 +26,6 @@ do_deploy() {
 
 addtask deploy after do_install before do_build
 
-
 FILES:${PN} += "${EFI_FILES_PATH}"
 
 RPROVIDES:${PN} += "virtual-grub-bootconf"

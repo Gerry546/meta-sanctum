@@ -3,6 +3,7 @@ IMAGE_INSTALL:append:qemuall = " \
     \
     python3-accuweather-ptest \
     python3-aiodiscover-ptest \
+    python3-aiohasupervisor-ptest \
     python3-aioshelly-ptest \
     python3-airthings-ble-ptest \
     python3-bleak-retry-connector-ptest \
@@ -18,4 +19,5 @@ IMAGE_INSTALL:append:qemuall = " \
     \
     python3-bleak-ptest \
     python3-sqlparse-ptest \
+    python3-cryptography-ptest \
 "
