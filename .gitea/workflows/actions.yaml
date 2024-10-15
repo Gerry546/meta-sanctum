@@ -6,47 +6,40 @@ on:
     - cron: '@weekly'
 
 jobs:
-  Build-Core-Image-HomeAssistant-QemuX86-64:
-    runs-on: yocto-builder
+  Build-Container:
+    runs-on: ubuntu-latest
     container:
-      volumes:
-          - /cache/:/cache/
-          - /dev/kvm:/dev/kvm/
+      image: catthehacker/ubuntu:act-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Build QemuX86-64 Core Image Homeassistant Full
-        run: |
-          kas build kas/home-assistant-test-kas-x86-64.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
+      - uses: actions/checkout@v4
+      - name: Setup Docker Buildx
+        uses: https://github.com/docker/setup-buildx-action@v3
+      - name: Log in to Gitea Container Registry
+        uses: docker/login-action@v3
         with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
+          registry: gitea.estalor.com
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PAT }}
+      - name: Build and Push Container
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./utils/dockerfile
+          push: true
+          tags: gitea.estalor.com/tom/yocto-builder:latest
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-
-  # Build-Reterminal-QemuArm64-A72:
+  # Build-Core-Image-HomeAssistant-QemuX86-64:
   #   runs-on: yocto-builder
   #   container:
   #     volumes:
   #         - /cache/:/cache/
+  #         - /dev/kvm:/dev/kvm/
   #   steps:
   #     - name: Check out repository code
-  #       uses: actions/checkout@v3
-  #     - name: Build Reterminal-Qemuarm64-A72
+  #       uses: actions/checkout@v4
+  #     - name: Build QemuX86-64 Core Image Homeassistant Full
   #       run: |
-  #         kas build kas/reterminal-kas-qemuarm64.yml
+  #         kas build kas/home-assistant-test-kas-x86-64.yml
   #     - name: Send failure mail
   #       if: failure()
   #       uses: https://github.com/dawidd6/action-send-mail@v3
@@ -61,64 +54,64 @@ jobs:
   #         priority: high
   #         convert_markdown: true
   #         html_body: |
-  #             ### Job QemuArm64-A72 Core Image Homeassistant Full${{ job.status }}
+  #             ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
   #             ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
-  Build-Reterminal-QemuX86-64:
-    runs-on: yocto-builder
-    container:
-      volumes:
-          - /cache/:/cache/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Build Reterminal-QemuX86-64
-        run: |
-          kas build kas/reterminal-kas-qemux86.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Reterminal Image ${{ job.status }}
+  # Build-Reterminal-QemuX86-64:
+  #   runs-on: yocto-builder
+  #   container:
+  #     volumes:
+  #         - /cache/:/cache/
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v4
+  #     - name: Build Reterminal-QemuX86-64
+  #       run: |
+  #         kas build kas/reterminal-kas-qemux86.yml
+  #     - name: Send failure mail
+  #       if: failure()
+  #       uses: https://github.com/dawidd6/action-send-mail@v3
+  #       with:
+  #         to: ${{ secrets.MAIL_TO }}
+  #         from: Gitea <gitea@hostname>
+  #         server_address: smtp.gmail.com
+  #         server_port: 465
+  #         username: ${{ secrets.OUTLOOK_EMAIL }}
+  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
+  #         subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+  #         priority: high
+  #         convert_markdown: true
+  #         html_body: |
+  #             ### Job QemuX86-64 Reterminal Image ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+  #             ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
 
-  Build-Reterminal-RaspberryPi4:
-    runs-on: yocto-builder
-    container:
-      volumes:
-          - /cache/:/cache/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Build Reterminal-RaspberryPi4
-        run: |
-          kas build kas/reterminal-kas.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job Reterminal Image ${{ job.status }}
+  # Build-Reterminal-RaspberryPi4:
+  #   runs-on: yocto-builder
+  #   container:
+  #     volumes:
+  #         - /cache/:/cache/
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v4
+  #     - name: Build Reterminal-RaspberryPi4
+  #       run: |
+  #         kas build kas/reterminal-kas.yml
+  #     - name: Send failure mail
+  #       if: failure()
+  #       uses: https://github.com/dawidd6/action-send-mail@v3
+  #       with:
+  #         to: ${{ secrets.MAIL_TO }}
+  #         from: Gitea <gitea@hostname>
+  #         server_address: smtp.gmail.com
+  #         server_port: 465
+  #         username: ${{ secrets.OUTLOOK_EMAIL }}
+  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
+  #         subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+  #         priority: high
+  #         convert_markdown: true
+  #         html_body: |
+  #             ### Job Reterminal Image ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+  #             ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
