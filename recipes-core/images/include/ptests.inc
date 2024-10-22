@@ -12,6 +12,7 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-evohome-async-ptest \
     python3-home-assistant-bluetooth-ptest \
     python3-homeassistant-ptest \
+    python3-pykulersky-ptest \
     python3-psutil-home-assistant-ptest \
     python3-s3transfer-ptest \
     python3-uart-devices-ptest \
