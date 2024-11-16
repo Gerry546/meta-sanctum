@@ -216,3 +216,4 @@ local_conf_header:
     # Port forwarding settings
     QB_SLIRP_OPT:qemuall ="-netdev user,id=net0,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp::8888-:8123"
     QB_MEM:qemuall = "-m 8192"
+    QB_SMP:qemux86-64 = "-smp 8"
