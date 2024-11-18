@@ -120,6 +120,10 @@ IMAGE_INSTALL = "\
 
 IMAGE_FEATURES += "\
     weston \
+    allow-empty-password \
+    empty-root-password \
+    allow-root-login \
+    post-install-logging \
 "
 
 IMAGE_ROOTFS_ALIGNMENT = "4"

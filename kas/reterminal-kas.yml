@@ -9,7 +9,3 @@ machine: reterminal
 
 target: 
   - reterminal-bundle
-
-local_conf_header:
-  debug-image: |
-    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
