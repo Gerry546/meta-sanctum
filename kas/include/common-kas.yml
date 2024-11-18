@@ -8,10 +8,10 @@ repos:
     path: "."
 
   poky:
-    url: "https://git.yoctoproject.org/git/poky"
-    # url: "https://github.com/Gerry546/poky.git"
-    # branch: master-dev
-    commit: "8d909f94a630ba582a81068dc1ea52ce3470c6fb"
+    # url: "https://git.yoctoproject.org/git/poky"
+    url: "https://github.com/Gerry546/poky.git"
+    branch: master-dev
+    # commit: "8d909f94a630ba582a81068dc1ea52ce3470c6fb"
     layers:
       meta:
     path: "sources/poky"
