@@ -22,6 +22,8 @@ RUN apt update && apt install -y \
     tmux \
     # parted to use wic tools
     parted \
+    # for meta-sca
+    gcc-multilib git-core xterm \
     # Clean image
     && apt -y autoremove \
     && rm -rf /var/lib/apt/lists/* \

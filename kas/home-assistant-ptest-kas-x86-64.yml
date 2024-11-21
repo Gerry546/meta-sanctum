@@ -2,10 +2,10 @@ header:
   version: 16
   includes:
   - kas/include/common-kas.yml
-  - kas/include/image-test-kas.yml
+  - kas/include/image-ptest-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
-machine: reterminal-qemuarm64-a72
+machine: qemux86-64
 
 target: 
   - core-image-homeassistant-full

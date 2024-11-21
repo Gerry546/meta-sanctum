@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build QemuX86-64 Core Image Homeassistant Full
         run: |
-          kas build kas/home-assistant-test-kas-x86-64.yml
+          kas build kas/home-assistant-ptest-kas-x86-64.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
