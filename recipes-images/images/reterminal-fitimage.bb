@@ -6,6 +6,7 @@ inherit fitimage
 
 FITIMAGE_IMAGES = "kernel fdt"
 FITIMAGE_IMAGE_LINK_NAME = "fitImage"
+ITS_LINK_NAME = "fitImage"
 
 FITIMAGE_IMAGE_kernel ?= "virtual/kernel"
 FITIMAGE_IMAGE_kernel[type] ?= "kernel"
