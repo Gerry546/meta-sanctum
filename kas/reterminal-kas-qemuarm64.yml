@@ -8,4 +8,4 @@ header:
 machine: reterminal-qemuarm64-a72
 
 target: 
-  - reterminal-bundle-arm
+  - reterminal-bundle

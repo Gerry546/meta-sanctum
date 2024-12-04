@@ -23,15 +23,19 @@ do_extract_boot_part[depends] += "\
 "
 
 PARTITION_NAME = "boot-part"
+TARGET_IMAGE_NAME = "${DEPLOY_DIR_IMAGE}/reterminal-image.wic"
 
 python do_extract_boot_part() {
     import subprocess
-    # wic_image = d.getVar('IMAGE_NAME') + '.wic'
-    wic_image = d.getVar('DEPLOY_DIR_IMAGE') + '/reterminal-image-reterminal.rootfs.wic'
+    import os
+    wic_image = d.getVar('TARGET_IMAGE_NAME')
     vfat_image = d.getVar('WORKDIR') + '/' + d.getVar('PARTITION_NAME') + '.vfat'
+    bb.warn("Using wic image: {}".format(wic_image))
 
-    cmd = 'wic ls {}'.format(wic_image)
-    output = subprocess.check_output(cmd, shell=True)
+    bb.warn('wic ls {}'.format(wic_image))
+    cmd = ['wic', 'ls', wic_image]
+    output = subprocess.check_output(cmd, env=os.environ)
+    bb.warn("wic info: {}".format(output))
     lines = output.splitlines()
     # Ensure there are at least 2 lines (header + 1 rows)
     if len(lines) >= 2:
@@ -41,8 +45,8 @@ python do_extract_boot_part() {
         end = int(columns[2])
 
         # Log the extracted values
-        bb.note("Start of the first partition: {}".format(start))
-        bb.note("End of the first partition: {}".format(end))
+        bb.warn("Start of the first partition: {}".format(start))
+        bb.warn("End of the first partition: {}".format(end))
     else:
         bb.fatal("The wic ls output does not have enough rows to extract the second partition info.")
 
