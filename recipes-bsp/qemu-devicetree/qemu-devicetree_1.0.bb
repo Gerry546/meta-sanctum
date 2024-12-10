@@ -10,6 +10,8 @@ SRC_URI[sha256sum] = "4c6fdb788209b8d28f052ee31f940d809b7e5a40fa0e0ae37b78069b13
 
 inherit deploy
 
+S = "${UNPACKDIR}"
+
 do_compile() {
     ${STAGING_BINDIR_NATIVE}/dtc -I dts -O dtb -o qemu.dtb ${UNPACKDIR}/qemu.dts
 }
