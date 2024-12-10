@@ -1,6 +1,5 @@
 # short-description: Create Qemu disk image
 # long-description: Creates a partitioned Qemu disk image consisting of
-
 # - 2x boot partition
 # - empty partition for the u-boot env
 # - 2x rootfs partition
