@@ -8,6 +8,8 @@ on:
 jobs:
   # Build-Container:
   #   runs-on: ubuntu-latest
+  # env: 
+  #     RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
   #   container:
   #     image: catthehacker/ubuntu:act-latest
   #   steps:
@@ -30,6 +32,8 @@ jobs:
 
   # Build-Core-Image-HomeAssistant-QemuX86-64:
   #   runs-on: yocto-builder
+  # env: 
+  #     RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
   #   container:
   #     volumes:
   #         - /cache/:/cache/
@@ -60,6 +64,8 @@ jobs:
 
   Build-Reterminal-QemuX86-64:
     runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
       volumes:
           - /cache/:/cache/
@@ -68,7 +74,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Reterminal-QemuX86-64
         run: |
-          kas build kas/qemux86/reterminal-kas-qemux86.yml
+          kas build kas/reterminal/x86-qemu-reterminal-kas.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
@@ -89,6 +95,8 @@ jobs:
 
   Build-Reterminal-RaspberryPi4:
     runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
       volumes:
           - /cache/:/cache/
@@ -97,7 +105,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Reterminal-RaspberryPi4
         run: |
-          kas build kas/aarch64/reterminal-kas.yml
+          kas build kas/reterminal/reterminal-kas.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
