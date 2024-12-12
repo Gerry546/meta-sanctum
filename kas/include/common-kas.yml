@@ -5,7 +5,7 @@ distro: sanctum
 
 repos:
   meta-sanctum:
-    path: "."
+    path: "meta-sanctum"
 
   poky:
     # url: "https://git.yoctoproject.org/git/poky"
