@@ -7,4 +7,4 @@ header:
 machine: reterminal-qemux86-64
 
 target: 
-  - reterminal-bundle-x86
+  - reterminal-bundle
