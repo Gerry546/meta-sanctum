@@ -13,6 +13,6 @@ IMAGE_INSTALL:append = " \
     nano \
 "
 
-IMAGE_INSTALL:append:qemuarm64-a72 = " \
+IMAGE_INSTALL:append:qemuall = " \
     python3-pip \
 "
