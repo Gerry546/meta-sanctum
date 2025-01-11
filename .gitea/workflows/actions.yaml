@@ -60,9 +60,7 @@ jobs:
           html_body: |
               ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
-
-  Build-Reterminal-QemuX86-64:
+  Build-Reterminal-Qemu:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
@@ -75,6 +73,9 @@ jobs:
       - name: Build Reterminal-QemuX86-64
         run: |
           kas build kas/reterminal/x86-qemu-reterminal-kas.yml
+      - name: Build Reterminal-Aarch64
+        run: |
+          kas build kas/reterminal/aarch64-qemu-reterminal-kas.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
@@ -89,9 +90,7 @@ jobs:
           priority: high
           convert_markdown: true
           html_body: |
-              ### Job QemuX86-64 Reterminal Image ${{ job.status }}
-
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
+              ### Job Qemu Reterminal Image ${{ job.status }}
 
   Build-Reterminal-RaspberryPi4:
     runs-on: yocto-builder
@@ -121,5 +120,3 @@ jobs:
           convert_markdown: true
           html_body: |
               ### Job Reterminal Image ${{ job.status }}
-
-              ${{ github.repository }}: [${{ github.ref }}@${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/actions)
