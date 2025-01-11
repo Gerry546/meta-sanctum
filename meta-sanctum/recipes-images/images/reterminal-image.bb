@@ -6,10 +6,11 @@ inherit core-image
 IMAGE_INSTALL = "\
     packagegroup-core-boot \
     ${CORE_IMAGE_EXTRA_INSTALL} \
-    \
     rauc \
-    \
     nano \
+"
+
+IMAGE_INSTALL:reterminal = "\
     evtest \
     i2c-tools \
     curl \
@@ -17,7 +18,6 @@ IMAGE_INSTALL = "\
     kernel-modules \
     \
     button-handler \
-    reterminal-homeassistant-config \
 "
 
 IMAGE_FEATURES += "\

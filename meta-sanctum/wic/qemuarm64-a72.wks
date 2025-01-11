@@ -3,7 +3,7 @@
 # - 2x boot partition
 # - empty partition for the u-boot env
 # - 2x rootfs partition
-# - data partition
+# - 2x data partition
 
 bootloader --ptable gpt
 
@@ -15,9 +15,9 @@ part --source bootimg-partition --ondisk vda --fstype vfat --label boot_B --acti
 part --fixed-size 10M --ondisk vda --align 4096 --label uboot-env --fstype vfat
 
 # Rootfs
-part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_a --align 4096
+part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_A --align 4096
+part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_B --align 4096
 
-# Redundant rootfs
-part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_b --align 4096
-
-part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data --align 4096
+# Data partitions
+part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data_A --align 4096
+part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data_B --align 4096
