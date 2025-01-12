@@ -15,9 +15,8 @@ part --source bootimg-partition --ondisk vda --fstype vfat --label boot_B --acti
 part --fixed-size 10M --ondisk vda --align 4096 --label uboot-env --fstype vfat
 
 # Rootfs
-part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_A --align 4096
-part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_B --align 4096
+part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_A --align 4096
+part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_B --align 4096
 
 # Data partitions
-part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data_A --align 4096
-part --fixed-size 100M --ondisk vda --fstype=ext4 --label=data_B --align 4096
+part --fixed-size 100M --source rootfs --ondisk vda --rootfs-dir=${IMAGE_ROOTFS}/data --fstype=ext4 --label=data --align 4096

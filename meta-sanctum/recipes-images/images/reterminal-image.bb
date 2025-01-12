@@ -8,6 +8,7 @@ IMAGE_INSTALL = "\
     ${CORE_IMAGE_EXTRA_INSTALL} \
     rauc \
     nano \
+    python3-homeassistant \
 "
 
 IMAGE_INSTALL:reterminal = "\
@@ -35,4 +36,5 @@ EXTRA_IMAGECMD:ext4 = "-i 4096 -b 4096 -E hash_seed=86ca73ff-7379-40bd-a098-fcb0
 
 IMAGE_FSTYPES:append = " \
     wic \
+    ext4 \
 "
