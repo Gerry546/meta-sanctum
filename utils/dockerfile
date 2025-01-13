@@ -27,6 +27,9 @@ RUN apt update && apt install -y \
     gcc-multilib git-core xterm \
     # for devicetree actions
     device-tree-compiler \
+    # for running http-server
+    npm \
+    && npm install -g http-server \
     # Clean image
     && apt -y autoremove \
     && rm -rf /var/lib/apt/lists/* \
