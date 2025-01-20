@@ -10,7 +10,7 @@ RAUC_BUNDLE_COMPATIBLE:reterminal = "reterminal"
 
 RAUC_BUNDLE_FORMAT = "verity"
 
-RAUC_BUNDLE_SLOTS = "rootfs"
+RAUC_BUNDLE_SLOTS = "rootfs boot"
 RAUC_BUNDLE_SLOTS:qemux86-64 = "rootfs"
 # RAUC_BUNDLE_SLOTS:qemux86-64 = "efi rootfs"
 RAUC_BUNDLE_SLOTS:qemuarm64 = "rootfs boot"

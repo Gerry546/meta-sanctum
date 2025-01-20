@@ -25,14 +25,37 @@ do_image_complete[depends] += "\
 PARTITION_NAME = "boot-image"
 TARGET_IMAGE_NAME = "${DEPLOY_DIR_IMAGE}/reterminal-image.wic"
 
+python do_retrieve_artifacts() {
+    import os
+    import shutil
+
+    workdir = d.getVar('WORKDIR')
+    deploy_dir_image = d.getVar('DEPLOY_DIR_IMAGE')
+    fatsourcedir = os.path.join(workdir, 'boot', 'EFI', 'BOOT')
+    os.makedirs(fatsourcedir, exist_ok=True)
+
+    image_boot_files = d.getVar('IMAGE_BOOT_FILES').split()
+
+    for file_entry in image_boot_files:
+        if 'bootfiles' in file_entry:
+            continue
+        if ';' in file_entry:
+            src_file, dst_file = file_entry.split(';')
+        else:
+            src_file = dst_file = file_entry
+
+        src_path = os.path.join(deploy_dir_image, src_file)
+        dst_path = os.path.join(fatsourcedir, src_file)
+        bb.warn(f"Copying {src_path} to {dst_path}")
+
+        os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+        shutil.copy2(src_path, dst_path)
+
+    d.setVar('FATSOURCEDIR', os.path.join(workdir, 'boot'))
+}
+
 do_image_complete() {
     FATSOURCEDIR="${WORKDIR}/boot"
-    mkdir -p ${FATSOURCEDIR}/EFI/BOOT
-
-    for file_entry in ${IMAGE_BOOT_FILES}; do
-        cp ${DEPLOY_DIR_IMAGE}/${file_entry} ${FATSOURCEDIR}/EFI/BOOT
-    done
-    
     MKDOSFS_EXTRAOPTS="-S 512"
     FATIMG="${WORKDIR}/${PARTITION_NAME}.vfat"
     BLOCKS=32786
@@ -50,4 +73,5 @@ do_image_complete() {
 
 do_image_complete[cleandirs] += "${WORKDIR}/efi-boot"
 
+addtask do_retrieve_artifacts before do_image_complete
 addtask image_complete after do_install
