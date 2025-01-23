@@ -10,16 +10,16 @@ do_fetch[noexec] = "1"
 do_patch[noexec] = "1"
 do_compile[noexec] = "1"
 do_install[noexec] = "1"
-do_extract_boot_part[nostamp] = "1"
 deltask do_populate_sysroot
 
-DEPENDS = "\
+DEPENDS += "\
     dosfstools-native \
     mtools-native \
 "
 
-do_image_complete[depends] += "\
+do_retrieve_artifacts[depends] += "\
     reterminal-image:do_image_complete \
+    reterminal-fitimage:do_deploy \
 "
 
 PARTITION_NAME = "boot-image"
