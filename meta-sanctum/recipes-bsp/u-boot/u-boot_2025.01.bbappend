@@ -13,7 +13,8 @@ SRC_URI:append:qemuarm64 = " \
 "
 
 SRC_URI:append:reterminal = " \
-    file://fragment.cfg \
+    file://fitimage.cfg \
+    file://mmc_uboot_env.cfg \
 "
 
 do_configure:append:qemuarm64() {

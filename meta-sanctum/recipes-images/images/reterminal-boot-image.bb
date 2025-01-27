@@ -24,6 +24,7 @@ do_retrieve_artifacts[depends] += "\
 
 PARTITION_NAME = "boot-image"
 TARGET_IMAGE_NAME = "${DEPLOY_DIR_IMAGE}/reterminal-image.wic"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 python do_retrieve_artifacts() {
     import os
@@ -31,14 +32,19 @@ python do_retrieve_artifacts() {
 
     workdir = d.getVar('WORKDIR')
     deploy_dir_image = d.getVar('DEPLOY_DIR_IMAGE')
-    fatsourcedir = os.path.join(workdir, 'boot', 'EFI', 'BOOT')
+    fatsourcedir = os.path.join(workdir, 'boot')
     os.makedirs(fatsourcedir, exist_ok=True)
 
     image_boot_files = d.getVar('IMAGE_BOOT_FILES').split()
 
     for file_entry in image_boot_files:
         if 'bootfiles' in file_entry:
+            src_path = os.path.join(deploy_dir_image, 'bootfiles')
+            dst_path = os.path.join(fatsourcedir, 'bootfiles')
+            bb.warn(f"Copying directory {src_path} to {dst_path}")
+            shutil.copytree(src_path, dst_path, dirs_exist_ok=True)
             continue
+
         if ';' in file_entry:
             src_file, dst_file = file_entry.split(';')
         else:
@@ -46,7 +52,7 @@ python do_retrieve_artifacts() {
 
         src_path = os.path.join(deploy_dir_image, src_file)
         dst_path = os.path.join(fatsourcedir, src_file)
-        bb.warn(f"Copying {src_path} to {dst_path}")
+        # bb.warn(f"Copying {src_path} to {dst_path}")
 
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
         shutil.copy2(src_path, dst_path)
@@ -58,7 +64,7 @@ do_image_complete() {
     FATSOURCEDIR="${WORKDIR}/boot"
     MKDOSFS_EXTRAOPTS="-S 512"
     FATIMG="${WORKDIR}/${PARTITION_NAME}.vfat"
-    BLOCKS=32786
+    BLOCKS=131144
 
     rm -f ${FATIMG}
 
