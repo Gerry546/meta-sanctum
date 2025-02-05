@@ -16,7 +16,7 @@ FITIMAGE_ENTRYPOINT:qemuarm64 = "0x40400000"
 FITIMAGE_ENTRYPOINT:reterminal = "0x00080000"
 
 FITIMAGE_DEVICETREE_NAME:qemuarm64 = "qemu-devicetree.dtb"
-FITIMAGE_DEVICETREE_NAME:reterminal = "bcm2711-rpi-cm4.dtb"
+FITIMAGE_DEVICETREE_NAME:reterminal = "reterminal.dtb"
 FITIMAGE_IMAGE_fdt:qemuall ?= "qemu-devicetree"
 FITIMAGE_IMAGE_fdt:reterminal ?= "virtual/kernel"
 FITIMAGE_IMAGE_fdt[type] = "fdt"
