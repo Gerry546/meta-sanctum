@@ -78,15 +78,15 @@
 	};
 	chosen: chosen {
 		stdout-path = "serial0:115200n8";
-		bootargs = "coherent_pool=1M 8250.nr_uarts=1 snd_bcm2835.enable_headphones=0 cgroup_disable=memory numa_policy=interleave";
+		bootargs = "coherent_pool=1M 8250.nr_uarts=1 snd_bcm2835.enable_headphones=0 cgroup_disable=memory numa_policy=interleave snd_bcm2835.enable_hdmi=0";
 	};
 	rmem: reserved-memory {
 		#address-cells = <2>;
 		#size-cells = <1>;
 		ranges;
-		cma: linux,cma {
+		cma: frag0: linux,cma {
 			compatible = "shared-dma-pool";
-			size = <0x4000000>;
+			size = <((512-4)*1024*1024)>;
 			reusable;
 			linux,cma-default;
 			alloc-ranges = <0x0 0x00000000 0x30000000>;
@@ -142,7 +142,7 @@
 			compatible = "brcm,bcm2835-txp";
 			reg = <0x7e004000 0x20>;
 			interrupts = <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		clocks: cprman@7e101000 {
 			compatible = "brcm,bcm2711-cprman";
@@ -1035,7 +1035,7 @@
 			compatible = "brcm,bcm2711-hvs";
 			reg = <0x7e400000 0x8000>;
 			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 			clocks = <&firmware_clocks 4>;
 		};
 		dsi1: dsi@7e700000 {
@@ -1256,19 +1256,19 @@
 			compatible = "brcm,bcm2711-pixelvalve0";
 			reg = <0x7e206000 0x100>;
 			interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		pixelvalve1: pixelvalve@7e207000 {
 			compatible = "brcm,bcm2711-pixelvalve1";
 			reg = <0x7e207000 0x100>;
 			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		pixelvalve2: pixelvalve@7e20a000 {
 			compatible = "brcm,bcm2711-pixelvalve2";
 			reg = <0x7e20a000 0x100>;
 			interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		pwm1: pwm@7e20c800 {
 			compatible = "brcm,bcm2835-pwm";
@@ -1285,13 +1285,13 @@
 			compatible = "brcm,bcm2711-pixelvalve4";
 			reg = <0x7e216000 0x100>;
 			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		pixelvalve3: pixelvalve@7ec12000 {
 			compatible = "brcm,bcm2711-pixelvalve3";
 			reg = <0x7ec12000 0x100>;
 			interrupts = <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 		vec: vec@7ec13000 {
 			compatible = "brcm,bcm2711-vec";
@@ -1307,7 +1307,7 @@
 			clocks = <&clk_108MHz>;
 			#clock-cells = <1>;
 			#reset-cells = <1>;
-			status = "disabled";
+			status = "okay";
 		};
 		aon_intr: interrupt-controller@7ef00100 {
 			compatible = "brcm,bcm2711-l2-intc", "brcm,l2-intc";
@@ -1315,7 +1315,7 @@
 			interrupts = <GIC_SPI 96 IRQ_TYPE_EDGE_RISING>;
 			interrupt-controller;
 			#interrupt-cells = <1>;
-			status = "disabled";
+			status = "okay";
 		};
 		hdmi0: hdmi@7ef00700 {
 			compatible = "brcm,bcm2711-hdmi0";
@@ -1329,7 +1329,7 @@
 			ddc = <&ddc0>;
 			dmas = <&dma40 (10|(1<<30)|(1<<24)|(10<<16)|(15<<20))>;
 			dma-names = "audio-rx";
-			status = "disabled";
+			status = "okay";
 			clocks = <&firmware_clocks 13>, <&firmware_clocks 14>, <&dvp 0>, <&clk_27MHz>;
 			wifi-2.4ghz-coexistence;
 		};
@@ -1338,7 +1338,7 @@
 			reg = <0x7ef04500 0x100>, <0x7ef00b00 0x300>;
 			reg-names = "bsc", "auto-i2c";
 			clock-frequency = <97500>;
-			status = "disabled";
+			status = "okay";
 		};
 		hdmi1: hdmi@7ef05700 {
 			compatible = "brcm,bcm2711-hdmi1";
@@ -1352,7 +1352,7 @@
 			interrupt-names = "cec-tx", "cec-rx", "cec-low", "wakeup", "hpd-connected", "hpd-removed";
 			dmas = <&dma40 (17|(1<<30)|(1<<24)|(10<<16)|(15<<20))>;
 			dma-names = "audio-rx";
-			status = "disabled";
+			status = "okay";
 			clocks = <&firmware_clocks 13>, <&firmware_clocks 14>, <&dvp 1>, <&clk_27MHz>;
 			wifi-2.4ghz-coexistence;
 		};
@@ -1361,7 +1361,7 @@
 			reg = <0x7ef09500 0x100>, <0x7ef05b00 0x300>;
 			reg-names = "bsc", "auto-i2c";
 			clock-frequency = <97500>;
-			status = "disabled";
+			status = "okay";
 		};
 		sdhci: mmc: mmc@7e300000 {
 			compatible = "brcm,bcm2835-mmc", "brcm,bcm2835-sdhci";
@@ -1514,7 +1514,7 @@
 		fb: fb {
 			compatible = "brcm,bcm2708-fb";
 			firmware = <&firmware>;
-			status = "okay";
+			status = "disabled";
 		};
 		sound: sound {
 			status = "disabled";
@@ -1566,7 +1566,7 @@
 	};
 	vc4: gpu {
 		compatible = "brcm,bcm2711-vc5";
-		status = "disabled";
+		status = "okay";
 		raspberrypi,firmware = <&firmware>;
 	};
 	clk_27MHz: clk-27M {
@@ -1924,7 +1924,7 @@
 			clocks = <&firmware_clocks 5>;
 			clocks-names = "v3d";
 			interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
+			status = "okay";
 		};
 	};
 };
