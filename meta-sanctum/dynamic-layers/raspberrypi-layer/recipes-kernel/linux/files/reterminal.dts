@@ -1058,7 +1058,7 @@
 			clocks = <&clocks BCM2835_CLOCK_VPU>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
+			status = "okay";
 			pinctrl-names = "default";
 			pinctrl-0 = <&i2c1_pins>;
 			clock-frequency = <100000>;
@@ -1214,9 +1214,10 @@
 			clocks = <&clocks BCM2835_CLOCK_VPU>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
+			status = "okay";
 			pinctrl-0 = <&i2c3_pins>;
 			pinctrl-names = "default";
+			clock-frequency = <100000>;
 		};
 		i2c4: i2c@7e205800 {
 			compatible = "brcm,bcm2711-i2c", "brcm,bcm2835-i2c";
