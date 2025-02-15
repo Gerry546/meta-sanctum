@@ -19,7 +19,6 @@ DEPENDS += "\
 
 do_retrieve_artifacts[depends] += "\
     reterminal-image:do_image_complete \
-    reterminal-fitimage:do_deploy \
 "
 
 PARTITION_NAME = "boot-image"
@@ -40,8 +39,8 @@ python do_retrieve_artifacts() {
     for file_entry in image_boot_files:
         if 'bootfiles' in file_entry:
             src_path = os.path.join(deploy_dir_image, 'bootfiles')
-            dst_path = os.path.join(fatsourcedir, 'bootfiles')
-            bb.warn(f"Copying directory {src_path} to {dst_path}")
+            dst_path = fatsourcedir
+            bb.note(f"Copying directory {src_path} to {dst_path}")
             shutil.copytree(src_path, dst_path, dirs_exist_ok=True)
             continue
 
@@ -50,12 +49,18 @@ python do_retrieve_artifacts() {
         else:
             src_file = dst_file = file_entry
 
+        if '.dtbo' in file_entry:
+            dst_path = os.path.join(fatsourcedir, 'overlays', src_file)
+        else:
+            dst_path = os.path.join(fatsourcedir, src_file)
+
         src_path = os.path.join(deploy_dir_image, src_file)
-        dst_path = os.path.join(fatsourcedir, src_file)
-        # bb.warn(f"Copying {src_path} to {dst_path}")
+        bb.note(f"Copying {src_path} to {dst_path}")
 
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
         shutil.copy2(src_path, dst_path)
+
+    shutil.move(os.path.join(fatsourcedir, 'u-boot.bin'), os.path.join(fatsourcedir, d.getVar('SDIMG_KERNELIMAGE')))
 
     d.setVar('FATSOURCEDIR', os.path.join(workdir, 'boot'))
 }
@@ -76,8 +81,6 @@ do_image_complete() {
 
     mv ${FATIMG} ${DEPLOY_DIR_IMAGE}/
 }
-
-do_image_complete[cleandirs] += "${WORKDIR}/efi-boot"
 
 addtask do_retrieve_artifacts before do_image_complete
 addtask image_complete after do_install

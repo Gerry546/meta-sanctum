@@ -45,6 +45,6 @@ else
   reset
 fi
 
-load ${BOOT_DEV} ${ramdisk_addr_r} /fitImage
+load ${BOOT_DEV} ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
 if test ! -e ${BOOT_DEV} uboot.env; then saveenv; fi;
-@@KERNEL_BOOTCMD@@ ${ramdisk_addr_r}
+@@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
