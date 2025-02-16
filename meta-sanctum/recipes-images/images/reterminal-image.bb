@@ -9,7 +9,8 @@ IMAGE_INSTALL = "\
     util-linux \
     rauc \
     nano \
-    python3-homeassistant \
+    chromium-ozone-wayland \
+    chromium-starter \
 "
 
 IMAGE_INSTALL:append:reterminal = "\
