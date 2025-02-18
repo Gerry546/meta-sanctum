@@ -3,7 +3,7 @@ header:
   includes:
   - kas/include/common-kas.yml
   - kas/include/image-ptest-kas.yml
-  - kas/include/homeassistant-stable-kas.yml
+  - kas/include/homeassistant-dev-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
 machine: qemux86-64

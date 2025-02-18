@@ -2,6 +2,7 @@ header:
   version: 16
   includes:
   - kas/include/common-kas.yml
+  - kas/include/homeassistant-stable-kas.yml
 
 # The machine as it is written into the `local.conf` of bitbake.
 machine: reterminal-qemux86-64
