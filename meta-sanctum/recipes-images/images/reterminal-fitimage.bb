@@ -5,6 +5,7 @@ LICENSE = "Apache-2.0"
 inherit fitimage
 
 FITIMAGE_IMAGES = "kernel fdt"
+FITIMAGE_IMAGES:reterminal = "kernel"
 FITIMAGE_IMAGE_LINK_NAME = "fitImage"
 ITS_LINK_NAME = "fitImage"
 

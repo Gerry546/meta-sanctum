@@ -49,6 +49,8 @@ python do_retrieve_artifacts() {
         else:
             src_file = dst_file = file_entry
 
+        if 'overlay_map.dtb' in file_entry:
+            dst_path = os.path.join(fatsourcedir, 'overlays', src_file)
         if '.dtbo' in file_entry:
             dst_path = os.path.join(fatsourcedir, 'overlays', src_file)
         else:
@@ -60,7 +62,8 @@ python do_retrieve_artifacts() {
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
         shutil.copy2(src_path, dst_path)
 
-    shutil.move(os.path.join(fatsourcedir, 'u-boot.bin'), os.path.join(fatsourcedir, d.getVar('SDIMG_KERNELIMAGE')))
+    if (d.getVar('SDIMG_KERNELIMAGE') is not None):
+        shutil.move(os.path.join(fatsourcedir, 'u-boot.bin'), os.path.join(fatsourcedir, d.getVar('SDIMG_KERNELIMAGE')))
 
     d.setVar('FATSOURCEDIR', os.path.join(workdir, 'boot'))
 }
