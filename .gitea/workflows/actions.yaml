@@ -30,7 +30,7 @@ jobs:
   #         push: true
   #         tags: gitea.estalor.com/tom/yocto-builder:latest
 
-  Build-Core-Image-HomeAssistant-QemuX86-64-Stable:
+  Build-HomeAssistant-Qemu-Stable:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
@@ -60,7 +60,7 @@ jobs:
           html_body: |
               ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
-  Build-Core-Image-HomeAssistant-QemuX86-64-Dev:
+  Build-HomeAssistant-Qemu-Dev:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
