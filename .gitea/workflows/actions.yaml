@@ -4,6 +4,7 @@ on:
   push:
   schedule:
     - cron: '@weekly'
+    - cron: '@daily'
 
 jobs:
   # Build-Container:
@@ -32,6 +33,7 @@ jobs:
 
   HomeAssistant-Stable:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -62,6 +64,7 @@ jobs:
 
   HomeAssistant-Dev:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -92,6 +95,7 @@ jobs:
 
   Build-Reterminal-QemuX86:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -121,6 +125,7 @@ jobs:
 
   Build-Reterminal-QemuAarch64:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -150,6 +155,7 @@ jobs:
 
   Build-Reterminal-RaspberryPi4:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
