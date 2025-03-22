@@ -9,8 +9,6 @@ IMAGE_INSTALL = "\
     util-linux \
     rauc \
     nano \
-    chromium-ozone-wayland \
-    chromium-starter \
     \
     python3-homeassistant \
     python3-homeassistant-acaia \
@@ -148,6 +146,9 @@ IMAGE_INSTALL:append:reterminal = "\
     kernel-modules \
     \
     button-handler \
+    \
+    chromium-ozone-wayland \
+    chromium-starter \
 "
 
 IMAGE_FEATURES += "\
