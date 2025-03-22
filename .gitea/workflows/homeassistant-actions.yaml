@@ -6,7 +6,7 @@ on:
     - cron: '@daily'
 
 jobs:
-  HomeAssistant-Stable:
+  Stable:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
@@ -36,7 +36,7 @@ jobs:
           html_body: |
               ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
 
-  HomeAssistant-Dev:
+  Development:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache

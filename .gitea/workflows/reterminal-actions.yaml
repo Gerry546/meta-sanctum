@@ -30,7 +30,7 @@ jobs:
   #         push: true
   #         tags: gitea.estalor.com/tom/yocto-builder:latest
 
-  Build-Reterminal-QemuX86:
+  QemuX86:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
@@ -59,7 +59,7 @@ jobs:
           html_body: |
               ### Job Qemu Reterminal Image ${{ job.status }}
 
-  Build-Reterminal-QemuAarch64:
+  QemuAarch64:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
@@ -88,7 +88,7 @@ jobs:
           html_body: |
               ### Job Qemu Reterminal Image ${{ job.status }}
 
-  Build-Reterminal-RaspberryPi4:
+  RaspberryPi4:
     runs-on: yocto-builder
     if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
     env: 
