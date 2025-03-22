@@ -4,7 +4,6 @@ on:
   push:
   schedule:
     - cron: '@weekly'
-    - cron: '@daily'
 
 jobs:
   # Build-Container:
@@ -31,71 +30,8 @@ jobs:
   #         push: true
   #         tags: gitea.estalor.com/tom/yocto-builder:latest
 
-  HomeAssistant-Stable:
-    runs-on: yocto-builder
-    if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
-    env: 
-      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-    container:
-      volumes:
-          - /cache/:/cache/
-          - /dev/kvm:/dev/kvm/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Build QemuX86-64 Core Image Homeassistant Full
-        run: |
-          kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
-
-  HomeAssistant-Dev:
-    runs-on: yocto-builder
-    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
-    env: 
-      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-    container:
-      volumes:
-          - /cache/:/cache/
-          - /dev/kvm:/dev/kvm/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Build QemuX86-64 Core Image Homeassistant Full
-        run: |
-          kas build kas/homeassistant/dev-ptest-x86-home-assistant-kas.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
-
   Build-Reterminal-QemuX86:
     runs-on: yocto-builder
-    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -125,7 +61,6 @@ jobs:
 
   Build-Reterminal-QemuAarch64:
     runs-on: yocto-builder
-    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
