@@ -3,11 +3,18 @@ FROM ubuntu:24.04
 RUN rm /bin/sh && ln -s bash /bin/sh
 
 # Set environment variables for locale
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 # Install all yocto dependencies
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    locales \
+    && rm -rf /var/lib/apt/lists/* \
+# Set the locales correct
+    && locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y \
     build-essential \
@@ -34,50 +41,52 @@ RUN apt update && \
     unzip \
     wget \
     xz-utils \
-    zstd \
-    libegl1-mesa libsdl1.2-dev \
+    zstd
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    libsdl1.2-dev \
     mesa-common-dev \
-    # Several other packages to run
     iproute2 \
-    tmux \
-    # parted to use wic tools
+    tmux
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
     parted \
-    mtools \
-    # for meta-sca
-    gcc-multilib git-core xterm \
-    # for devicetree actions
-    device-tree-compiler \
-    # for running http-server
-    npm \
-    && npm install -g http-server \
-    # Clean image
-    && apt -y autoremove \
-    && rm -rf /var/lib/apt/lists/* \
-    # Set the locales correct
-    && locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
-    # Install python packages for devtool to be able to parse python packages
-    && python3 -m pip install tomli \
+    mtools
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    gcc-multilib \
+    git-core \
+    xterm
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    device-tree-compiler
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    npm && \
+    npm install -g http-server
+
+RUN apt -y autoremove && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install python packages for devtool to be able to parse python packages
+RUN pip3 install --break-system-packages tomli \
     # and install kas
     kas
 
-# Create a user
-ENV USER_NAME=yocto
-ARG host_uid=1000
-ARG host_gid=1000
 ARG kvm_gid=108
 
-RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER_NAME} && \
-    chmod 0440 /etc/sudoers.d/${USER_NAME} \
-    # The running container writes all the build artefacts to a host directory (outside the container).
-    # The container can only write files to host directories, if it uses the same user ID and
-    # group ID owning the host directories. The host_uid and group_uid are passed to the docker build
-    # command with the --build-arg option. By default, they are both 1000. The docker image creates
-    # a group with host_gid and a user with host_uid and adds the user to the group.
-    && groupadd -g $host_gid $USER_NAME && groupadd -g $kvm_gid kvm && useradd -g $host_gid -G $kvm_gid -m -s /bin/bash -u $host_uid $USER_NAME \
-    && echo ${USER_NAME}:${USER_NAME} | chpasswd
+# Create the kvm group with the specified GID and add the ubuntu user to it
+RUN groupadd -g ${kvm_gid} kvm && \
+    usermod -aG kvm ubuntu
 
-USER ${USER_NAME}
+USER ubuntu
+
 # Install the dependency for linting
-RUN python3 -m pip install --user oelint-adv
+RUN pip3 install --break-system-packages --user oelint-adv
 
 WORKDIR /
