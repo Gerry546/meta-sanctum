@@ -1,25 +1,25 @@
-name: Gitea HomeAssistant Actions Sanctum Project
+name: Gitea Actions Sanctum Project
 run-name: ${{ gitea.actor }} is building the sanctum project
 on: 
   push:
   schedule:
-    - cron: '@daily'
+    - cron: '@weekly'
 
 jobs:
-  Stable:
+  RaspberryPi4:
     runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
       volumes:
           - /cache/:/cache/
-          - /dev/kvm:/dev/kvm/
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Build QemuX86-64 Core Image Homeassistant Full
+      - name: Build Reterminal-RaspberryPi4
         run: |
-          kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml
+          kas build kas/reterminal/reterminal-kas.yml
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3
@@ -34,6 +34,4 @@ jobs:
           priority: high
           convert_markdown: true
           html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
-          attachments: 
-            - ${{ gitea.workspace }}/build/tmp/log/oeqa/core-image-homeassistant-full/log.do_testimage.*
+              ### Job Reterminal Image ${{ job.status }}
