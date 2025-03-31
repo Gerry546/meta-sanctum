@@ -17,5 +17,4 @@ local_conf_header:
       ssh \
       python \
       ptest \
-      scp \
     "
