@@ -35,5 +35,5 @@ jobs:
           convert_markdown: true
           html_body: |
               ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
-          attachments: 
-            - ${{ gitea.workspace }}/build/tmp/log/oeqa/core-image-homeassistant-full/log.do_testimage.*
+          # attachments: 
+          #   - ${{ gitea.workspace }}/build/tmp/log/oeqa/core-image-homeassistant-full/log.do_testimage.*
