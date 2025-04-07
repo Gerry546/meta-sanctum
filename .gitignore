@@ -1,5 +1,5 @@
 build/
 sources/
-TODO
+TODO.sh
 .venv
 *.csv
