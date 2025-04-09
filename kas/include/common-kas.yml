@@ -1,8 +1,6 @@
 header:
   version: 16
 
-distro: sanctum
-
 repos:
   meta-sanctum:
     path: "meta-sanctum"
@@ -63,11 +61,6 @@ local_conf_header:
     # Where to place shared-state files
     #
     SSTATE_DIR = "/cache/sstate"
-
-    #
-    # Default policy config
-    #
-    DISTRO ?= "sanctum"
 
     #
     # Package Management configuration

@@ -6,6 +6,7 @@ header:
 
 # The machine as it is written into the `local.conf` of bitbake.
 machine: reterminal-qemux86-64
+distro: sanctum
 
 target: 
   - reterminal-bundle

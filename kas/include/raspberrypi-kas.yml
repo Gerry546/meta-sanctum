@@ -1,6 +1,8 @@
 header:
   version: 16
 
+distro: sanctum
+
 repos:
   meta-raspberrypi:
     # url: "https://github.com/Gerry546/meta-raspberrypi.git"
