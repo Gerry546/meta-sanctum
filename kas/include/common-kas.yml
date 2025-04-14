@@ -24,11 +24,12 @@ repos:
     path: "sources/meta-openembedded"
 
   meta-browser:
-    url: "https://github.com/OSSystems/meta-browser/"
+    #url: "https://github.com/OSSystems/meta-browser/"
+    url: "https://github.com/Gerry546/meta-browser.git"
     path: "sources/meta-browser"
     layers:
-      meta-chromium:
-    branch: "master"
+      meta-firefox:
+    branch: "fix_x11_dependency"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"

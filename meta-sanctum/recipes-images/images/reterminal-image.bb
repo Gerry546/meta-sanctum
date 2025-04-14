@@ -146,8 +146,7 @@ IMAGE_INSTALL:append:reterminal = "\
     \
     button-handler \
     \
-    chromium-ozone-wayland \
-    chromium-starter \
+    firefox \
 "
 
 IMAGE_FEATURES += "\
