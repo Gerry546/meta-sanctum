@@ -5,4 +5,12 @@ IMAGE_INSTALL:append:qemuall = " \
 
 IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-accuweather-ptest \
+    python3-adext-ptest \
+    python3-aioairq-ptest \
+    python3-aiodiscover-ptest \
+    python3-aiohasupervisor-ptest \
+    python3-aiohttp-asyncmdnsresolver-ptest \
+    python3-aioshelly-ptest \
+    python3-aiousbwatcher-ptest \
+    python3-airthings-ble-ptest \
 "
