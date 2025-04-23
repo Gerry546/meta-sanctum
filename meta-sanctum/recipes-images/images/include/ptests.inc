@@ -16,5 +16,4 @@ IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-alarmdecoder-ptest \
     python3-async-upnp-client-ptest \
     python3-audioop-lts-ptest \
-    python3-av-ptest \
 "
