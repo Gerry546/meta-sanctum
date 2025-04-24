@@ -9,6 +9,7 @@ IMAGE_INSTALL = "\
     util-linux \
     rauc \
     nano \
+    firefox \
     \
     python3-homeassistant \
     python3-homeassistant-acaia \
@@ -145,8 +146,6 @@ IMAGE_INSTALL:append:reterminal = "\
     kernel-modules \
     \
     button-handler \
-    \
-    firefox \
 "
 
 IMAGE_FEATURES += "\
