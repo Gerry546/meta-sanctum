@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+echo "Updating modules..."
+cd sources/meta-browser
+git fetch --all
+cd ../meta-clang
+git fetch --all
+cd ../meta-openembedded
+git fetch --all
+cd ../meta-raspberrypi
+git fetch --all
+cd ../meta-rauc
+git fetch --all
+cd ../poky
+git fetch --all
+cd ../meta-homeassistant
+git fetch --all
+cd ../..
+
+echo "Done"
