@@ -32,4 +32,21 @@ IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-inflect-ptest \
     python3-josepy-ptest \
     python3-keyring-ptest \
+    python3-mashumaro-ptest \
+    python3-mutagen-ptest \
+    python3-psutil-home-assistant-ptest \
+    python3-pyfritzhome-ptest \
+    python3-pymicro-vad-ptest \
+    python3-pymicro-vad-ptest \
+    python3-pyserial-asyncio-fast-ptest \
+    python3-pyswitchbot-ptest \
+    python3-uart-devices-ptest \
+    python3-unicode-rbnf-ptest \
+    python3-usb-devices-ptest \
+    python3-voluptuous-serialize-ptest \
+    python3-webrtc-noise-gain-ptest \
+    python3-zigpy-xbee-ptest \
+    python3-zigpy-znp-ptest \
+    python3-zm-py-ptest \
+    python3-homeassistant-ptest \
 "
