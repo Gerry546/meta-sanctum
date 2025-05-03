@@ -44,7 +44,6 @@ IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-unicode-rbnf-ptest \
     python3-usb-devices-ptest \
     python3-voluptuous-serialize-ptest \
-    python3-webrtc-noise-gain-ptest \
     python3-zigpy-xbee-ptest \
     python3-zigpy-znp-ptest \
     python3-zm-py-ptest \
