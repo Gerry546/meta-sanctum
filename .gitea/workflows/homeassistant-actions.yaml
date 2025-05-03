@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Build QemuX86-64 Core Image Homeassistant Full
+      - name: Build QemuX86-64 Core Image Homeassistant
         run: |
           kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml
       - name: Send failure mail
@@ -30,10 +30,10 @@ jobs:
           server_port: 465
           username: ${{ secrets.OUTLOOK_EMAIL }}
           password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: ${{ gitea.repository }} ${{gitea.workflow}} ${{ job.status }}
+          subject: Meta Sanctum - Home Assistant Stable - Status = ${{ job.status }}
           priority: high
           convert_markdown: true
           html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Full ${{ job.status }}
+              ### Job QemuX86-64 Core Image Homeassistant Stable ${{ job.status }}
           # attachments: 
           #   - ${{ gitea.workspace }}/build/tmp/log/oeqa/core-image-homeassistant-full/log.do_testimage.*
