@@ -48,4 +48,7 @@ IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-zigpy-znp-ptest \
     python3-zm-py-ptest \
     python3-homeassistant-ptest \
+    python3-google-auth-httplib2-ptest \
+    python3-pytibber-ptest \
+    python3-graphql-core-ptest \
 "
