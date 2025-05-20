@@ -1,9 +1,6 @@
 IMAGE_INSTALL:append:qemuall = " \
     ptest-runner \
     \
-"
-
-IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-accuweather-ptest \
     python3-adext-ptest \
     python3-aioairq-ptest \
@@ -47,8 +44,12 @@ IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-zigpy-xbee-ptest \
     python3-zigpy-znp-ptest \
     python3-zm-py-ptest \
+"
+
+IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
     python3-homeassistant-ptest \
     python3-google-auth-httplib2-ptest \
     python3-pytibber-ptest \
     python3-graphql-core-ptest \
+    python3-aioruuvigateway-ptest \
 "
