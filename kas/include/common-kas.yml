@@ -28,8 +28,10 @@ repos:
     url: "https://github.com/Gerry546/meta-browser.git"
     path: "sources/meta-browser"
     layers:
-      meta-firefox:
-    branch: "fix_x11_dependency"
+      # meta-firefox:
+      meta-chromium:
+    # branch: "fix_x11_dependency"
+    branch: "master"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"

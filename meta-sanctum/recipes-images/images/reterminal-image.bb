@@ -9,7 +9,7 @@ IMAGE_INSTALL = "\
     util-linux \
     rauc \
     nano \
-    firefox \
+    chromium-ozone-wayland \
     \
     python3-homeassistant \
     python3-homeassistant-acaia \
