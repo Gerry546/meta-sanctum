@@ -1,28 +1,28 @@
-From 418f75e8e3878dbe91f5169cce8b1c406f8b3172 Mon Sep 17 00:00:00 2001
+From 13f5fa1825a2d6437a2ca5c2f367c94d5e7c4320 Mon Sep 17 00:00:00 2001
 From: Tom Geelen <t.f.g.geelen@gmail.com>
-Date: Sun, 18 Aug 2024 21:51:43 +0000
-Subject: [PATCH] add ilitek-ili9881d.c driver
+Date: Sun, 25 May 2025 19:53:01 +0000
+Subject: [PATCH] Add ilitek-ili9881d driver
 
 Signed-off-by: Tom Geelen <t.f.g.geelen@gmail.com>
 Upstream-Status: Pending
 ---
  drivers/gpu/drm/panel/Kconfig                 |   9 +
- drivers/gpu/drm/panel/Makefile                |   4 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
  drivers/gpu/drm/panel/mipi_dsi.h              | 136 +++++
  drivers/gpu/drm/panel/mipi_dsi_drv.c          | 510 ++++++++++++++++++
  drivers/gpu/drm/panel/panel-ilitek-ili9881d.c | 311 +++++++++++
  drivers/gpu/drm/panel/touch_panel.c           | 190 +++++++
- 6 files changed, 1160 insertions(+)
+ 6 files changed, 1157 insertions(+)
  create mode 100644 drivers/gpu/drm/panel/mipi_dsi.h
  create mode 100644 drivers/gpu/drm/panel/mipi_dsi_drv.c
  create mode 100644 drivers/gpu/drm/panel/panel-ilitek-ili9881d.c
  create mode 100644 drivers/gpu/drm/panel/touch_panel.c
 
 diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 307dd2c0fae4..b11b8fafcf6c 100644
+index 928b9f1bf7d5..688ed3166845 100644
 --- a/drivers/gpu/drm/panel/Kconfig
 +++ b/drivers/gpu/drm/panel/Kconfig
-@@ -214,6 +214,15 @@ config DRM_PANEL_ILITEK_ILI9881C
+@@ -243,6 +243,15 @@ config DRM_PANEL_ILITEK_ILI9881C
  	  Say Y if you want to enable support for panels based on the
  	  Ilitek ILI9881c controller.
  
@@ -32,30 +32,27 @@ index 307dd2c0fae4..b11b8fafcf6c 100644
 +	depends on DRM_MIPI_DSI
 +	depends on BACKLIGHT_CLASS_DEVICE
 +	help
-+	  Say Y if you want to enable support for panels based on the
-+	  Ilitek ILI9881d controller.
++		Say Y if you want to enable support for panels based on the
++		Ilitek ILI9881d controller.
 +
- config DRM_PANEL_INNOLUX_EJ030NA
-         tristate "Innolux EJ030NA 320x480 LCD panel"
-         depends on OF && SPI
+ config DRM_PANEL_ILITEK_ILI9882T
+ 	tristate "Ilitek ILI9882t-based panels"
+ 	depends on OF
 diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 9dd9b3503802..5ba05af3a353 100644
+index c13a08111d0c..b7d72fe9d337 100644
 --- a/drivers/gpu/drm/panel/Makefile
 +++ b/drivers/gpu/drm/panel/Makefile
-@@ -19,6 +19,10 @@ obj-$(CONFIG_DRM_PANEL_ILITEK_IL9322) += panel-ilitek-ili9322.o
- obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9341) += panel-ilitek-ili9341.o
+@@ -25,6 +25,7 @@ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9805) += panel-ilitek-ili9805.o
  obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9806E) += panel-ilitek-ili9806e.o
+ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9806E_SPI) += panel-ilitek-ili9806e-spi.o
  obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9881C) += panel-ilitek-ili9881c.o
-+obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9881D) += \
-+	panel-ilitek-ili9881d.o \
-+	mipi_dsi_drv.o \
-+	touch_panel.o
+++obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9881D) += panel-ilitek-ili9881d.o mipi_dsi_drv.o touch_panel.o
+ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9882T) += panel-ilitek-ili9882t.o
  obj-$(CONFIG_DRM_PANEL_INNOLUX_EJ030NA) += panel-innolux-ej030na.o
  obj-$(CONFIG_DRM_PANEL_INNOLUX_P079ZCA) += panel-innolux-p079zca.o
- obj-$(CONFIG_DRM_PANEL_JADARD_JD9365DA_H3) += panel-jadard-jd9365da-h3.o
 diff --git a/drivers/gpu/drm/panel/mipi_dsi.h b/drivers/gpu/drm/panel/mipi_dsi.h
 new file mode 100644
-index 000000000000..715ae9a1db4f
+index 000000000000..a4963d0b6652
 --- /dev/null
 +++ b/drivers/gpu/drm/panel/mipi_dsi.h
 @@ -0,0 +1,136 @@
@@ -195,10 +192,9 @@ index 000000000000..715ae9a1db4f
 +int tp_deinit(struct i2c_mipi_dsi *md);
 +
 +#endif /*End of header guard macro */
-\ No newline at end of file
 diff --git a/drivers/gpu/drm/panel/mipi_dsi_drv.c b/drivers/gpu/drm/panel/mipi_dsi_drv.c
 new file mode 100644
-index 000000000000..a617e8d33705
+index 000000000000..42e3d31149d1
 --- /dev/null
 +++ b/drivers/gpu/drm/panel/mipi_dsi_drv.c
 @@ -0,0 +1,510 @@
@@ -712,7 +708,6 @@ index 000000000000..a617e8d33705
 +MODULE_AUTHOR("Seeed, Inc.");
 +MODULE_DESCRIPTION("MIPI-DSI driver");
 +MODULE_LICENSE("GPL v2");
-\ No newline at end of file
 diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881d.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881d.c
 new file mode 100644
 index 000000000000..e3aaded0cda2

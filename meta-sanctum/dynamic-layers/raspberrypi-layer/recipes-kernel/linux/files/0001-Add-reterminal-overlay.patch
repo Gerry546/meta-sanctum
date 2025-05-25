@@ -1,0 +1,23 @@
+From ae15661dad3f1ec36abe3d8b7eb3b24f87b82741 Mon Sep 17 00:00:00 2001
+From: Tom Geelen <t.f.g.geelen@gmail.com>
+Date: Sun, 25 May 2025 19:14:01 +0000
+Subject: [PATCH] Add reterminal overlay
+
+Signed-off-by: Tom Geelen <t.f.g.geelen@gmail.com>
+Upstream-Status: Pending
+---
+ arch/arm/boot/dts/overlays/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/overlays/Makefile b/arch/arm/boot/dts/overlays/Makefile
+index e142a7d999b8..d53e09047a2e 100644
+--- a/arch/arm/boot/dts/overlays/Makefile
++++ b/arch/arm/boot/dts/overlays/Makefile
+@@ -233,6 +233,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	qca7000-uart0.dtbo \
+ 	ramoops.dtbo \
+ 	ramoops-pi4.dtbo \
++	reterminal.dtbo \
+ 	rootmaster.dtbo \
+ 	rotary-encoder.dtbo \
+ 	rpi-backlight.dtbo \
