@@ -3,18 +3,25 @@
 set -e
 
 echo "Updating modules..."
+echo "meta-browser"
 cd sources/meta-browser
 git fetch --all
+echo "meta-clang"
 cd ../meta-clang
 git fetch --all
+echo "meta-openembedded"
 cd ../meta-openembedded
 git fetch --all
+echo "meta-raspberrypi"
 cd ../meta-raspberrypi
 git fetch --all
+echo "meta-rauc"
 cd ../meta-rauc
 git fetch --all
+echo "poky"
 cd ../poky
 git fetch --all
+echo "meta-homeassistant"
 cd ../meta-homeassistant
 git fetch --all
 cd ../..
