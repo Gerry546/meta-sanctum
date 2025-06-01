@@ -1,5 +1,5 @@
 header:
-  version: 16
+  version: 14
 
 local_conf_header:
   test-image: |

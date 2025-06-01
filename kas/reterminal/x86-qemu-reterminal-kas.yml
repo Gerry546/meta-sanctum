@@ -1,5 +1,5 @@
 header:
-  version: 16
+  version: 14
   includes:
   - kas/include/common-kas.yml
   - kas/include/homeassistant-stable-kas.yml

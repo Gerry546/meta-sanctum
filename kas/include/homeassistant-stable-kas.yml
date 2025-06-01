@@ -1,5 +1,5 @@
 header:
-  version: 16
+  version: 14
 
 repos:
   meta-homeassistant:
