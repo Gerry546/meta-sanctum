@@ -10,6 +10,7 @@ IMAGE_INSTALL = "\
     rauc \
     nano \
     chromium-ozone-wayland \
+    ca-certificates \
     \
     python3-homeassistant \
     python3-homeassistant-acaia \
