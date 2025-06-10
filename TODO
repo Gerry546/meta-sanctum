@@ -152,4 +152,11 @@ python3-androidtvremote2
 python3-aioapcaccess
 python3-aiomqtt
 python3-gql
-python3-tibber
+python3-pytibber
+
+# The following integrations are reporting problems in HA
+${PN}-atag
+${PN}-conversation
+${PN}-evohome-async
+${PN}-sensor
+${PN}-bluetooth

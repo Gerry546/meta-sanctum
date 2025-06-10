@@ -35,6 +35,10 @@
 		{
 			"name": "meta-rauc",
 			"path": "sources/meta-rauc"
+		},
+		{
+			"name": "homeassistant",
+			"path": "sources/meta-homeassistant/scripts/HA"
 		}
 	],
 	"settings": {
