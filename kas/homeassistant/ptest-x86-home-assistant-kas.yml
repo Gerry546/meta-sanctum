@@ -8,7 +8,7 @@ header:
 # The machine as it is written into the `local.conf` of bitbake.
 machine: qemux86-64
 
-distro: sanctum
+distro: sanctum-test
 
 target: 
   - core-image-homeassistant-full

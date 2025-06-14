@@ -160,3 +160,4 @@ ${PN}-conversation
 ${PN}-evohome-async
 ${PN}-sensor
 ${PN}-bluetooth
+${PN}-group
