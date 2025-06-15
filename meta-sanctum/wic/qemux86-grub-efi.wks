@@ -4,16 +4,16 @@
 bootloader --ptable gpt
 
 # Boot partition
-part --fixed-size 50M --source rawcopy --sourceparams="file=efi-boot.vfat" --fstype=vfat --ondisk sda --label boot --active --align 4096
+part --fixed-size 50M --source rawcopy --sourceparams="file=efi-boot.vfat" --fstype=vfat --ondisk vda --label boot --active --align 4096
 part --fixed-size 50M --ondisk sda --align 4096 --no-table
 
 # Data storage for persistent data such as grubenv environment
-part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk sda --label grubenv --align 1024
+part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv --align 1024
 
 # Rootfs
-part / --fixed-size 2G --source rootfs --ondisk sda --fstype=ext4 --label root_a --align 4096
+part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_A --align 4096
 
 # Redundant Rootfs
-part / --fixed-size 2G --source empty --ondisk sda --fstype=ext4 --label root_b --align 4096
+part / --fixed-size 2G --source empty --ondisk vda --fstype=ext4 --label root_B --align 4096
 
-part --fixed-size 100M --ondisk sda --fstype=ext4 --label data --align 4096
+part /data --fixed-size 100M --source rootfs --ondisk vda --fstype=ext4 --rootfs-dir=${IMAGE_ROOTFS}/data --label data --align 4096

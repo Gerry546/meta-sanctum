@@ -19,4 +19,4 @@ part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstyp
 part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_B --align 4096
 
 # Data partitions
-part --fixed-size 100M --source rootfs --ondisk vda --rootfs-dir=${IMAGE_ROOTFS}/data --fstype=ext4 --label=data --align 4096
+part /data --fixed-size 100M --source rootfs --ondisk vda --fstype=ext4 --rootfs-dir=${IMAGE_ROOTFS}/data --label data --align 4096
