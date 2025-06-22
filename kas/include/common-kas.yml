@@ -14,8 +14,8 @@ repos:
     path: "sources/poky"
 
   meta-openembedded:
-    # url: "https://github.com/Gerry546/meta-openembedded.git"
-    url: "https://github.com/openembedded/meta-openembedded.git"
+    url: "https://github.com/Gerry546/meta-openembedded.git"
+    # url: "https://github.com/openembedded/meta-openembedded.git"
     branch: master
     layers:
       meta-oe:
@@ -29,9 +29,7 @@ repos:
     path: "sources/meta-browser"
     layers:
       meta-firefox:
-      meta-chromium:
-    branch: "fix_x11_dependency"
-    # branch: "master"
+    branch: "master"
   
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
@@ -39,7 +37,7 @@ repos:
     branch: "master"
 
   meta-rauc:
-    url: "https://github.com/rauc/meta-rauc.git"
+    url: "https://github.com/Gerry546/meta-rauc.git"
     path: "sources/meta-rauc"
     branch: "master"
   
