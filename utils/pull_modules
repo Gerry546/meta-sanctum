@@ -25,5 +25,9 @@ echo "meta-homeassistant"
 cd ../meta-homeassistant
 git fetch --all
 cd ../..
+echo "Homeassistant"
+cd sources/meta-homeassistant/scripts/HA
+git fetch --all --prune
+cd ../../../..
 
 echo "Done"
