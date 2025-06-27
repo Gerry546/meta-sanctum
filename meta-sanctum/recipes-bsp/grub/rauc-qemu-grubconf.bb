@@ -9,8 +9,7 @@ SRC_URI:append = " \
     file://grubenv \
 "
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 inherit deploy
 

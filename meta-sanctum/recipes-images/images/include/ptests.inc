@@ -41,8 +41,6 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-unicode-rbnf-ptest \
     python3-usb-devices-ptest \
     python3-voluptuous-serialize-ptest \
-    python3-zigpy-xbee-ptest \
-    python3-zigpy-znp-ptest \
     python3-zm-py-ptest \
     python3-google-auth-httplib2-ptest \
     python3-graphql-core-ptest \
