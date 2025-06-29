@@ -5,4 +5,4 @@ repos:
   meta-homeassistant:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
-    branch: "fix_stable"
+    branch: "main"

@@ -48,6 +48,6 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-hap-python-ptest \
 "
 
-IMAGE_INSTALL:append:qemuall:sanctum-dev = " \
+IMAGE_INSTALL:append:qemuall:sanctum-test = " \
     python3-homeassistant-ptest \
 "
