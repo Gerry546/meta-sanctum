@@ -13,8 +13,6 @@ SRC_URI = "\
 
 SRCREV = "516b80353ba2f4d5e674f0e39f5035af5c372152"
 
-S = "${WORKDIR}/git"
-
 inherit meson systemd pkgconfig
 
 do_install() {
