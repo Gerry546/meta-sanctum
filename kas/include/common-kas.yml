@@ -37,7 +37,8 @@ repos:
     branch: "master"
 
   meta-rauc:
-    url: "https://github.com/Gerry546/meta-rauc.git"
+    # url: "https://github.com/Gerry546/meta-rauc.git"
+    url: "https://github.com/rauc/meta-rauc.git"
     path: "sources/meta-rauc"
     branch: "master"
   
