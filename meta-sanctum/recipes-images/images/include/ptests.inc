@@ -45,7 +45,6 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-google-auth-httplib2-ptest \
     python3-graphql-core-ptest \
     python3-aioruuvigateway-ptest \
-    python3-hap-python-ptest \
 "
 
 IMAGE_INSTALL:append:qemuall:sanctum-test = " \

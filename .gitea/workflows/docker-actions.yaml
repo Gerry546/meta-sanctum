@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./utils/docker/dockerfile
+          file: utils/dockerfile
           push: true
           tags: "${{ secrets.DOMAIN_NAME }}/${{ secrets.USER }}/yocto-builder:latest"
       - name: Send failure mail

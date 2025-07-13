@@ -155,11 +155,20 @@ python3-gql
 python3-pytibber
 python3-zigpy-xbee-ptest
 python3-zigpy-znp-ptest
+python3-hap-python-ptest
 
 # The following integrations are reporting problems in HA
+${PN}-assist-pipeline
 ${PN}-atag
-${PN}-conversation
-${PN}-evohome-async
-${PN}-sensor
+${PN}-axis --> needs component deconz
 ${PN}-bluetooth
-${PN}-group
+${PN}-conversation
+${PN}-fritz
+${PN}-generic
+${PN}-octoprint
+${PN}-scrape
+${PN}-speedtestdotnet
+${PN}-sql
+${PN}-stream
+${PN}-zha
+${PN}-zwave-js
