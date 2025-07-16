@@ -156,6 +156,7 @@ python3-pytibber
 python3-zigpy-xbee-ptest
 python3-zigpy-znp-ptest
 python3-hap-python-ptest
+python3-async-upnp-client-ptest \
 
 # The following integrations are reporting problems in HA
 ${PN}-assist-pipeline

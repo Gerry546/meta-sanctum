@@ -11,7 +11,6 @@ IMAGE_INSTALL:append:qemuall = " \
     python3-aiousbwatcher-ptest \
     python3-airthings-ble-ptest \
     python3-alarmdecoder-ptest \
-    python3-async-upnp-client-ptest \
     python3-audioop-lts-ptest \
     python3-bluetooth-auto-recovery-ptest \
     python3-ciso8601-ptest \
