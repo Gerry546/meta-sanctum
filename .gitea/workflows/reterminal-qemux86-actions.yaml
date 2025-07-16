@@ -34,32 +34,3 @@ jobs:
           convert_markdown: true
           html_body: |
               ### Job Reterminal X86 Image ${{ job.status }}
-
-  QemuAarch64:
-    runs-on: yocto-builder
-    env: 
-      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-    container:
-      volumes:
-          - /cache/:/cache/
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Build Reterminal-Aarch64
-        run: |
-          kas build kas/reterminal/aarch64-qemu-reterminal-kas.yml
-      - name: Send failure mail
-        if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
-        with:
-          to: ${{ secrets.MAIL_TO }}
-          from: Gitea <gitea@hostname>
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
-          subject: Meta Sanctum - Reterminal Aarch64 - Status = ${{ job.status }}
-          priority: high
-          convert_markdown: true
-          html_body: |
-              ### Job Qemu Reterminal Aarch64 Image ${{ job.status }}
