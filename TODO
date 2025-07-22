@@ -6,7 +6,11 @@ ptest-runner python3-homeassistant | grep '^FAIL:'
 runqemu build/tmp/deploy/images/qemux86-64/core-image-homeassistant-full.qemuboot.conf slirp kvm nographic
 runqemu build/tmp/deploy/images/reterminal-qemux86-64/reterminal-image.qemuboot.conf slirp ovmf kvm publicvnc wic
 
-# Steps
+# Sanctum steps
+1. Add raspberry pi as benchmark project
+2. Ensure pipeline can reliably do RAUC updates
+
+# HomeAssistant Steps
 1. Add all integrations to homeassistant
 2. Adjust scripts etc now everything is in place
 3. Start repairing pytests of all other packages
