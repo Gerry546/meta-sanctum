@@ -8,15 +8,15 @@
 bootloader --ptable gpt
 
 # Boot partition
-part --source bootimg-partition --ondisk vda --fstype vfat --label boot_A --active --align 4096 --fixed-size 50M
-part --source bootimg-partition --ondisk vda --fstype vfat --label boot_B --active --align 4096 --fixed-size 50M
+part --fixed-size 50M --ondisk vda --align 4096 --fstype vfat --label boot_A --active --source bootimg-partition
+part --fixed-size 50M --ondisk sda --align 4096 --no-table --label boot_B
 
 # Data storage for persistent data such as uboot environment
 part --fixed-size 10M --ondisk vda --align 4096 --label uboot-env --fstype vfat
 
 # Rootfs
 part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_A --align 4096
-part / --fixed-size 2G --source rootfs --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_B --align 4096
+part / --fixed-size 2G --source empty  --exclude-path=data/ --ondisk vda --fstype=ext4 --label root_B --align 4096
 
 # Data partitions
 part /data --fixed-size 100M --source rootfs --ondisk vda --fstype=ext4 --rootfs-dir=${IMAGE_ROOTFS}/data --label data --align 4096

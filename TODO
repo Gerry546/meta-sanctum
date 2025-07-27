@@ -9,6 +9,8 @@ runqemu build/tmp/deploy/images/reterminal-qemux86-64/reterminal-image.qemuboot.
 # Sanctum steps
 1. Add raspberry pi as benchmark project
 2. Ensure pipeline can reliably do RAUC updates
+3. Adjust vfat-image.inc to clean up deploy tasks
+4. Find out why qemux86 needs to be run twice in order for GRUBENV to get populated correctly
 
 # HomeAssistant Steps
 1. Add all integrations to homeassistant

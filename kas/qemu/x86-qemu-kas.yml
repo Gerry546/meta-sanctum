@@ -1,0 +1,10 @@
+header:
+  version: 14
+  includes:
+  - kas/include/common-kas.yml
+
+machine: qemux86-64n
+distro: sanctum
+
+target: 
+  - sanctum-bundle
