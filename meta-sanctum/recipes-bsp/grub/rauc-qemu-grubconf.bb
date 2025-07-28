@@ -13,12 +13,12 @@ S = "${UNPACKDIR}"
 
 inherit deploy
 
-do_install() {
+do_install () {
         install -d ${D}${EFI_FILES_PATH}
         install -m 644 ${S}/grub.cfg ${D}${EFI_FILES_PATH}/grub.cfg
 }
 
-do_deploy() {
+do_deploy () {
     install -m 644 ${S}/grub.cfg ${DEPLOYDIR}
     install -m 644 ${S}/grubenv ${DEPLOYDIR}
 }

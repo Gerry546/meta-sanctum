@@ -4,7 +4,7 @@ do_fetch[noexec] = "1"
 do_patch[noexec] = "1"
 do_compile[noexec] = "1"
 do_install[noexec] = "1"
-deltask do_populate_sysroot
+deltask do_populate_sysroot deploy
 
 DEPENDS += "\
     dosfstools-native \
@@ -65,8 +65,6 @@ python do_retrieve_artifacts() {
     d.setVar('FATSOURCEDIR', os.path.join(workdir, 'boot'))
 }
 
-do_retrieve_artifacts[nostamp] = "1"
-
 do_image_complete () {
     FATSOURCEDIR="${WORKDIR}/boot"
     MKDOSFS_EXTRAOPTS="-S 512"
@@ -89,6 +87,6 @@ python do_deploy(){
     bb.note("do_deploy is intentionally left empty to avoid default deploy behavior.")
 }
 
-addtask do_retrieve_artifacts before do_image_complete
-addtask image_complete after do_install
+addtask retrieve_artifacts after do_install
+addtask image_complete after do_retrieve_artifacts
 addtask deploy after do_image_complete
