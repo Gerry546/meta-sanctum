@@ -19,6 +19,9 @@ jobs:
       - name: Build QemuX86-64
         run: |
           kas build kas/qemu/x86-qemu-kas.yml
+      - name: Run RAUC update test
+        run: |
+          ./tests/rauc-test.sh
       - name: Send failure mail
         if: failure()
         uses: https://github.com/dawidd6/action-send-mail@v3

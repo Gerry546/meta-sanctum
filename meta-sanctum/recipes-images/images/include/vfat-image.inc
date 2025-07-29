@@ -15,6 +15,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 PARTITION_FILES ?= "${IMAGE_BOOT_FILES}"
 PARTITION_NAME ?= "test-bootfs"
 
+do_retrieve_artifacts[nostamp] = "1"
+
 python do_retrieve_artifacts() {
     import os
     import shutil
