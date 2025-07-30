@@ -10,9 +10,6 @@ jobs:
     runs-on: yocto-builder
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-    container:
-      volumes:
-          - /cache/:/cache/
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -36,7 +33,7 @@ jobs:
           priority: high
           convert_markdown: true
           html_body: |
-            ### Job Reterminal X86-64 Image ${{ job.status }}
+            ### Job Qemu - X86-64 Image ${{ job.status }}
 
             The build step failed with the following output:
 
