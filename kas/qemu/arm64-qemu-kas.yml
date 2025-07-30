@@ -7,4 +7,4 @@ machine: qemuarm64-a72
 distro: sanctum
 
 target: 
-  - reterminal-bundle
+  - sanctum-bundle

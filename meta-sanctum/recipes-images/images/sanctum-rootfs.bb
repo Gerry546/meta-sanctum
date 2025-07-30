@@ -1,4 +1,4 @@
-SUMMARY = "Image for a reterminal"
+SUMMARY = "Image for a sanctum project"
 LICENSE = "Apache-2.0"
 
 inherit core-image

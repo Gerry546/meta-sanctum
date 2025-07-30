@@ -19,10 +19,9 @@ RAUC_SLOT_rootfs[fstype] = "ext4"
 RAUC_SLOT_rootfs[file] = "sanctum-rootfs.ext4"
 RAUC_SLOT_rootfs[adaptive] = "block-hash-index"
 
-# RAUC_SLOT_boot = "reterminal-boot-image"
-# RAUC_SLOT_boot[fstype] = "vfat"
-# RAUC_SLOT_boot[file] = "boot-image.vfat"
-# RAUC_SLOT_boot[adaptive] = ""
+RAUC_SLOT_boot = "sanctum-bootfs"
+RAUC_SLOT_boot[fstype] = "vfat"
+RAUC_SLOT_boot[file] = "sanctum-bootfs.vfat"
 
 RAUC_SLOT_efi = "sanctum-bootfs"
 RAUC_SLOT_efi[file] = "sanctum-bootfs.vfat"

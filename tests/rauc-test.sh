@@ -1,9 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 
+MACHINE="qemux86-64n"
+if [ $# -ge 1 ]; then
+    MACHINE="$1"
+fi
+
 # CONFIGURATION
-QEMU_CONF="build/tmp/deploy/images/qemux86-64n/sanctum-rootfs.qemuboot.conf"
-BUNDLE="build/tmp/deploy/images/qemux86-64n/sanctum-bundle.raucb"         # Path to your RAUC bundle
+QEMU_CONF="build/tmp/deploy/images/${MACHINE}/sanctum-rootfs.qemuboot.conf"
+BUNDLE="build/tmp/deploy/images/${MACHINE}/sanctum-bundle.raucb"         # Path to your RAUC bundle
 SSH_USER="root"
 SSH_PORT=2222                        # Default slirp port, adjust if needed
 SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $SSH_PORT"
@@ -32,9 +37,17 @@ source sources/poky/oe-init-build-env
 set -u
 cd ..
 
+
 # 2. Start QEMU with runqemu in the background, log output to qemu.log
 echo "Launching QEMU in the background (headless)..."
-runqemu "$QEMU_CONF" slirp kvm nographic wic ovmf >qemu.log 2>&1 &
+if [ "$MACHINE" = "qemux86-64n" ]; then
+    runqemu "$QEMU_CONF" slirp kvm nographic wic ovmf >qemu.log 2>&1 &
+elif [ "$MACHINE" = "qemuarm64-a72" ]; then
+    runqemu "$QEMU_CONF" slirp nographic wic >qemu.log 2>&1 &
+else
+    echo "ERROR: Unknown machine '$MACHINE'. Please update the script for this machine type." >&2
+    exit 1
+fi
 QEMU_TERM_PID=$!
 echo $QEMU_TERM_PID > "$QEMU_PID_FILE"
 sleep 5  # Give QEMU time to start
