@@ -10,4 +10,4 @@ machine: reterminal
 distro: sanctum
 
 target: 
-  - reterminal-bundle
+  - sanctum-bundle

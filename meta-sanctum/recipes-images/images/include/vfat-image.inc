@@ -14,6 +14,7 @@ DEPENDS += "\
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 PARTITION_FILES ?= "${IMAGE_BOOT_FILES}"
 PARTITION_NAME ?= "test-bootfs"
+FAT_SIZE ?= "32786"
 
 do_retrieve_artifacts[nostamp] = "1"
 
@@ -26,14 +27,14 @@ python do_retrieve_artifacts() {
     if d.getVar('MACHINEOVERRIDES') is not None:
         machine_overrides = d.getVar('MACHINEOVERRIDES').split(':')
         if 'qemux86-64n' in machine_overrides:
-            bb.warn("qemux86-64n detected, using /boot/EFI/BOOT directory for FAT source")
+            bb.note("qemux86-64n detected, using /boot/EFI/BOOT directory for FAT source")
             fatsourcedir = os.path.join(workdir, 'boot', 'EFI', 'BOOT')
         else:
             fatsourcedir = os.path.join(workdir, 'boot')
     os.makedirs(fatsourcedir, exist_ok=True)
 
     partition_files = d.getVar('PARTITION_FILES').split()
-    bb.warn(f"PARTITION_FILES: {partition_files}")
+    bb.note(f"PARTITION_FILES: {partition_files}")
 
     for file_entry in partition_files:
         if 'bootfiles' in file_entry:
@@ -56,13 +57,10 @@ python do_retrieve_artifacts() {
             dst_path = os.path.join(fatsourcedir, dst_file)
 
         src_path = os.path.join(deploy_dir_image, src_file)
-        bb.warn(f"Copying {src_path} to {dst_path}")
+        bb.note(f"Copying {src_path} to {dst_path}")
 
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
         shutil.copy2(src_path, dst_path)
-
-    if (d.getVar('SDIMG_KERNELIMAGE') is not None):
-        shutil.move(os.path.join(fatsourcedir, 'u-boot.bin'), os.path.join(fatsourcedir, d.getVar('SDIMG_KERNELIMAGE')))
 
     d.setVar('FATSOURCEDIR', os.path.join(workdir, 'boot'))
 }
@@ -71,7 +69,7 @@ do_image_complete () {
     FATSOURCEDIR="${WORKDIR}/boot"
     MKDOSFS_EXTRAOPTS="-S 512"
     FATIMG="${WORKDIR}/${PARTITION_NAME}.vfat"
-    BLOCKS=32786
+    BLOCKS=${FAT_SIZE}
 
     rm -f ${FATIMG}
 
@@ -82,6 +80,7 @@ do_image_complete () {
     chmod 644 ${FATIMG}
 
     mv ${FATIMG} ${DEPLOY_DIR_IMAGE}/
+    rm -rf ${FATSOURCEDIR}
 }
 
 python do_deploy(){
