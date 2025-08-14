@@ -15,9 +15,9 @@ meta-sanctum is a Yocto layer designed to provide a flexible platform for home a
 
 ## Supported Machines
 
-- QEMU (qemuarm64-a72, qemux86-64, etc.)
+- Qemuarm64
+- Qemux86-64
 - reTerminal
-- Additional custom and emulated machines (see `kas/` and `meta-sanctum/conf/machine/`)
 
 ## Features
 
@@ -44,7 +44,7 @@ meta-sanctum is a Yocto layer designed to provide a flexible platform for home a
 2. **Clone this repository:**
 
    ```sh
-   git clone https://github.com/yourusername/meta-sanctum.git
+   git clone https://github.com/Gerry546/meta-sanctum.git
    cd meta-sanctum
    ```
 
@@ -61,9 +61,13 @@ meta-sanctum is a Yocto layer designed to provide a flexible platform for home a
 
 ## Building the Project (with kas)
 
-1. **Choose a kas configuration file:**
-   - Example: `kas/reterminal/reterminal.yml` or another file in the `kas/` directory.
-2. **Build the image:**
+1: **Choose a kas configuration file:**
+
+- Example: `kas/reterminal/reterminal.yml` or another file in the `kas/` directory.
+
+The Kas files are structured based on machine type (Qemu, Reterminal etc.). The include directory contains specific snippets which enable more features.
+
+2: **Build the image:**
 
    ```sh
    kas build kas/reterminal/reterminal.yml
