@@ -4,3 +4,4 @@ meta-sanctum.wiki/
 TODO.sh
 .venv
 *.csv
+*.pyc
