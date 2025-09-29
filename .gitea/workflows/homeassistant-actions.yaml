@@ -19,10 +19,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Build QemuX86-64 Core Image Homeassistant
         run: |
-          kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml
+          kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml 2>&1 | tee build.log
+          awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
+          # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
+          echo '<pre>' > snippet.html
+          sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
+          echo '</pre>' >> snippet.html
       - name: Send failure mail
         if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
+        uses: https://github.com/dawidd6/action-send-mail@v6
         with:
           to: ${{ secrets.MAIL_TO }}
           from: Gitea <gitea@hostname>
@@ -33,5 +38,4 @@ jobs:
           subject: Meta Sanctum - Home Assistant Stable Core Failed
           priority: high
           convert_markdown: true
-          html_body: |
-              ### Job QemuX86-64 Core Image Homeassistant Stable ${{ job.status }}
+          html_body: file://snippet.html

@@ -8,7 +8,7 @@ on:
 jobs:
   RaspberryPi4:
     runs-on: yocto-builder
-    if: gitea.event_name == 'push' || gitea.event.schedule == '@daily'
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
     env: 
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
@@ -22,7 +22,7 @@ jobs:
           kas build kas/reterminal/reterminal-kas.yml
       - name: Send failure mail
         if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
+        uses: https://github.com/dawidd6/action-send-mail@v6
         with:
           to: ${{ secrets.MAIL_TO }}
           from: Gitea <gitea@hostname>

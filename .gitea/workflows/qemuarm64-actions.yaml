@@ -24,7 +24,7 @@ jobs:
           ./tests/rauc-test.sh qemuarm64-a72
       - name: Send failure mail
         if: failure()
-        uses: https://github.com/dawidd6/action-send-mail@v3
+        uses: https://github.com/dawidd6/action-send-mail@v6
         with:
           to: ${{ secrets.MAIL_TO }}
           from: Gitea <gitea@hostname>
