@@ -17,9 +17,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Build QemuX86-64 Core Image Homeassistant
+      - name: Build QemuX86-64 Core Image Homeassistant Development
         run: |
-          kas build kas/homeassistant/ptest-x86-home-assistant-kas.yml 2>&1 | tee build.log
+          kas build kas/homeassistant/dev-ptest-x86-home-assistant-kas.yml 2>&1 | tee build.log
+      - name: Collect results
+        if: always()
+        run: |
           awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
           # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
           echo '<pre>' > snippet.html
