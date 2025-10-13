@@ -53,7 +53,7 @@
             "name": "Upgrade recipes",
             "type": "debugpy",
             "request": "launch",
-            "program": "utils/run_upgrades_from_csv.py",
+            "program": "scripts/run_upgrades_from_csv.py",
             "console": "integratedTerminal",
             "args": "-v ${command:pickArgs}"
         },

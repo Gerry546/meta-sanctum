@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Read upgraded_components_<date>.csv from meta-homeassistant/scripts and run
-`utils/run-upgrade-helper.sh` for every package found that has a recipe in
+`scripts/run-upgrade-helper.sh` for every package found that has a recipe in
 `sources/meta-homeassistant/recipes-devtools/python`.
 
 The script prompts the user for the date/version (the same value used when
@@ -17,8 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / 'sources' / 'meta-homeassistant' / 'scripts'
 RECIPES_DIR = ROOT / 'sources' / 'meta-homeassistant' / 'recipes-devtools' / 'python'
-UTILS_DIR = ROOT / 'utils'
-RUNNER = UTILS_DIR / 'run-upgrade-helper.sh'
+SCRIPTS_DIR = ROOT / 'scripts'
+RUNNER = SCRIPTS_DIR / 'run-upgrade-helper.sh'
 LOG_DIR = SCRIPTS_DIR / 'upgrade_logs'
 
 
