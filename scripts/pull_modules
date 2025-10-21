@@ -5,25 +5,25 @@ set -e
 echo "Updating modules..."
 echo "meta-browser"
 cd sources/meta-browser
-git fetch --all
+git fetch --all --prune
 echo "meta-clang"
 cd ../meta-clang
-git fetch --all
+git fetch --all --prune
 echo "meta-openembedded"
 cd ../meta-openembedded
-git fetch --all
+git fetch --all --prune
 echo "meta-raspberrypi"
 cd ../meta-raspberrypi
-git fetch --all
+git fetch --all --prune
 echo "meta-rauc"
 cd ../meta-rauc
-git fetch --all
+git fetch --all --prune
 echo "poky"
 cd ../poky
-git fetch --all
+git fetch --all --prune
 echo "meta-homeassistant"
 cd ../meta-homeassistant
-git fetch --all
+git fetch --all --prune
 cd ../..
 echo "Homeassistant"
 cd sources/meta-homeassistant/scripts/HA
