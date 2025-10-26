@@ -33,8 +33,16 @@
 			"path": "sources/meta-sca"
 		},
 		{
+			"name": "meta-python-ai",
+			"path": "sources/meta-python-ai"
+		},
+		{
 			"name": "meta-rauc",
 			"path": "sources/meta-rauc"
+		},
+		{
+			"name": "meta-clang-revival",
+			"path": "sources/meta-clang-revival"
 		},
 		{
 			"name": "homeassistant",
