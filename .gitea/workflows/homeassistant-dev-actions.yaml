@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build QemuX86-64 Core Image Homeassistant Development
         run: |
-          kas build kas/homeassistant/dev-ptest-x86-home-assistant-kas.yml 2>&1 | tee build.log
+          kas build kas/homeassistant/dev-x86-home-assistant-kas.yml 2>&1 | tee build.log
       - name: Collect results
         if: always()
         run: |

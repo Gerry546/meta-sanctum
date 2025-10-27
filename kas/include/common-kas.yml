@@ -19,28 +19,7 @@ repos:
     branch: master
     layers:
       meta-oe:
-      meta-python:
-      meta-networking:
     path: "sources/meta-openembedded"
-
-  meta-browser:
-    #url: "https://github.com/OSSystems/meta-browser/"
-    url: "https://github.com/Gerry546/meta-browser.git"
-    path: "sources/meta-browser"
-    layers:
-      meta-firefox:
-    branch: "master"
-  
-  meta-clang:
-    url: "https://github.com/kraj/meta-clang"
-    path: "sources/meta-clang"
-    branch: "master"
-
-  meta-rauc:
-    # url: "https://github.com/Gerry546/meta-rauc.git"
-    url: "https://github.com/rauc/meta-rauc.git"
-    path: "sources/meta-rauc"
-    branch: "master"
   
 local_conf_header:
   sanctum: |
@@ -241,6 +220,7 @@ local_conf_header:
 
     LICENSE_FLAGS_ACCEPTED = "\
         commercial_ffmpeg \
+        commercial \
     "
     
   qemu-settings: |

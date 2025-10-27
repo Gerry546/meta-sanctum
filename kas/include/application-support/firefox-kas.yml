@@ -1,0 +1,16 @@
+header:
+  version: 14
+
+repos:
+  meta-browser:
+    url: "https://github.com/OSSystems/meta-browser/"
+    # url: "https://github.com/Gerry546/meta-browser.git"
+    path: "sources/meta-browser"
+    layers:
+      meta-firefox:
+    branch: "master"
+
+  meta-clang:
+    url: "https://github.com/kraj/meta-clang"
+    path: "sources/meta-clang"
+    branch: "master"
