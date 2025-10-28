@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Checkout Home Assistant Dev",
+            "type": "shell",
+            "command": "kas build kas/homeassistant/dev-x86-home-assistant-kas.yml",
+            "group": "build",
+            "hide": true
+        },
+        {
+            "label": "Checkout Home Assistant Stable",
+            "type": "shell",
+            "command": "kas build kas/homeassistant/stable-x86-home-assistant-kas.yml",
+            "group": "build",
+            "hide": true
+        },
+        {
+            "label": "Build Home Assistant",
+            "type": "bitbake",
+            "recipes": ["core-image-homeassistant-full"],
+            "hide": true
+        },
+        {
+            "label": "Build Home Assistant Dev",
+            "dependsOn": [
+                "Checkout Home Assistant Dev",
+                "Build Home Assistant"
+            ],
+            "dependsOrder": "sequence"
+        }
+        },
+        {
+            "label": "Build Home Assistant Stable",
+            "dependsOn": [
+                "Checkout Home Assistant Stable",
+                "Build Home Assistant"
+            ],
+            "dependsOrder": "sequence"
+        }
+    ]
+}
