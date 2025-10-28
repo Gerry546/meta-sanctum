@@ -2,7 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Parse HA Requirement, Upgrade Only",
+            "name": "Upgrade recipes",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "scripts/run_upgrades_from_csv.py",
+            "console": "integratedTerminal",
+            "args": "-v ${command:pickArgs}"
+        },
+        {
+            "name": "Parse HA Requirements: Upgrade Only",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
@@ -10,7 +18,7 @@
             "args": "-v ${command:pickArgs} -u y"
         },
         {
-            "name": "Parse Requirement, Everything",
+            "name": "Parse HA Requirements: All",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
@@ -18,7 +26,7 @@
             "args": "-v ${command:pickArgs}"
         },
         {
-            "name": "Parse Requirement, Upgrade Only, No Clean",
+            "name": "Parse HA Requirements: Upgrade Only, No Clean",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
@@ -26,7 +34,7 @@
             "args": "-v ${command:pickArgs} -u y -c n"
         },
         {
-            "name": "Parse Requirement, Upgrade Only, Integrations Only, No Clean",
+            "name": "Parse HA Requirements: Upgrade & Integrations Only, No Clean",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
@@ -34,28 +42,20 @@
             "args": "-v ${command:pickArgs} -u y -c n -i y"
         },
         {
-            "name": "Parse Requirement, No Clean",
+            "name": "Parse HA Requirements: No Clean",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
             "console": "integratedTerminal",
-            "args": "-v ${command:pickArgs} -c n"
+            "args": "-v ${command:pickArgs} -c n",
         },
         {
-            "name": "Parse Requirement, Integrations Only, No Clean",
+            "name": "Parse HA Requirements: Integrations Only, No Clean",
             "type": "debugpy",
             "request": "launch",
             "program": "sources/meta-homeassistant/scripts/parse_requirement.py",
             "console": "integratedTerminal",
             "args": "-v ${command:pickArgs} -c n -i y"
-        },
-        {
-            "name": "Upgrade recipes",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "scripts/run_upgrades_from_csv.py",
-            "console": "integratedTerminal",
-            "args": "-v ${command:pickArgs}"
         },
     ]
 }
