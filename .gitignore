@@ -5,3 +5,6 @@ TODO.sh
 .venv
 *.csv
 *.pyc
+rauc-info.txt
+rauc-status-after.txt
+rauc-status-before.txt
