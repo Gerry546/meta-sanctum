@@ -43,10 +43,6 @@
 		{
 			"name": "meta-clang-revival",
 			"path": "sources/meta-clang-revival"
-		},
-		{
-			"name": "homeassistant",
-			"path": "sources/meta-homeassistant/scripts/HA"
 		}
 	],
 	"settings": {
