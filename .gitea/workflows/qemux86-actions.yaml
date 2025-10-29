@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build QemuX86-64
         run: |
-          kas build kas/qemu/x86-qemu-kas.yml
+          kas build kas/targets/qemu/x86-qemu-kas.yml
       - name: Run RAUC update test
         run: |
           ./tests/rauc-test.sh qemux86-64n

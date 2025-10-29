@@ -1,7 +1,7 @@
 header:
   version: 14
   includes:
-  - kas/include/common-kas.yml
+  - kas/include/base/common-kas.yml
   - kas/include/application-support/rauc-kas.yml
 
 machine: qemuarm64-a72

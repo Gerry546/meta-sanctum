@@ -1,7 +1,8 @@
 header:
   version: 14
   includes:
-  - kas/include/common-kas.yml
+  - kas/include/base/common-kas.yml
+  - kas/include/application-support/rauc-kas.yml  
 
 machine: qemux86-64n
 distro: sanctum

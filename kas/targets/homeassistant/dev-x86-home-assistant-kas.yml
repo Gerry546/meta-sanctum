@@ -1,14 +1,12 @@
 header:
   version: 14
   includes:
-  - kas/include/common-kas.yml
-  - kas/include/image-ptest-kas.yml
+  - kas/include/base/common-kas.yml
+  - kas/include/testing/qemu-testing-kas.yml
   - kas/include/application-support/homeassistant-kas.yml
 
 repos:
   meta-homeassistant:
-    url: "https://github.com/Gerry546/meta-homeassistant.git"
-    path: "sources/meta-homeassistant"
     branch: "dev"
 
 # The machine as it is written into the `local.conf` of bitbake.

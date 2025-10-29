@@ -2,41 +2,125 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Checkout Home Assistant Dev",
+            "label": "Rauc Test: qemuarm64-a72",
             "type": "shell",
-            "command": "kas build kas/homeassistant/dev-x86-home-assistant-kas.yml",
-            "group": "build",
-            "hide": true
+            "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
+            "group": "test",
+            "dependsOn": [
+                "Build Sanctum Qemuarm64"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
         },
         {
-            "label": "Checkout Home Assistant Stable",
+            "label": "Rauc Test: qemux86-64n",
             "type": "shell",
-            "command": "kas build kas/homeassistant/stable-x86-home-assistant-kas.yml",
-            "group": "build",
-            "hide": true
+            "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
+            "group": "test",
+            "dependsOn": [
+                "Build Sanctum QemuX86n"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
         },
         {
-            "label": "Build Home Assistant",
+            "label": "checkout dev-x86-home-assistant-kas.yml",
+            "type": "shell",
+            "command": "kas checkout kas/targets/homeassistant/dev-x86-home-assistant-kas.yml",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "checkout stable-x86-home-assistant-kas.yml",
+            "type": "shell",
+            "command": "kas checkout kas/targets/homeassistant/stable-x86-home-assistant-kas.yml",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "checkout arm64-qemu-kas",
+            "type": "shell",
+            "command": "kas checkout kas/targets/qemu/arm64-qemu-kas.yml",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "checkout x86-qemu-kas",
+            "type": "shell",
+            "command": "kas checkout kas/targets/qemu/x86-qemu-kas.yml",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "checkout reterminal-kas",
+            "type": "shell",
+            "command": "kas checkout kas/targets/reterminal/reterminal-kas.yml",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "bitbake core-image-homeassistant-full",
             "type": "bitbake",
             "recipes": ["core-image-homeassistant-full"],
-            "hide": true
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "bitbake sanctum-bundle",
+            "type": "bitbake",
+            "recipes": ["sanctum-bundle"],
+            "hide": true,
+            "problemMatcher": []
         },
         {
             "label": "Build Home Assistant Dev",
             "dependsOn": [
-                "Checkout Home Assistant Dev",
-                "Build Home Assistant"
+                "checkout dev-x86-home-assistant-kas.yml",
+                "bitbake core-image-homeassistant-full"
             ],
-            "dependsOrder": "sequence"
-        }
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
         },
         {
             "label": "Build Home Assistant Stable",
             "dependsOn": [
-                "Checkout Home Assistant Stable",
-                "Build Home Assistant"
+                "checkout stable-x86-home-assistant-kas.yml",
+                "bitbake core-image-homeassistant-full"
             ],
-            "dependsOrder": "sequence"
-        }
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Sanctum Qemuarm64",
+            "dependsOn": [
+                "checkout arm64-qemu-kas",
+                "bitbake sanctum-bundle"
+            ],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Sanctum QemuX86n",
+            "dependsOn": [
+                "checkout x86-qemu-kas",
+                "bitbake sanctum-bundle"
+            ],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Sanctum Reterminal",
+            "dependsOn": [
+                "checkout reterminal-kas",
+                "bitbake sanctum-bundle"
+            ],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
+        },
     ]
 }
