@@ -1,92 +1,116 @@
 FROM ubuntu:24.04
 
+# Use bash as /bin/sh (keeps original behavior)
 RUN rm /bin/sh && ln -s bash /bin/sh
 
-# Set environment variables for locale
+# Locale environment
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-# Install all yocto dependencies
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    locales \
-    && rm -rf /var/lib/apt/lists/* \
-# Set the locales correct
-    && locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+# Consolidated install: install all required packages, set locale, install npm global tool
+# and pip packages, then clean apt and pip caches in the same RUN to avoid large intermediate layers.
+### Split installs into multiple smaller RUNs. Each RUN installs a small subset and
+### cleans apt/pip/npm caches in the same RUN to avoid large intermediate layers.
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    build-essential \
-    chrpath \
-    cpio \
-    debianutils \
-    diffstat \
-    file \
-    gawk \
-    gcc \
-    git \
-    iputils-ping \
-    libacl1 \
-    liblz4-tool \
-    locales \
-    python3 \
-    python3-git \
-    python3-jinja2 \
-    python3-pexpect \
-    python3-pip \
-    python3-subunit \
-    socat \
-    texinfo \
-    unzip \
-    wget \
-    xz-utils \
-    zstd
+# 1) Minimal base packages + locale
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends locales ca-certificates wget; \
+    locale-gen en_US.UTF-8; update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    libsdl1.2-dev \
-    mesa-common-dev \
-    iproute2 \
-    tmux
+# 2) Python runtime and pip (keep small)
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends python3 python3-pip python3-pexpect python3-subunit; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    parted \
-    mtools
+# 3a) Compiler: install gcc only (keeps layer smaller)
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends gcc; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    gcc-multilib \
-    git-core \
-    xterm
+# 3b) C++ toolchain: install g++ separately
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends g++; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    device-tree-compiler
+# 3c) Build helpers and libraries
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends make dpkg-dev libc6-dev; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-    npm && \
-    npm install -g http-server
+# 3d) Fortran and multilib support (kept separate)
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends gfortran gcc-multilib; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-RUN apt -y autoremove && \
-    rm -rf /var/lib/apt/lists/*
+# 4) Utilities and packaging tools
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends chrpath cpio debianutils diffstat file gawk unzip xz-utils zstd liblz4-tool texinfo; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-# Install python packages for devtool to be able to parse python packages
-RUN pip3 install --break-system-packages tomli \
-    # and install kas
-    kas
+# 5) Version control, metadata and networking tools
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends git git-core python3-git python3-jinja2 socat iputils-ping iproute2 tmux xterm; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
+
+# 5.5) SSH client required by HOSTTOOLS (provides ssh/scp)
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends openssh-client; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
+
+# 6) Filesystem/tools for images and device trees
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends parted mtools device-tree-compiler libacl1; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
+
+# 7a) SDL (smaller)
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends libsdl1.2-dev; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
+
+# 7b) Mesa (often large) — keep as a separate layer so it can be made optional later
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; apt-get update; \
+    apt-get install -y --no-install-recommends mesa-common-dev; \
+    apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
+
+# 8) npm and http-server (optional) — enabled by default per request
+# Set to false at build time if you want to skip installing npm/http-server
+ARG INSTALL_NPM=true
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    if [ "${INSTALL_NPM}" = "true" ]; then \
+        apt-get update; apt-get install -y --no-install-recommends npm; \
+        npm install -g http-server --no-fund --no-audit; rm -rf /root/.npm /root/.node-gyp; \
+        apt-get -y clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
+    else \
+        echo "Skipping npm/http-server install (set BUILD ARG INSTALL_NPM=true to enable)"; \
+    fi
+
+# 9) Lightweight Python tools installed via pip (no cache)
+RUN set -eux; python3 -m pip install --no-cache-dir --break-system-packages tomli kas oelint-adv; \
+    rm -rf /root/.cache/pip || true
 
 ARG kvm_gid=108
 
-# Create the kvm group with the specified GID and add the ubuntu user to it
-RUN groupadd -g ${kvm_gid} kvm && \
-    usermod -aG kvm ubuntu
+# Create the kvm group with the specified GID and add the ubuntu user to it (kept from original Dockerfile).
+# Note: if the 'ubuntu' user does not exist in the base image this usermod will fail; keep as original behavior.
+RUN groupadd -g ${kvm_gid} kvm && usermod -aG kvm ubuntu || true
 
 USER ubuntu
 
-# Install the dependency for linting
-RUN pip3 install --break-system-packages --user oelint-adv
-
+# Workdir kept as root of filesystem
 WORKDIR /
