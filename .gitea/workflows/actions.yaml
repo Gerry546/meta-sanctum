@@ -1,0 +1,235 @@
+name: Gitea HomeAssistant Actions Sanctum Project
+run-name: ${{ gitea.actor }} is building the sanctum project
+on: 
+  push:
+  schedule:
+    - cron: '@weekly'
+
+jobs:
+  Build-Container:
+    runs-on: ubuntu-latest
+    container:
+          image: catthehacker/ubuntu:act-latest
+    env: 
+        RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          config-inline: |
+            [registry."${{ secrets.DOMAIN_NAME }}"]
+              http = true
+              insecure = true 
+      - name: Log in to Docker registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.DOMAIN_NAME }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PAT }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: utils/dockerfile
+          push: true
+          tags: "${{ secrets.DOMAIN_NAME }}/${{ secrets.USER }}/yocto-builder:latest"
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Docker Container Build Failed
+          priority: high
+          convert_markdown: true
+          html_body: |
+              ### Job Container Creation ${{ job.status }}
+
+
+  Stable:
+    runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+          - /dev/kvm:/dev/kvm/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build QemuX86-64 Core Image Homeassistant Development
+        run: |
+          kas build kas/targets/homeassistant/stable-x86-home-assistant-kas.yml 2>&1 | tee build.log
+      - name: Collect results
+        if: always()
+        run: |
+          awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
+          # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
+          echo '<pre>' > snippet.html
+          sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
+          echo '</pre>' >> snippet.html
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - Home Assistant Stable Core Failed
+          priority: high
+          convert_markdown: true
+          html_body: file://snippet.html
+
+  Development:
+    runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+          - /dev/kvm:/dev/kvm/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build QemuX86-64 Core Image Homeassistant Development
+        run: |
+          kas build kas/targets/homeassistant/dev-x86-home-assistant-kas.yml 2>&1 | tee build.log
+      - name: Collect results
+        if: always()
+        run: |
+          awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
+          # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
+          echo '<pre>' > snippet.html
+          sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
+          echo '</pre>' >> snippet.html
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - Home Assistant Full Tests Failed
+          priority: high
+          convert_markdown: true
+          html_body: file://snippet.html
+
+  QemuX86:
+    runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build QemuX86-64
+        run: |
+          kas build kas/targets/qemu/x86-qemu-kas.yml
+      - name: Run RAUC update test
+        run: |
+          ./tests/rauc-test.sh qemux86-64n
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - X86-64 - Status = ${{ job.status }}
+          priority: high
+          convert_markdown: true
+          html_body: |
+            ### Job Reterminal X86-64 Image ${{ job.status }}
+
+            The build step failed with the following output:
+
+            ```
+            ${{ steps.Build_QemuX86_64.outputs.stdout }}
+            ${{ steps.Build_QemuX86_64.outputs.stderr }}
+            ```
+
+  QemuArm64:
+    runs-on: yocto-builder
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build QemuArm64
+        run: |
+          kas build kas/targets/qemu/arm64-qemu-kas.yml
+      - name: Run RAUC update test
+        run: |
+          ./tests/rauc-test.sh qemuarm64-a72
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - QemuArm64 - Status = ${{ job.status }}
+          priority: high
+          convert_markdown: true
+          html_body: |
+            ### Job Qemu - Arm64 Image ${{ job.status }}
+
+            The build step failed with the following output:
+
+            ```
+            ${{ steps.Build_QemuX86_64.outputs.stdout }}
+            ${{ steps.Build_QemuX86_64.outputs.stderr }}
+            ```
+
+  RaspberryPi4:
+    runs-on: yocto-builder
+    if: gitea.event_name == 'push' || gitea.event.schedule == '@weekly'
+    env: 
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build Reterminal-RaspberryPi4
+        run: |
+          kas build kas/targets/reterminal/reterminal-kas.yml
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - Reterminal RPI - Status = ${{ job.status }}
+          priority: high
+          convert_markdown: true
+          html_body: |
+              ### Job Reterminal RPI Image ${{ job.status }}
