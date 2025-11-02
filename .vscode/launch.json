@@ -5,7 +5,7 @@
             "name": "Upgrade recipes",
             "type": "debugpy",
             "request": "launch",
-            "program": "scripts/run_upgrades_from_csv.py",
+            "program": "scripts/run_ha_upgrades_from_csv.py",
             "console": "integratedTerminal",
             "args": "-v ${command:pickArgs}"
         },
