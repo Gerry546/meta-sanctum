@@ -1,0 +1,8 @@
+header:
+  version: 14
+
+repos:
+  meta-sca:
+    url: "https://github.com/priv-kweihmann/meta-sca.git"
+    branch: master
+    path: "sources/meta-sca"

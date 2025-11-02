@@ -3,6 +3,7 @@ header:
   includes:
   - kas/include/base/common-kas.yml
   - kas/include/testing/qemu-testing-kas.yml
+  - kas/include/testing/sca-base-kas.yml
   - kas/include/application-support/homeassistant-kas.yml
 
 repos:
