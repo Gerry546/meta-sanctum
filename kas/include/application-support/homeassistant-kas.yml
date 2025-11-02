@@ -3,7 +3,8 @@ header:
 
 repos:
   meta-python-ai:
-    url: "https://github.com/zboszor/meta-python-ai.git"
+    # url: "https://github.com/zboszor/meta-python-ai.git"
+    url: "https://github.com/Gerry546/meta-python-ai.git"
     path: "sources/meta-python-ai"
     branch: "master"
   
