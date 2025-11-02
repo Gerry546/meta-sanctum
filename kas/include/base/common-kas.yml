@@ -14,8 +14,8 @@ repos:
     path: "sources/poky"
 
   meta-openembedded:
-    url: "https://github.com/Gerry546/meta-openembedded.git"
-    # url: "https://github.com/openembedded/meta-openembedded.git"
+    # url: "https://github.com/Gerry546/meta-openembedded.git"
+    url: "https://github.com/openembedded/meta-openembedded.git"
     branch: master
     layers:
       meta-oe:
