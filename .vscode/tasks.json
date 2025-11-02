@@ -2,6 +2,13 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Git update layers",
+            "type": "shell",
+            "command": "${workspaceFolder}/scripts/pull_modules",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
             "label": "Rauc Test: qemuarm64-a72",
             "type": "shell",
             "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
