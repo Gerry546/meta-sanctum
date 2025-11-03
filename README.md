@@ -1,4 +1,4 @@
-# meta-sanctum
+# Meta-Sanctum
 
 meta-sanctum is a Yocto layer designed to provide a flexible platform for home automation projects. It offers custom machines, distributions, and recipes to support experimentation, learning, and practical deployments in home automation environments.
 
