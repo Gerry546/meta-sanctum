@@ -13,16 +13,12 @@ repos:
     path: "sources/meta-clang-revival"
     branch: "main"
 
-  meta-clang:
-    url: "https://github.com/kraj/meta-clang"
-    path: "sources/meta-clang"
-    branch: "master"
-
   meta-openembedded:
     url: "https://github.com/Gerry546/meta-openembedded.git"
     # url: "https://github.com/openembedded/meta-openembedded.git"
     branch: master
     layers:
+      meta-oe:
       meta-python:
       meta-networking:
       meta-multimedia:
@@ -32,3 +28,8 @@ repos:
     url: "https://github.com/Gerry546/meta-homeassistant.git"
     path: "sources/meta-homeassistant"
     branch: "main"
+  
+  meta-sca:
+    url: "https://github.com/priv-kweihmann/meta-sca.git"
+    branch: master
+    path: "sources/meta-sca"
