@@ -5,13 +5,26 @@ repos:
   meta-sanctum:
     path: "meta-sanctum"
 
-  poky:
-    url: "https://github.com/yoctoproject/poky.git"
-    # url: "https://github.com/Gerry546/poky.git"
+  bitbake:
+    url: "https://git.openembedded.org/bitbake"
+    branch: master
+    path: "sources/bitbake"
+    layers:
+      .: excluded
+  
+  openembedded-core:
+    url: "https://git.openembedded.org/openembedded-core"
     branch: master
     layers:
       meta:
-    path: "sources/poky"
+    path: "sources/openembedded-core"
+
+  meta-yocto:
+    url: https://git.yoctoproject.org/meta-yocto
+    branch: master
+    layers:
+      meta-poky:
+    path: "sources/meta-yocto"
 
   meta-openembedded:
     # url: "https://github.com/Gerry546/meta-openembedded.git"

@@ -13,8 +13,16 @@
 			"path": "sources/meta-openembedded"
 		},
 		{
-			"name": "poky",
-			"path": "sources/poky"
+			"name": "bitbake",
+			"path": "sources/bitbake"
+		},
+		{
+			"name": "openembedded-core",
+			"path": "sources/openembedded-core"
+		},
+		{
+			"name": "meta-yocto",
+			"path": "sources/meta-yocto"
 		},
 		{
 			"name": "meta-browser",
@@ -47,8 +55,8 @@
 	],
 	"settings": {
 		"bitbake.pathToBuildFolder": "${workspaceFolder}/build",
-		"bitbake.pathToEnvScript": "${workspaceFolder}/sources/poky/oe-init-build-env",
-		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/poky/bitbake",
+		"bitbake.pathToEnvScript": "${workspaceFolder}/sources/openembedded-core/oe-init-build-env",
+		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/openembedded-core/meta",
 		"task.saveBeforeRun": "never",
 		"files.associations": {
 			"*.conf": "bitbake",
@@ -83,12 +91,12 @@
 			"**/build"
 		],
 		"python.autoComplete.extraPaths": [
-			"${workspaceFolder}/sources/poky/bitbake/lib",
-			"${workspaceFolder}/sources/poky/meta/lib"
+			"${workspaceFolder}/sources/bitbake/lib",
+			"${workspaceFolder}/sources/openembedded-core/meta/lib"
 		],
 		"python.analysis.extraPaths": [
-			"${workspaceFolder}/sources/poky/bitbake/lib",
-			"${workspaceFolder}/sources/poky/meta/lib"
+			"${workspaceFolder}/sources/bitbake/lib",
+			"${workspaceFolder}/sources/openembedded-core/meta/lib"
 		]
 	}
 }
