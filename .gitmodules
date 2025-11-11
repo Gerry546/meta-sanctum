@@ -1,3 +1,6 @@
 [submodule "sources/bitbake"]
 	path = sources/bitbake
 	url = https://git.openembedded.org/bitbake
+[submodule "auto-upgrade-helper"]
+	path = auto-upgrade-helper
+	url = https://github.com/Gerry546/auto-upgrade-helper.git
