@@ -1,0 +1,157 @@
+{
+    "description": "Sanctum - 'core image minimal' configuration",
+    "sources": {
+        "bitbake": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.openembedded.org/bitbake;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/bitbake"
+        },
+        "openembedded-core": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.openembedded.org/openembedded-core;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/openembedded-core"
+        },
+        "meta-yocto": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.yoctoproject.org/meta-yocto;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/meta-yocto"
+        },
+        "meta-openembedded": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.openembedded.org/meta-openembedded;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/meta-openembedded"
+        },
+        "meta-python-ai": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/zboszor/meta-python-ai.git;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/meta-python-ai"
+        },
+        "meta-clang-revival": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/zboszor/meta-clang-revival;protocol=https"
+                    }
+                },
+                "branch": "main",
+                "rev": "main"
+            },
+            "path": "../../sources/meta-clang-revival"
+        },
+        "meta-homeassistant": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/Gerry546/meta-homeassistant.git;protocol=https"
+                    }
+                },
+                "branch": "main",
+                "rev": "main"
+            },
+            "path": "../../sources/meta-homeassistant"
+        },
+        "meta-sca": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/priv-kweihmann/meta-sca.git;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/meta-sca"
+        },
+        "meta-virtualization": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.yoctoproject.org/meta-virtualization;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "../../sources/meta-virtualization"
+        }
+    },
+    "bitbake-setup": {
+        "configurations": [
+            {
+                "name": "stable",
+                "description": "Stable configuration",
+                "bb-layers": [
+                    "../../meta-sanctum",
+                    "../../sources/meta-clang-revival",
+                    "../../sources/meta-homeassistant",
+                    "../../sources/meta-openembedded/meta-filesystems",
+                    "../../sources/meta-openembedded/meta-multimedia",
+                    "../../sources/meta-openembedded/meta-networking",
+                    "../../sources/meta-openembedded/meta-oe",
+                    "../../sources/meta-openembedded/meta-python",
+                    "../../sources/meta-python-ai",
+                    "../../sources/meta-sca",
+                    "../../sources/meta-virtualization",
+                    "../../sources/openembedded-core/meta"
+                ],
+                "oe-fragments": [
+                    "meta-sanctum/infrastructure/commercial-license",
+                    "meta-sanctum/testing/qemu-testing"
+                ],
+                "oe-fragments-one-of": {
+                    "machine": {
+                        "description": "Target machines",
+                        "options": [
+                            "machine/qemux86-64"
+                        ]
+                    },
+                    "distro": {
+                        "description": "Distribution configuration variant",
+                        "options": [
+                            "distro/sanctum-dev",
+                            "distro/sanctum-test",
+                            "distro/sanctum"
+                        ]
+                    }
+                },
+                "setup-dir-name": "build-homeassistant"
+            }
+        ]
+    },
+    "version": "1.0"
+}

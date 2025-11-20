@@ -1,133 +1,185 @@
 {
     "version": "2.0.0",
     "tasks": [
+        // {
+        //     "label": "Git update layers",
+        //     "type": "shell",
+        //     "command": "${workspaceFolder}/scripts/pull_modules",
+        //     "group": "none",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Rauc Test: qemuarm64-a72",
+        //     "type": "shell",
+        //     "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
+        //     "group": "test",
+        //     "dependsOn": [
+        //         "Build Sanctum Qemuarm64"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Rauc Test: qemux86-64n",
+        //     "type": "shell",
+        //     "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
+        //     "group": "test",
+        //     "dependsOn": [
+        //         "Build Sanctum QemuX86n"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "checkout dev-x86-home-assistant-kas.yml",
+        //     "type": "shell",
+        //     "command": "kas checkout kas/targets/homeassistant/dev-x86-home-assistant-kas.yml",
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Initialize HomeAssistant Dev",
+        //     "type": "shell",
+        //     "command": "${workspaceFolder}/scripts/initialize-bitbake-setup.sh homeassistant-dev dev machine/qemux86-64 distro/sanctum",
+        //     "group": "build",
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Update HomeAssistant Dev",
+        //     "type": "shell",
+        //     "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup update --setup-dir ${workspaceFolder}/build-homeassistant-dev",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build HomeAssistant Dev",
+        //     "type": "shell",
+        //     "dependsOn": [
+        //         "Initialize HomeAssistant Dev"
+        //     ],
+        //     "command": [
+        //         "source /home/tom/projects/meta-sanctum/build-homeassistant-dev/build/init-build-env && bitbake core-image-homeassistant-full"
+        //     ],
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
         {
-            "label": "Git update layers",
+            "label": "Initialize HomeAssistant Stable",
             "type": "shell",
-            "command": "${workspaceFolder}/scripts/pull_modules",
-            "group": "none",
-            "problemMatcher": []
-        },
-        {
-            "label": "Rauc Test: qemuarm64-a72",
-            "type": "shell",
-            "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
-            "group": "test",
-            "dependsOn": [
-                "Build Sanctum Qemuarm64"
-            ],
-            "dependsOrder": "sequence",
-            "problemMatcher": []
-        },
-        {
-            "label": "Rauc Test: qemux86-64n",
-            "type": "shell",
-            "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
-            "group": "test",
-            "dependsOn": [
-                "Build Sanctum QemuX86n"
-            ],
-            "dependsOrder": "sequence",
-            "problemMatcher": []
-        },
-        {
-            "label": "checkout dev-x86-home-assistant-kas.yml",
-            "type": "shell",
-            "command": "kas checkout kas/targets/homeassistant/dev-x86-home-assistant-kas.yml",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive homeassistant stable machine/qemux86-64 distro/sanctum-test",
+            "group": "build",
             "hide": true,
             "problemMatcher": []
         },
         {
-            "label": "checkout stable-x86-home-assistant-kas.yml",
+            "label": "Update HomeAssistant Stable",
             "type": "shell",
-            "command": "kas checkout kas/targets/homeassistant/stable-x86-home-assistant-kas.yml",
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "checkout arm64-qemu-kas",
-            "type": "shell",
-            "command": "kas checkout kas/targets/qemu/arm64-qemu-kas.yml",
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "checkout x86-qemu-kas",
-            "type": "shell",
-            "command": "kas checkout kas/targets/qemu/x86-qemu-kas.yml",
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "checkout reterminal-kas",
-            "type": "shell",
-            "command": "kas checkout kas/targets/reterminal/reterminal-kas.yml",
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "bitbake core-image-homeassistant-full",
-            "type": "bitbake",
-            "recipes": ["core-image-homeassistant-full"],
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "bitbake sanctum-bundle",
-            "type": "bitbake",
-            "recipes": ["sanctum-bundle"],
-            "hide": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Home Assistant Dev",
-            "dependsOn": [
-                "checkout dev-x86-home-assistant-kas.yml",
-                "bitbake core-image-homeassistant-full"
-            ],
-            "dependsOrder": "sequence",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup update --setup-dir ${workspaceFolder}/build-homeassistant",
             "group": "build",
             "problemMatcher": []
         },
         {
-            "label": "Build Home Assistant Stable",
+            "label": "Build HomeAssistant Stable",
+            "type": "shell",
             "dependsOn": [
-                "checkout stable-x86-home-assistant-kas.yml",
-                "bitbake core-image-homeassistant-full"
+                "Initialize HomeAssistant Stable"
             ],
-            "dependsOrder": "sequence",
+            "command": [
+                "source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake core-image-homeassistant-full"
+            ],
             "group": "build",
             "problemMatcher": []
         },
-        {
-            "label": "Build Sanctum Qemuarm64",
-            "dependsOn": [
-                "checkout arm64-qemu-kas",
-                "bitbake sanctum-bundle"
-            ],
-            "dependsOrder": "sequence",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Sanctum QemuX86n",
-            "dependsOn": [
-                "checkout x86-qemu-kas",
-                "bitbake sanctum-bundle"
-            ],
-            "dependsOrder": "sequence",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Sanctum Reterminal",
-            "dependsOn": [
-                "checkout reterminal-kas",
-                "bitbake sanctum-bundle"
-            ],
-            "dependsOrder": "sequence",
-            "group": "build",
-            "problemMatcher": []
-        },
+        // {
+        //     "label": "checkout arm64-qemu-kas",
+        //     "type": "shell",
+        //     "command": "kas checkout kas/targets/qemu/arm64-qemu-kas.yml",
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "checkout x86-qemu-kas",
+        //     "type": "shell",
+        //     "command": "kas checkout kas/targets/qemu/x86-qemu-kas.yml",
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "checkout reterminal-kas",
+        //     "type": "shell",
+        //     "command": "kas checkout kas/targets/reterminal/reterminal-kas.yml",
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+
+        // {
+        //     "label": "bitbake core-image-homeassistant-full",
+        //     "type": "bitbake",
+        //     "recipes": [
+        //         "core-image-homeassistant-full"
+        //     ],
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "bitbake sanctum-bundle",
+        //     "type": "bitbake",
+        //     "recipes": [
+        //         "sanctum-bundle"
+        //     ],
+        //     "hide": true,
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build Home Assistant Dev",
+        //     "dependsOn": [
+        //         "checkout dev-x86-home-assistant-kas.yml",
+        //         "bitbake core-image-homeassistant-full"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build Home Assistant Stable",
+        //     "dependsOn": [
+        //         "update homeassistant configuration",
+        //         "bitbake core-image-homeassistant-full"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build Sanctum Qemuarm64",
+        //     "dependsOn": [
+        //         "checkout arm64-qemu-kas",
+        //         "bitbake sanctum-bundle"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build Sanctum QemuX86n",
+        //     "dependsOn": [
+        //         "checkout x86-qemu-kas",
+        //         "bitbake sanctum-bundle"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "Build Sanctum Reterminal",
+        //     "dependsOn": [
+        //         "checkout reterminal-kas",
+        //         "bitbake sanctum-bundle"
+        //     ],
+        //     "dependsOrder": "sequence",
+        //     "group": "build",
+        //     "problemMatcher": []
+        // },
     ]
 }

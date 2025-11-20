@@ -1,10 +1,19 @@
-build/
-sources/
 meta-sanctum.wiki/
 TODO.sh
-.venv
 *.csv
-*.pyc
+# test artifacts
 rauc-info.txt
 rauc-status-after.txt
 rauc-status-before.txt
+# python
+*.pyc
+.venv
+# bitbake setup
+.bitbake*
+# Upstream sources
+sources/meta-yocto/
+sources/openembedded-core/
+site.conf-backup*
+# Build directories
+build-*/
+build/

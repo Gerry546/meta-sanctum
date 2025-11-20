@@ -51,6 +51,10 @@
 		{
 			"name": "meta-clang-revival",
 			"path": "sources/meta-clang-revival"
+		},
+		{
+			"name": "meta-virtualization",
+			"path": "sources/meta-virtualization"
 		}
 	],
 	"settings": {
@@ -66,9 +70,6 @@
 			"diffEditor.ignoreTrimWhitespace": false,
 			"editor.formatOnType": true,
 			"editor.wordBasedSuggestions": "off",
-			"gitlens.codeLens.symbolScopes": [
-				"!Module"
-			],
 			"files.trimTrailingWhitespace": false
 		},
 		"[shellscript]": {
@@ -79,9 +80,6 @@
         "**/build": true
 		},
 		"search.exclude": {
-			"**/build": true
-		},
-		"C_Cpp.files.exclude": {
 			"**/build": true
 		},
 		"python.analysis.exclude": [
