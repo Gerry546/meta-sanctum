@@ -37,33 +37,33 @@
         //     "hide": true,
         //     "problemMatcher": []
         // },
-        // {
-        //     "label": "Initialize HomeAssistant Dev",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/scripts/initialize-bitbake-setup.sh homeassistant-dev dev machine/qemux86-64 distro/sanctum",
-        //     "group": "build",
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Update HomeAssistant Dev",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup update --setup-dir ${workspaceFolder}/build-homeassistant-dev",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Build HomeAssistant Dev",
-        //     "type": "shell",
-        //     "dependsOn": [
-        //         "Initialize HomeAssistant Dev"
-        //     ],
-        //     "command": [
-        //         "source /home/tom/projects/meta-sanctum/build-homeassistant-dev/build/init-build-env && bitbake core-image-homeassistant-full"
-        //     ],
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
+        {
+            "label": "Initialize HomeAssistant Dev",
+            "type": "shell",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive homeassistant-dev dev machine/qemux86-64 distro/sanctum-test",
+            "group": "build",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Update HomeAssistant Dev",
+            "type": "shell",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup update --setup-dir ${workspaceFolder}/build-homeassistant-dev",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build HomeAssistant Dev",
+            "type": "shell",
+            "dependsOn": [
+                "Initialize HomeAssistant Dev"
+            ],
+            "command": [
+                "source /home/tom/projects/meta-sanctum/build-homeassistant-dev/build/init-build-env && bitbake core-image-homeassistant-full"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
         {
             "label": "Initialize HomeAssistant Stable",
             "type": "shell",
@@ -87,6 +87,26 @@
             ],
             "command": [
                 "source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake core-image-homeassistant-full"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Initialize OpenEmbedded Test Environment",
+            "type": "shell",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive openembedded-test stable machine/qemuriscv64 distro/sanctum-test",
+            "group": "build",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Build OpenEmbedded Test Environment",
+            "type": "shell",
+            "dependsOn": [
+                "Initialize OpenEmbedded Test Environment"
+            ],
+            "command": [
+                "source /home/tom/projects/meta-sanctum/build-openembedded-test/build/init-build-env && bitbake core-image-test"
             ],
             "group": "build",
             "problemMatcher": []

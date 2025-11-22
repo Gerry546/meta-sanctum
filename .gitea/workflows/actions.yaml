@@ -54,42 +54,50 @@ jobs:
           convert_markdown: true
           html_body: file://snippet.html
 
-  # Development:
-  #   runs-on: yocto-builder
-  #   env:
-  #     RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-  #   container:
-  #     volumes:
-  #         - /cache/:/cache/
-  #         - /dev/kvm:/dev/kvm/
-  #   steps:
-  #     - name: Check out repository code
-  #       uses: actions/checkout@v4
-  #     - name: Build QemuX86-64 Core Image Homeassistant Development
-  #       run: |
-  #         kas build kas/targets/homeassistant/dev-x86-home-assistant-kas.yml 2>&1 | tee build.log
-  #     - name: Collect results
-  #       if: always()
-  #       run: |
-  #         awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
-  #         # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
-  #         echo '<pre>' > snippet.html
-  #         sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
-  #         echo '</pre>' >> snippet.html
-  #     - name: Send failure mail
-  #       if: failure()
-  #       uses: https://github.com/dawidd6/action-send-mail@v6
-  #       with:
-  #         to: ${{ secrets.MAIL_TO }}
-  #         from: Gitea <gitea@hostname>
-  #         server_address: smtp.gmail.com
-  #         server_port: 465
-  #         username: ${{ secrets.OUTLOOK_EMAIL }}
-  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
-  #         subject: Meta Sanctum - Home Assistant Full Tests Failed
-  #         priority: high
-  #         convert_markdown: true
-  #         html_body: file://snippet.html
+  Development:
+    runs-on: yocto-builder
+    env:
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+          - /dev/kvm:/dev/kvm/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build QemuX86-64 Core Image Homeassistant Development
+        run: |
+          sources/bitbake/bin/bitbake-setup \
+            --setting default registry "${{ gitea.workspace }}" \
+            --setting default top-dir-prefix "${{ gitea.workspace }}/.." \
+            --setting default top-dir-name "meta-sanctum" \
+            init \
+            --non-interactive \
+            homeassistant-dev stabledev machine/qemux86-64 distro/sanctum-test
+          source build-homeassistant-dev/build/init-build-env
+          bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
+      - name: Collect results
+        if: always()
+        run: |
+          awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
+          # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
+          echo '<pre>' > snippet.html
+          sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
+          echo '</pre>' >> snippet.html
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - Home Assistant Full Tests Failed
+          priority: high
+          convert_markdown: true
+          html_body: file://snippet.html
 
   # QemuX86:
   #   runs-on: yocto-builder

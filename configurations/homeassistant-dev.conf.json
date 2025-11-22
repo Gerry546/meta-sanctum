@@ -114,7 +114,7 @@
         "configurations": [
             {
                 "name": "dev",
-                "description": "Stable configuration",
+                "description": "Development configuration",
                 "bb-layers": [
                     "../../meta-sanctum",
                     "../../sources/meta-clang-revival",
@@ -130,7 +130,8 @@
                     "../../sources/openembedded-core/meta"
                 ],
                 "oe-fragments": [
-                    "meta-sanctum/infrastructure/commercial-license"
+                    "meta-sanctum/infrastructure/commercial-license",
+                    "meta-sanctum/testing/qemu-testing"
                 ],
                 "oe-fragments-one-of": {
                     "machine": {
@@ -147,7 +148,8 @@
                             "distro/sanctum"
                         ]
                     }
-                }
+                },
+                "setup-dir-name": "build-homeassistant-dev"
             }
         ]
     },
