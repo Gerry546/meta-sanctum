@@ -1,0 +1,15 @@
+{
+    "sources": {
+        "meta-homeassistant": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/Gerry546/meta-homeassistant.git;protocol=https"
+                    }
+                },
+                "branch": "dev",
+                "rev": "dev"
+            }
+        }
+    }
+}

@@ -113,8 +113,6 @@
     "bitbake-setup": {
         "configurations": [
             {
-                "name": "stable",
-                "description": "Stable configuration",
                 "bb-layers": [
                     "../../meta-sanctum",
                     "../../sources/meta-clang-revival",
@@ -149,7 +147,18 @@
                         ]
                     }
                 },
-                "setup-dir-name": "build-homeassistant"
+                "configurations": [
+                    {
+                        "name": "stable",
+                        "description": "Stable configuration",
+                        "setup-dir-name": "build-homeassistant"
+                    },
+                    {
+                        "name": "dev",
+                        "description": "Development configuration",
+                        "setup-dir-name": "build-homeassistant-dev"
+                    }
+                ]
             }
         ]
     },

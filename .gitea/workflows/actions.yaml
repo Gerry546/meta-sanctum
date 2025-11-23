@@ -60,11 +60,13 @@ jobs:
       RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     container:
       volumes:
-          - /cache/:/cache/
-          - /dev/kvm:/dev/kvm/
+        - /cache/:/cache/
+        - /dev/kvm:/dev/kvm/
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Build QemuX86-64 Core Image Homeassistant Development
         run: |
           sources/bitbake/bin/bitbake-setup \
@@ -73,7 +75,8 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            homeassistant-dev stabledev machine/qemux86-64 distro/sanctum-test
+            --source-overrides ${{ gitea.workspace }}/configurations/homeassistant-dev-overrides.json \
+            homeassistant dev machine/qemux86-64 distro/sanctum-test
           source build-homeassistant-dev/build/init-build-env
           bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
       - name: Collect results

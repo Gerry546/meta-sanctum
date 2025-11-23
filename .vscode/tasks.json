@@ -45,13 +45,6 @@
             "problemMatcher": []
         },
         {
-            "label": "Update HomeAssistant",
-            "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup update --setup-dir ${workspaceFolder}/build-homeassistant",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
             "label": "Build HomeAssistant",
             "type": "shell",
             "command": [
@@ -60,13 +53,13 @@
             "group": "build",
             "problemMatcher": []
         },
-        // {
-        //     "label": "Initialize OpenEmbedded Test Environment",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive openembedded-test stable machine/qemuriscv64 distro/sanctum-test",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
+        {
+            "label": "Initialize Python Test Environment",
+            "type": "shell",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local python-test machine/qemux86-64 distro/sanctum-test",
+            "group": "build",
+            "problemMatcher": []
+        },
         // {
         //     "label": "Build OpenEmbedded Test Environment",
         //     "type": "shell",
