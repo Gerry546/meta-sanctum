@@ -27,6 +27,7 @@
                         "description": "Target machines",
                         "options": [
                             "machine/qemux86-64",
+                            "machine/qemux86-64n",
                             "machine/qemuarm64",
                             "machine/qemuriscv64"
                         ]
@@ -62,15 +63,20 @@
                         "setup-dir-name": "build-homeassistant"
                     },
                     {
-                        "name": "python-test",
-                        "description": "Python testing environment",
+                        "name": "openembedded-test",
+                        "description": "Openembedded testing environment",
                         "bb-layers": [
                             "../../sources/meta-openembedded/meta-python"
                         ],
                         "oe-fragments": [
                             "meta-sanctum/testing/qemu-testing"
                         ],
-                        "setup-dir-name": "build-meta-python-test"
+                        "setup-dir-name": "build-openembedded-test"
+                    },
+                    {
+                        "name": "sanctum-qemux86-64n",
+                        "description": "Standard Sanctum Build Configuration",
+                        "setup-dir-name": "build-sanctum-qemux86-64n"
                     }
                 ]
             }

@@ -1,13 +1,13 @@
 {
     "version": "2.0.0",
     "tasks": [
-        // {
-        //     "label": "Git update layers",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/scripts/pull_modules",
-        //     "group": "none",
-        //     "problemMatcher": []
-        // },
+        {
+            "label": "Git update layers",
+            "type": "shell",
+            "command": "${workspaceFolder}/scripts/pull_modules",
+            "group": "none",
+            "problemMatcher": []
+        },
         // {
         //     "label": "Rauc Test: qemuarm64-a72",
         //     "type": "shell",
@@ -30,13 +30,6 @@
         //     "dependsOrder": "sequence",
         //     "problemMatcher": []
         // },
-        // {
-        //     "label": "checkout dev-x86-home-assistant-kas.yml",
-        //     "type": "shell",
-        //     "command": "kas checkout kas/targets/homeassistant/dev-x86-home-assistant-kas.yml",
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
         {
             "label": "Initialize HomeAssistant",
             "type": "shell",
@@ -54,21 +47,37 @@
             "problemMatcher": []
         },
         {
-            "label": "Initialize Python Test Environment",
+            "label": "Initialize OpenEmbedded Test Environment",
             "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local python-test machine/qemux86-64 distro/sanctum-test",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local openembedded-test machine/qemux86-64 distro/sanctum-test",
             "group": "build",
             "problemMatcher": []
         },
-        // {
-        //     "label": "Build OpenEmbedded Test Environment",
-        //     "type": "shell",
-        //     "command": [
-        //         "source /home/tom/projects/meta-sanctum/build-openembedded-test/build/init-build-env && bitbake core-image-test"
-        //     ],
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
+        {
+            "label": "Build OpenEmbedded Test Environment",
+            "type": "shell",
+            "command": [
+                "source /home/tom/projects/meta-sanctum/build-openembedded-test/build/init-build-env && bitbake core-image-test"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Initialize Sanctum QemuX86-64n",
+            "type": "shell",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local sanctum-qemux86-64n machine/qemux86-64n distro/sanctum",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Sanctum QemuX86-64n",
+            "type": "shell",
+            "command": [
+                "source /home/tom/projects/meta-sanctum/build-sanctum-qemux86-64n/build/init-build-env && bitbake sanctum-rootfs"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
         // {
         //     "label": "checkout arm64-qemu-kas",
         //     "type": "shell",
@@ -91,41 +100,12 @@
         //     "problemMatcher": []
         // },
         // {
-        //     "label": "bitbake core-image-homeassistant-full",
-        //     "type": "bitbake",
-        //     "recipes": [
-        //         "core-image-homeassistant-full"
-        //     ],
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
         //     "label": "bitbake sanctum-bundle",
         //     "type": "bitbake",
         //     "recipes": [
         //         "sanctum-bundle"
         //     ],
         //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Build Home Assistant Dev",
-        //     "dependsOn": [
-        //         "checkout dev-x86-home-assistant-kas.yml",
-        //         "bitbake core-image-homeassistant-full"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Build Home Assistant Stable",
-        //     "dependsOn": [
-        //         "update homeassistant configuration",
-        //         "bitbake core-image-homeassistant-full"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "group": "build",
         //     "problemMatcher": []
         // },
         // {
