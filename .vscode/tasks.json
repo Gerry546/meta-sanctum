@@ -33,7 +33,7 @@
         {
             "label": "Initialize HomeAssistant",
             "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local homeassistant machine/qemux86-64 distro/sanctum-test",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup init --non-interactive sanctum-local homeassistant machine/qemux86-64 distro/sanctum-dev",
             "group": "build",
             "problemMatcher": []
         },
