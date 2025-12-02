@@ -58,9 +58,14 @@
 		}
 	],
 	"settings": {
-		"bitbake.pathToBuildFolder": "${workspaceFolder}/build",
-		"bitbake.pathToEnvScript": "${workspaceFolder}/sources/openembedded-core/oe-init-build-env",
-		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/openembedded-core/meta",
+		"bitbake.buildConfigurations": [
+			{
+				"name": "HomeAssistant",
+				"pathToBuildFolder": "${workspaceFolder}/build-homeassistant/build",
+				"pathToEnvScript": "${workspaceFolder}/build-homeassistant/build/init-build-env"
+			}
+		],
+		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/bitbake",
 		"task.saveBeforeRun": "never",
 		"files.associations": {
 			"*.conf": "bitbake",
@@ -77,7 +82,7 @@
 			"files.trimTrailingWhitespace": false
 		},
 		"files.watcherExclude": {
-        "**/build": true
+			"**/build": true
 		},
 		"search.exclude": {
 			"**/build": true
@@ -90,11 +95,17 @@
 		],
 		"python.autoComplete.extraPaths": [
 			"${workspaceFolder}/sources/bitbake/lib",
-			"${workspaceFolder}/sources/openembedded-core/meta/lib"
+			"${workspaceFolder}/sources/openembedded-core/meta/lib",
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib",
+			"${workspaceFolder}/sources/meta/lib"
 		],
 		"python.analysis.extraPaths": [
 			"${workspaceFolder}/sources/bitbake/lib",
-			"${workspaceFolder}/sources/openembedded-core/meta/lib"
+			"${workspaceFolder}/sources/openembedded-core/meta/lib",
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib",
+			"${workspaceFolder}/sources/meta/lib"
 		]
 	}
 }
