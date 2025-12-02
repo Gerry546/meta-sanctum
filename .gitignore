@@ -17,3 +17,5 @@ site.conf-backup*
 # Build directories
 build-*/
 build/
+# upgrade logs
+scripts/upgrade_logs/

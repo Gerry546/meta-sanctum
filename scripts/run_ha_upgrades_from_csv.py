@@ -17,9 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / 'sources' / 'meta-homeassistant' / 'scripts'
 RECIPES_DIR = ROOT / 'sources' / 'meta-homeassistant' / 'recipes-devtools' / 'python'
-SCRIPTS_DIR = ROOT / 'scripts'
-RUNNER = SCRIPTS_DIR / 'run-upgrade-helper.sh'
-LOG_DIR = SCRIPTS_DIR / 'upgrade_logs'
+RUNNER = ROOT / 'scripts/run-upgrade-helper.sh'
+LOG_DIR = ROOT / 'scripts' / 'upgrade_logs'
 
 
 def main():
@@ -82,7 +81,7 @@ def main():
                 lf.write(f"Running: {RUNNER} {recipe_name}\n\n")
                 lf.flush()
                 proc = subprocess.Popen(
-                    [str(RUNNER), base_pkg],
+                    [str(RUNNER), base_pkg, 'build-homeassistant'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     text=True,
