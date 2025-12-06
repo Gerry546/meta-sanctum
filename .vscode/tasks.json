@@ -8,6 +8,27 @@
             "group": "none",
             "problemMatcher": []
         },
+        {
+            "label": "HomeAssistant: upgrade integrations",
+            "type": "shell",
+            "command": "python3 ${workspaceFolder}/scripts/run_ha_upgrades_from_csv.py -v ${input:haVersions}",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "Devtool Helper",
+            "type": "shell",
+            "command": "${workspaceFolder}/scripts/devtool-pypi-helper.sh ${input:devtoolAddAction} ${input:devtoolRecipeName} ${input:buildDirectory}",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "Auto Upgrade Helper",
+            "type": "shell",
+            "command": "${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c utils/upgrade-helper.conf ${input:auhRecipeName}",
+            "group": "none",
+            "problemMatcher": []
+        }
         // {
         //     "label": "Rauc Test: qemuarm64-a72",
         //     "type": "shell",
