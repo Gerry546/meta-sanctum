@@ -3,17 +3,17 @@
 
 set -e
 
-if [ $# -ne 2 ]; then
-    echo "Usage: $0 <action (add/finish)> <recipe-name>"
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <action (add/finish)> <recipe-name> <build-dir-suffix>"
     exit 1
 fi
 
 ACTION="$1"
 RECIPE_NAME="$2"
+BUILD_DIR="build-$3"
 
 # Source the Yocto build environment in the 'build' directory
-source "sources/poky/oe-init-build-env" build
-cd ..
+source "$BUILD_DIR/build/init-build-env"
 
 if [ "$ACTION" != "add" ] && [ "$ACTION" != "finish" ]; then
     echo "Invalid action: $ACTION. Use 'add' or 'finish'."
