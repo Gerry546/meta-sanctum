@@ -58,7 +58,8 @@
                         ],
                         "oe-fragments": [
                             "meta-sanctum/infrastructure/commercial-license",
-                            "meta-sanctum/testing/qemu-testing"
+                            "meta-sanctum/testing/qemu-testing",
+                            "core/yocto/root-login-with-empty-password"
                         ],
                         "setup-dir-name": "build-homeassistant"
                     },
@@ -69,7 +70,8 @@
                             "../../sources/meta-openembedded/meta-python"
                         ],
                         "oe-fragments": [
-                            "meta-sanctum/testing/qemu-testing"
+                            "meta-sanctum/testing/qemu-testing",
+                            "core/yocto/root-login-with-empty-password"
                         ],
                         "setup-dir-name": "build-openembedded-test"
                     },

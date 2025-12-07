@@ -25,7 +25,7 @@
         {
             "label": "Auto Upgrade Helper",
             "type": "shell",
-            "command": "${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c utils/upgrade-helper.conf ${input:auhRecipeName}",
+            "command": "source /home/tom/projects/meta-sanctum/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:auhRecipeName}",
             "group": "none",
             "problemMatcher": []
         }

@@ -6,15 +6,6 @@ IMAGE_INSTALL = "\
     nano \
     ptest-runner \
     python3-pip \
-    \
-    python3-pytest-httpx-ptest \
-"
-
-IMAGE_FEATURES:append = " \
-    allow-empty-password \
-    empty-root-password \
-    allow-root-login \
-    post-install-logging \
 "
 
 IMAGE_LINGUAS = ""

@@ -129,7 +129,8 @@
                 ],
                 "oe-fragments": [
                     "meta-sanctum/infrastructure/commercial-license",
-                    "meta-sanctum/testing/qemu-testing"
+                    "meta-sanctum/testing/qemu-testing",
+                    "core/yocto/root-login-with-empty-password"
                 ],
                 "oe-fragments-one-of": {
                     "machine": {
