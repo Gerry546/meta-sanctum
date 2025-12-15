@@ -62,15 +62,8 @@
             "label": "Build HomeAssistant",
             "type": "shell",
             "command": [
-                "source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake core-image-homeassistant-full"
+                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake -k core-image-homeassistant-full"
             ],
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Initialize OpenEmbedded Test Environment",
-            "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local openembedded-test machine/qemux86-64 distro/sanctum-test",
             "group": "build",
             "problemMatcher": []
         },
@@ -78,7 +71,7 @@
             "label": "Build OpenEmbedded Test Environment",
             "type": "shell",
             "command": [
-                "source /home/tom/projects/meta-sanctum/build-openembedded-test/build/init-build-env && bitbake core-image-test"
+                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake -k core-image-test"
             ],
             "group": "build",
             "problemMatcher": []
@@ -94,7 +87,7 @@
             "label": "Build Sanctum QemuX86-64n",
             "type": "shell",
             "command": [
-                "source /home/tom/projects/meta-sanctum/build-sanctum-qemux86-64n/build/init-build-env && bitbake sanctum-rootfs"
+                "clear && source /home/tom/projects/meta-sanctum/build-sanctum-qemux86-64n/build/init-build-env && bitbake -k sanctum-rootfs"
             ],
             "group": "build",
             "problemMatcher": []
