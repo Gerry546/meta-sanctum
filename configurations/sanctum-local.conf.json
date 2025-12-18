@@ -76,9 +76,9 @@
                         "setup-dir-name": "build-openembedded-test"
                     },
                     {
-                        "name": "sanctum-qemux86-64n",
+                        "name": "sanctum",
                         "description": "Standard Sanctum Build Configuration",
-                        "setup-dir-name": "build-sanctum-qemux86-64n"
+                        "setup-dir-name": "build-sanctum"
                     }
                 ]
             }
