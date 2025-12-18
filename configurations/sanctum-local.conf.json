@@ -78,7 +78,14 @@
                     {
                         "name": "sanctum",
                         "description": "Standard Sanctum Build Configuration",
-                        "setup-dir-name": "build-sanctum"
+                        "setup-dir-name": "build-sanctum",
+                        "bb-layers": [
+                            "../../sources/meta-rauc"
+                        ],
+                        "oe-fragments": [
+                            "core/yocto/root-login-with-empty-password",
+                            "meta-sanctum/testing/rauc-qemu-testing"
+                        ]
                     }
                 ]
             }

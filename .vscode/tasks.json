@@ -28,29 +28,29 @@
             "command": "source /home/tom/projects/meta-sanctum/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:auhRecipeName}",
             "group": "none",
             "problemMatcher": []
-        }
-        // {
-        //     "label": "Rauc Test: qemuarm64-a72",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
-        //     "group": "test",
-        //     "dependsOn": [
-        //         "Build Sanctum Qemuarm64"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Rauc Test: qemux86-64n",
-        //     "type": "shell",
-        //     "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
-        //     "group": "test",
-        //     "dependsOn": [
-        //         "Build Sanctum QemuX86n"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "problemMatcher": []
-        // },
+        },
+        {
+            "label": "Rauc Test: qemuarm64-a72",
+            "type": "shell",
+            "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
+            "group": "test",
+            "dependsOn": [
+                "Build Sanctum Qemuarm64-a72"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Rauc Test: qemux86-64n",
+            "type": "shell",
+            "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
+            "group": "test",
+            "dependsOn": [
+                "Build Sanctum QemuX86n-64n"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
         {
             "label": "Initialize HomeAssistant",
             "type": "shell",
@@ -87,7 +87,7 @@
             "label": "Build Sanctum QemuX86-64n",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemux86-64n && bitbake -k sanctum-rootfs"
+                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemux86-64n && bitbake -k sanctum-bundle"
             ],
             "group": "build",
             "problemMatcher": []
@@ -96,7 +96,7 @@
             "label": "Build Sanctum Qemuarm64-a72",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemuarm64-a72 && bitbake -k sanctum-rootfs"
+                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemuarm64-a72 && bitbake -k sanctum-bundle"
             ],
             "group": "build",
             "problemMatcher": []

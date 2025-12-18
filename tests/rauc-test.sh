@@ -5,12 +5,21 @@ MACHINE="qemux86-64n"
 if [ $# -ge 1 ]; then
     MACHINE="$1"
 fi
+# Resolve workspace root (script lives in tests/)
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # CONFIGURATION
-QEMU_CONF="build/tmp/deploy/images/${MACHINE}/sanctum-rootfs.qemuboot.conf"
-BUNDLE="build/tmp/deploy/images/${MACHINE}/sanctum-bundle.raucb"         # Path to your RAUC bundle
+QEMU_CONF="${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}/sanctum-rootfs.qemuboot.conf"
+
+# Auto-detect RAUC bundle (*.raucb) in deploy/images/<MACHINE>
+BUNDLE_CANDIDATES=("${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}"/*.raucb)
+if [ "${#BUNDLE_CANDIDATES[@]}" -eq 0 ] || [ "${BUNDLE_CANDIDATES[0]##*/}" = "*.raucb" ]; then
+    echo "ERROR: No .raucb bundle found in ${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}" >&2
+    exit 1
+fi
+BUNDLE="${BUNDLE_CANDIDATES[0]}"
 SSH_USER="root"
-SSH_PORT=2222                        # Default slirp port, adjust if needed
+SSH_PORT=2222
 SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $SSH_PORT"
 SCP_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -P $SSH_PORT"
 GUEST_BUNDLE_PATH="/tmp/$(basename "$BUNDLE")"
@@ -33,15 +42,15 @@ trap cleanup EXIT
 
 # 1. Temporarily disable 'set -u' to avoid unbound variable error, then source Yocto environment and cd to workspace root
 set +u
-source sources/poky/oe-init-build-env
+source build-sanctum/build/init-build-env
 set -u
-cd ..
+cd "$ROOT"
 
 
 # 2. Start QEMU with runqemu in the background, log output to qemu.log
 echo "Launching QEMU in the background (headless)..."
 if [ "$MACHINE" = "qemux86-64n" ]; then
-    runqemu "$QEMU_CONF" slirp kvm nographic wic ovmf >qemu.log 2>&1 &
+    runqemu "$QEMU_CONF" slirp kvm nographic snapshot wic ovmf >qemu.log 2>&1 &
 elif [ "$MACHINE" = "qemuarm64-a72" ]; then
     runqemu "$QEMU_CONF" slirp nographic wic >qemu.log 2>&1 &
 else
