@@ -77,9 +77,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Initialize Sanctum QemuX86-64n",
+            "label": "Initialize Sanctum",
             "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local sanctum-qemux86-64n machine/qemux86-64n distro/sanctum",
+            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local sanctum machine/qemux86-64n distro/sanctum",
             "group": "build",
             "problemMatcher": []
         },
@@ -87,25 +87,20 @@
             "label": "Build Sanctum QemuX86-64n",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-sanctum-qemux86-64n/build/init-build-env && bitbake -k sanctum-rootfs"
+                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemux86-64n && bitbake -k sanctum-rootfs"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Sanctum Qemuarm64-a72",
+            "type": "shell",
+            "command": [
+                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemuarm64-a72 && bitbake -k sanctum-rootfs"
             ],
             "group": "build",
             "problemMatcher": []
         }
-        // {
-        //     "label": "checkout arm64-qemu-kas",
-        //     "type": "shell",
-        //     "command": "kas checkout kas/targets/qemu/arm64-qemu-kas.yml",
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "checkout x86-qemu-kas",
-        //     "type": "shell",
-        //     "command": "kas checkout kas/targets/qemu/x86-qemu-kas.yml",
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
         // {
         //     "label": "checkout reterminal-kas",
         //     "type": "shell",
@@ -120,28 +115,7 @@
         //         "sanctum-bundle"
         //     ],
         //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Build Sanctum Qemuarm64",
-        //     "dependsOn": [
-        //         "checkout arm64-qemu-kas",
-        //         "bitbake sanctum-bundle"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "Build Sanctum QemuX86n",
-        //     "dependsOn": [
-        //         "checkout x86-qemu-kas",
-        //         "bitbake sanctum-bundle"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
+
         // {
         //     "label": "Build Sanctum Reterminal",
         //     "dependsOn": [
