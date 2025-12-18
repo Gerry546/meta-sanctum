@@ -11,7 +11,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/openembedded-core-sanctum"
+            "path": "../../sources/openembedded-core"
         }
     },
     "bitbake-setup": {
@@ -20,7 +20,7 @@
                 "bb-layers": [
                     "../../meta-sanctum",
                     "../../sources/meta-openembedded/meta-oe",
-                    "../../sources/openembedded-core-sanctum/meta"
+                    "../../sources/openembedded-core/meta"
                 ],
                 "oe-fragments-one-of": {
                     "machine": {
