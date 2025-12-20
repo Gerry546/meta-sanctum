@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Build QemuX86-64 Core Image Homeassistant Development
+      - name: Build QemuX86-64 Core Image Homeassistant Stable
         shell: bash
         run: |
           sources/bitbake/bin/bitbake-setup \
@@ -28,7 +28,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            homeassistant stable machine/qemux86-64 distro/sanctum-test
+            homeassistant homeassistant machine/qemux86-64 distro/sanctum-test
           source build-homeassistant/build/init-build-env
           bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
       - name: Collect results
@@ -76,8 +76,8 @@ jobs:
             init \
             --non-interactive \
             --source-overrides ${{ gitea.workspace }}/configurations/homeassistant-dev-overrides.json \
-            homeassistant dev machine/qemux86-64 distro/sanctum-test
-          source build-homeassistant-dev/build/init-build-env
+            homeassistant homeassistant machine/qemux86-64 distro/sanctum-test
+          source build-homeassistant/build/init-build-env
           bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
       - name: Collect results
         if: always()
@@ -102,44 +102,55 @@ jobs:
           convert_markdown: true
           html_body: file://snippet.html
 
-  # QemuX86:
-  #   runs-on: yocto-builder
-  #   env:
-  #     RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
-  #   container:
-  #     volumes:
-  #         - /cache/:/cache/
-  #   steps:
-  #     - name: Check out repository code
-  #       uses: actions/checkout@v4
-  #     - name: Build QemuX86-64
-  #       run: |
-  #         kas build kas/targets/qemu/x86-qemu-kas.yml
-  #     - name: Run RAUC update test
-  #       run: |
-  #         ./tests/rauc-test.sh qemux86-64n
-  #     - name: Send failure mail
-  #       if: failure()
-  #       uses: https://github.com/dawidd6/action-send-mail@v6
-  #       with:
-  #         to: ${{ secrets.MAIL_TO }}
-  #         from: Gitea <gitea@hostname>
-  #         server_address: smtp.gmail.com
-  #         server_port: 465
-  #         username: ${{ secrets.OUTLOOK_EMAIL }}
-  #         password: ${{ secrets.OUTLOOK_PASSWORD }}
-  #         subject: Meta Sanctum - X86-64 - Status = ${{ job.status }}
-  #         priority: high
-  #         convert_markdown: true
-  #         html_body: |
-  #           ### Job Reterminal X86-64 Image ${{ job.status }}
-
-  #           The build step failed with the following output:
-
-  #           ```
-  #           ${{ steps.Build_QemuX86_64.outputs.stdout }}
-  #           ${{ steps.Build_QemuX86_64.outputs.stderr }}
-  #           ```
+  QemuX86:
+    runs-on: yocto-builder
+    env:
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
+    container:
+      volumes:
+          - /cache/:/cache/
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build QemuX86-64
+        shell: bash
+        run: |
+          sources/bitbake/bin/bitbake-setup \
+            --setting default registry "${{ gitea.workspace }}" \
+            --setting default top-dir-prefix "${{ gitea.workspace }}/.." \
+            --setting default top-dir-name "meta-sanctum" \
+            init \
+            --non-interactive \
+            sanctum sanctum machine/qemux86-64n distro/sanctum-test
+          source build-sanctum/build/init-build-env
+          bitbake sanctum-bundle |& tee "${{ gitea.workspace }}/build.log"
+      - name: Collect results
+        if: always()
+        run: |
+          awk '/QMP Available/,/Output from runqemu/' build.log > snippet.log
+          # Convert snippet.log to HTML (escape special chars, wrap in <pre>)
+          echo '<pre>' > snippet.html
+          sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' snippet.log >> snippet.html
+          echo '</pre>' >> snippet.html
+      - name: Run RAUC update test
+        run: |
+          ./tests/rauc-test.sh qemux86-64n
+      - name: Send failure mail
+        if: failure()
+        uses: https://github.com/dawidd6/action-send-mail@v6
+        with:
+          to: ${{ secrets.MAIL_TO }}
+          from: Gitea <gitea@hostname>
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.OUTLOOK_EMAIL }}
+          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          subject: Meta Sanctum - Sanctum QemuX86-64N Tests Failed
+          priority: high
+          convert_markdown: true
+          html_body: file://snippet.html
 
   # QemuArm64:
   #   runs-on: yocto-builder
