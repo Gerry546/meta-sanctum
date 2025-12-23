@@ -1,7 +1,7 @@
 IMAGE_INSTALL = "\
     packagegroup-core-boot \
     ${CORE_IMAGE_EXTRA_INSTALL} \
-    openssh-sshd \
+    openssh \
     openssh-scp \
     nano \
     ptest-runner \
