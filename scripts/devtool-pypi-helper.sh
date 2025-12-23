@@ -27,6 +27,6 @@ if [ "$ACTION" == "add" ]; then
 fi
 if [ "$ACTION" == "finish" ]; then
     # Run the finish helper
-    devtool finish -r -f python3-$RECIPE_NAME sources/meta-homeassistant/recipes-devtools/python/
+    devtool finish -r -f python3-$RECIPE_NAME ../../sources/meta-homeassistant/recipes-devtools/python/
     exit 0
 fi
