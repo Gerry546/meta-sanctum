@@ -25,7 +25,7 @@
         {
             "label": "Auto Upgrade Helper",
             "type": "shell",
-            "command": "source /home/tom/projects/meta-sanctum/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:auhRecipeName}",
+            "command": "source /home/tom/projects/meta-sanctum/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:recipeName}",
             "group": "none",
             "problemMatcher": []
         },
@@ -52,10 +52,28 @@
             "problemMatcher": []
         },
         {
+            "label": "Test HomeAssistant Layer",
+            "type": "shell",
+            "command": [
+                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-all"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Test HomeAssistant Package",
+            "type": "shell",
+            "command": [
+                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-ptest-${input:recipeName}"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
             "label": "Initialize HomeAssistant",
             "type": "shell",
             "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local homeassistant machine/qemux86-64 distro/sanctum-dev",
-            "group": "build",
+            "group": "none",
             "problemMatcher": []
         },
         {
@@ -80,7 +98,7 @@
             "label": "Initialize Sanctum",
             "type": "shell",
             "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local sanctum machine/qemux86-64n distro/sanctum",
-            "group": "build",
+            "group": "none",
             "problemMatcher": []
         },
         {
@@ -150,8 +168,8 @@
             "default": "homeassistant"
         },
         {
-            "id": "auhRecipeName",
-            "description": "Enter the Auto Upgrade Helper recipe name",
+            "id": "recipeName",
+            "description": "Enter the Recipe name",
             "type": "promptString"
         }
     ]
