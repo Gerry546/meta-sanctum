@@ -1,0 +1,3 @@
+[tool.ruff]
+exclude = ["build-homeassistant"]
+ignore = ["E402"]
