@@ -4,28 +4,38 @@ set -e
 
 echo "Updating modules..."
 
-echo "--- meta-browser"
-cd sources/meta-browser
-git fetch --all --prune
+# echo "--- meta-browser"
+# cd sources/meta-browser
+# git fetch --all --prune
 
-echo "--- meta-clang"
-cd ../meta-clang
-git fetch --all --prune
+# echo "--- meta-clang"
+# cd ../meta-clang
+# git fetch --all --prune
+
+cd sources/meta-openembedded
 
 echo "--- meta-openembedded"
 cd ../meta-openembedded
 git fetch --all --prune
 
-echo "--- meta-raspberrypi"
-cd ../meta-raspberrypi
-git fetch --all --prune
+# echo "--- meta-raspberrypi"
+# cd ../meta-raspberrypi
+# git fetch --all --prune
 
 echo "--- meta-rauc"
 cd ../meta-rauc
 git fetch --all --prune
 
-echo "--- poky"
-cd ../poky
+echo "--- meta-yocto"
+cd ../meta-yocto
+git fetch --all --prune  
+
+echo "--- meta-virtualization"
+cd ../meta-virtualization
+git fetch --all --prune
+
+echo "--- openembedded-core"
+cd ../openembedded-core
 git fetch --all --prune
 
 echo "--- meta-homeassistant"
