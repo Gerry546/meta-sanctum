@@ -103,7 +103,7 @@
 			"${workspaceFolder}/sources/poky/bitbake/lib",
 			"${workspaceFolder}/sources/poky/meta/lib",
 			"${workspaceFolder}/sources/meta/lib",
-			"${workspaceFolder}/auto-upgrade-helper/modules"			
+			"${workspaceFolder}/auto-upgrade-helper/modules"
 		],
 		"python.analysis.extraPaths": [
 			"${workspaceFolder}/sources/bitbake/lib",
