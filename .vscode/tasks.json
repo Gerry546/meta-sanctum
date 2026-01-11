@@ -72,7 +72,7 @@
         {
             "label": "Initialize HomeAssistant",
             "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local homeassistant machine/qemux86-64 distro/sanctum-dev",
+            "command": "${workspaceFolder}/scripts/init-bitbake-setup.sh homeassistant",
             "group": "none",
             "problemMatcher": []
         },
@@ -97,7 +97,7 @@
         {
             "label": "Initialize Sanctum",
             "type": "shell",
-            "command": "${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry ${workspaceFolder} --setting default top-dir-prefix ${workspaceFolder}/.. --setting default top-dir-name ${workspaceFolderBasename} init --non-interactive sanctum-local sanctum machine/qemux86-64n distro/sanctum",
+            "command": "${workspaceFolder}/scripts/init-bitbake-setup.sh sanctum",
             "group": "none",
             "problemMatcher": []
         },
