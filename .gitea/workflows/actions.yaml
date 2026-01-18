@@ -28,7 +28,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            homeassistant homeassistant machine/qemux86-64 distro/sanctum-test
+            sanctum homeassistant machine/qemux86-64 distro/sanctum-test
           source build-homeassistant/build/init-build-env
           bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
       - name: Collect results
@@ -76,7 +76,7 @@ jobs:
             init \
             --non-interactive \
             --source-overrides ${{ gitea.workspace }}/configurations/homeassistant-dev-overrides.json \
-            homeassistant homeassistant machine/qemux86-64 distro/sanctum-test
+            sanctum homeassistant machine/qemux86-64 distro/sanctum-test
           source build-homeassistant/build/init-build-env
           bitbake core-image-homeassistant-full |& tee "${{ gitea.workspace }}/build.log"
       - name: Collect results

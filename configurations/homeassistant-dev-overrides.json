@@ -9,7 +9,8 @@
                 },
                 "branch": "dev",
                 "rev": "dev"
-            }
+            },
+            "path": "../../sources/meta-homeassistant"
         }
     }
 }

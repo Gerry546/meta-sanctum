@@ -1,0 +1,49 @@
+{
+    "sources": {
+        "openembedded-core": {
+            "local": {
+                "path": "../sources/openembedded-core"
+            }
+        },
+        "meta-yocto": {
+            "local": {
+                "path": "../sources/meta-yocto"
+            }
+        },
+        "meta-openembedded": {
+            "local": {
+                "path": "../sources/meta-openembedded"
+            }
+        },
+        "meta-python-ai": {
+            "local": {
+                "path": "../sources/meta-python-ai"
+            }
+        },
+        "meta-clang-revival": {
+            "local": {
+                "path": "../sources/meta-clang-revival"
+            }            
+        },
+        "meta-homeassistant": {
+            "local": {
+                "path": "../sources/meta-homeassistant"
+            }           
+        },
+        "meta-sca": {
+            "local": {
+                "path": "../sources/meta-sca"
+            }
+        },
+        "meta-virtualization": {
+            "local": {
+                "path": "../sources/meta-virtualization"
+            }
+        },
+        "meta-rauc": {
+            "local": {
+                "path": "../sources/meta-rauc"
+            }
+        }
+    }
+}
