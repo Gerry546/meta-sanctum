@@ -22,11 +22,11 @@ fi
 echo "Running action: $ACTION for recipe: $RECIPE_NAME"
 if [ "$ACTION" == "add" ]; then
     # Run the add helper
-    devtool add python3-$RECIPE_NAME https://pypi.org/project/$RECIPE_NAME/
+    devtool add $RECIPE_NAME https://pypi.org/project/$RECIPE_NAME/
     exit 0
 fi
 if [ "$ACTION" == "finish" ]; then
     # Run the finish helper
-    devtool finish -r -f python3-$RECIPE_NAME ../../sources/meta-homeassistant/recipes-devtools/python/
+    devtool finish -r -f $RECIPE_NAME ../../sources/meta-homeassistant/recipes-devtools/python/
     exit 0
 fi

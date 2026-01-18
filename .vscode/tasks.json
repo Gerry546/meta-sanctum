@@ -18,7 +18,7 @@
         {
             "label": "Devtool Helper",
             "type": "shell",
-            "command": "${workspaceFolder}/scripts/devtool-pypi-helper.sh ${input:devtoolAddAction} ${input:devtoolRecipeName} ${input:buildDirectory}",
+            "command": "${workspaceFolder}/scripts/devtool-pypi-helper.sh ${input:devtoolAddAction} ${input:recipeName} ${input:buildDirectory}",
             "group": "none",
             "problemMatcher": []
         },
@@ -70,80 +70,21 @@
             "problemMatcher": []
         },
         {
-            "label": "Initialize HomeAssistant",
+            "label": "Initialize Yocto Environment",
             "type": "shell",
-            "command": "${workspaceFolder}/scripts/init-bitbake-setup.sh homeassistant",
+            "command": "clear && ${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry . --setting default top-dir-prefix ../ --setting default top-dir-name meta-sanctum init --non-interactive --source-overrides ${workspaceFolder}/configurations/sanctum-local-overrides.json sanctum ${input:bitbakeSetupConfiguration} machine/${input:bitbakeSetupMachine} distro/${input:bitbakeSetupDistro}",
             "group": "none",
             "problemMatcher": []
         },
         {
-            "label": "Build HomeAssistant",
+            "label": "Build Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake -k core-image-homeassistant-full"
-            ],
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Build OpenEmbedded Test Environment",
-            "type": "shell",
-            "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake -k core-image-test"
-            ],
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Initialize Sanctum",
-            "type": "shell",
-            "command": "${workspaceFolder}/scripts/init-bitbake-setup.sh sanctum",
-            "group": "none",
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Sanctum QemuX86-64n",
-            "type": "shell",
-            "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemux86-64n && bitbake -k sanctum-bundle"
-            ],
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Sanctum Qemuarm64-a72",
-            "type": "shell",
-            "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-sanctum/build/init-build-env && bitbake-config-build enable-fragment machine/qemuarm64-a72 && bitbake -k sanctum-bundle"
+                "clear && source /home/tom/projects/meta-sanctum/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
             ],
             "group": "build",
             "problemMatcher": []
         }
-        // {
-        //     "label": "checkout reterminal-kas",
-        //     "type": "shell",
-        //     "command": "kas checkout kas/targets/reterminal/reterminal-kas.yml",
-        //     "hide": true,
-        //     "problemMatcher": []
-        // },
-        // {
-        //     "label": "bitbake sanctum-bundle",
-        //     "type": "bitbake",
-        //     "recipes": [
-        //         "sanctum-bundle"
-        //     ],
-        //     "hide": true,
-
-        // {
-        //     "label": "Build Sanctum Reterminal",
-        //     "dependsOn": [
-        //         "checkout reterminal-kas",
-        //         "bitbake sanctum-bundle"
-        //     ],
-        //     "dependsOrder": "sequence",
-        //     "group": "build",
-        //     "problemMatcher": []
-        // },
     ],
     "inputs": [
         {
@@ -154,12 +95,12 @@
         {
             "id": "devtoolAddAction",
             "description": "devtool action (add/finish)",
-            "type": "promptString"
-        },
-        {
-            "id": "devtoolRecipeName",
-            "description": "Enter the recipe name (e.g., homeassistant)",
-            "type": "promptString"
+            "type":"pickString",
+            "options": [
+                "add",
+                "finish"
+            ],
+            "default": "add"
         },
         {
             "id": "buildDirectory",
@@ -171,6 +112,51 @@
             "id": "recipeName",
             "description": "Enter the Recipe name",
             "type": "promptString"
+        },
+        {
+            "id": "bitbakeSetupConfiguration",
+            "description": "Select the bitbake-setup configuration to use",
+            "type":"pickString",
+            "options": [
+                "homeassistant",
+                "sanctum",
+                "openembedded-test"
+            ],
+            "default": "sanctum"
+        },
+        {
+            "id": "bitbakeSetupMachine",
+            "description": "Enter the machine name for bitbake-setup",
+            "type": "pickString",
+            "options": [
+                "qemux86-64",
+                "qemux86-64n",
+                "qemuriscv64",
+                "qemuarm64-a72",
+            ],
+            "default": "qemux86-64n"
+        },
+        {
+            "id": "bitbakeSetupDistro",
+            "description": "Enter the distro name for bitbake-setup",
+            "type": "pickString",
+            "options": [
+                "sanctum-dev",
+                "sanctum-test",
+                "sanctum"
+            ],
+            "default": "sanctum-test"
+        },
+        {
+            "id": "buildTarget",
+            "description": "Enter the build target",
+            "type": "pickString",
+            "options": [
+                "core-image-homeassistant-full",
+                "sanctum-bundle",
+                "sanctum-rootfs"
+            ],
+            "default": "sanctum-bundle"
         }
     ]
 }
