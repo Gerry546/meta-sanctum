@@ -11,8 +11,7 @@ rauc-status-before.txt
 # bitbake setup
 .bitbake*
 # Upstream sources
-sources/meta-yocto/
-sources/openembedded-core/
+sources/*
 site.conf-backup*
 # Build directories
 build-*/
