@@ -6,15 +6,16 @@ if [ $# -ge 1 ]; then
     MACHINE="$1"
 fi
 # Resolve workspace root (script lives in tests/)
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="/cache/tmpdir"
 
 # CONFIGURATION
-QEMU_CONF="${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}/sanctum-rootfs.qemuboot.conf"
+QEMU_CONF="${ROOT}/build-sanctum/deploy/images/${MACHINE}/sanctum-rootfs.qemuboot.conf"
 
 # Auto-detect RAUC bundle (*.raucb) in deploy/images/<MACHINE>
-BUNDLE_CANDIDATES=("${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}"/*.raucb)
+BUNDLE_CANDIDATES=("${ROOT}/build-sanctum/deploy/images/${MACHINE}"/*.raucb)
 if [ "${#BUNDLE_CANDIDATES[@]}" -eq 0 ] || [ "${BUNDLE_CANDIDATES[0]##*/}" = "*.raucb" ]; then
-    echo "ERROR: No .raucb bundle found in ${ROOT}/build-sanctum/build/tmp/deploy/images/${MACHINE}" >&2
+    echo "ERROR: No .raucb bundle found in ${ROOT}/build-sanctum/deploy/images/${MACHINE}" >&2
     exit 1
 fi
 BUNDLE="${BUNDLE_CANDIDATES[0]}"

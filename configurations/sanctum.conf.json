@@ -131,8 +131,6 @@
                     "distro": {
                         "description": "Distribution configuration variant",
                         "options": [
-                            "distro/sanctum-dev",
-                            "distro/sanctum-test",
                             "distro/sanctum"
                         ]
                     }

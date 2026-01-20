@@ -1,5 +1,3 @@
-require include/ptests.inc
-
 IMAGE_INSTALL:append = " \
     openssh-sshd \
     openssh-scp \
@@ -8,4 +6,6 @@ IMAGE_INSTALL:append = " \
 
 IMAGE_INSTALL:append:qemuall = " \
     python3-pip \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'ptest-runner', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'python3-homeassistant-ptest', '', d)} \
 "

@@ -141,11 +141,9 @@
             "description": "Enter the distro name for bitbake-setup",
             "type": "pickString",
             "options": [
-                "sanctum-dev",
-                "sanctum-test",
                 "sanctum"
             ],
-            "default": "sanctum-test"
+            "default": "sanctum"
         },
         {
             "id": "buildTarget",
