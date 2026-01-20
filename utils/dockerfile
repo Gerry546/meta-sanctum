@@ -101,7 +101,7 @@ RUN set -eux; \
     fi
 
 # 9) Lightweight Python tools installed via pip (no cache)
-RUN set -eux; python3 -m pip install --no-cache-dir --break-system-packages tomli kas oelint-adv; \
+RUN set -eux; python3 -m pip install --no-cache-dir --break-system-packages tomli oelint-adv; \
     rm -rf /root/.cache/pip || true
 
 ARG kvm_gid=108
