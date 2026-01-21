@@ -25,7 +25,7 @@
         {
             "label": "Auto Upgrade Helper",
             "type": "shell",
-            "command": "source /home/tom/projects/meta-sanctum/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:recipeName}",
+            "command": "source /home/tom/projects/meta-sanctum/build/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:recipeName}",
             "group": "none",
             "problemMatcher": []
         },
@@ -55,7 +55,7 @@
             "label": "Test HomeAssistant Layer",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-all"
+                "clear && source /home/tom/projects/meta-sanctum/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-all"
             ],
             "group": "test",
             "problemMatcher": []
@@ -64,7 +64,7 @@
             "label": "Test HomeAssistant Package",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-ptest-${input:recipeName}"
+                "clear && source /home/tom/projects/meta-sanctum/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-ptest-${input:recipeName}"
             ],
             "group": "test",
             "problemMatcher": []
@@ -80,7 +80,7 @@
             "label": "Build Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
+                "clear && source /home/tom/projects/meta-sanctum/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
             ],
             "group": "build",
             "problemMatcher": []

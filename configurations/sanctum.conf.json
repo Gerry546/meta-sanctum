@@ -1,6 +1,18 @@
 {
     "description": "Sanctum - 'core image minimal' configuration",
     "sources": {
+        "meta-sanctum": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/Gerry546/meta-sanctum.git;protocol=https"
+                    }
+                },
+                "branch": "main",
+                "rev": "main"
+            },
+            "path": "meta-sanctum"
+        },
         "openembedded-core": {
             "git-remote": {
                 "remotes": {
@@ -11,7 +23,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/openembedded-core"
+            "path": "openembedded-core"
         },
         "meta-yocto": {
             "git-remote": {
@@ -23,7 +35,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-yocto"
+            "path": "meta-yocto"
         },
         "meta-openembedded": {
             "git-remote": {
@@ -35,7 +47,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-openembedded"
+            "path": "meta-openembedded"
         },
         "meta-python-ai": {
             "git-remote": {
@@ -47,7 +59,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-python-ai"
+            "path": "meta-python-ai"
         },
         "meta-clang-revival": {
             "git-remote": {
@@ -59,7 +71,7 @@
                 "branch": "main",
                 "rev": "main"
             },
-            "path": "../../sources/meta-clang-revival"
+            "path": "meta-clang-revival"
         },
         "meta-homeassistant": {
             "git-remote": {
@@ -71,7 +83,7 @@
                 "branch": "main",
                 "rev": "main"
             },
-            "path": "../../sources/meta-homeassistant"
+            "path": "meta-homeassistant"
         },
         "meta-sca": {
             "git-remote": {
@@ -83,7 +95,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-sca"
+            "path": "meta-sca"
         },
         "meta-virtualization": {
             "git-remote": {
@@ -95,7 +107,7 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-virtualization"
+            "path": "meta-virtualization"
         },
         "meta-rauc": {
             "git-remote": {
@@ -107,16 +119,16 @@
                 "branch": "master",
                 "rev": "master"
             },
-            "path": "../../sources/meta-rauc"
+            "path": "meta-rauc"
         }
     },
     "bitbake-setup": {
         "configurations": [
             {
                 "bb-layers": [
-                    "../../meta-sanctum",
-                    "../../sources/meta-openembedded/meta-oe",
-                    "../../sources/openembedded-core/meta"
+                    "meta-sanctum/meta-sanctum",
+                    "meta-openembedded/meta-oe",
+                    "openembedded-core/meta"
                 ],
                 "oe-fragments-one-of": {
                     "machine": {
@@ -140,15 +152,15 @@
                         "name": "homeassistant",
                         "description": "HomeAssistant Build Configuration",
                         "bb-layers": [
-                            "../../sources/meta-clang-revival",
-                            "../../sources/meta-homeassistant",
-                            "../../sources/meta-openembedded/meta-filesystems",
-                            "../../sources/meta-openembedded/meta-multimedia",
-                            "../../sources/meta-openembedded/meta-networking",
-                            "../../sources/meta-openembedded/meta-python",
-                            "../../sources/meta-python-ai",
-                            "../../sources/meta-sca",
-                            "../../sources/meta-virtualization"
+                            "meta-clang-revival",
+                            "meta-homeassistant",
+                            "meta-openembedded/meta-filesystems",
+                            "meta-openembedded/meta-multimedia",
+                            "meta-openembedded/meta-networking",
+                            "meta-openembedded/meta-python",
+                            "meta-python-ai",
+                            "meta-sca",
+                            "meta-virtualization"
                         ],
                         "oe-fragments": [
                             "meta-sanctum/infrastructure/commercial-license",
@@ -161,7 +173,7 @@
                         "name": "openembedded-test",
                         "description": "Openembedded testing environment",
                         "bb-layers": [
-                            "../../sources/meta-openembedded/meta-python"
+                            "meta-openembedded/meta-python"
                         ],
                         "oe-fragments": [
                             "meta-sanctum/testing/qemu-testing",
@@ -172,9 +184,9 @@
                     {
                         "name": "sanctum",
                         "description": "Standard Sanctum Build Configuration",
-                        "setup-dir-name": "build-sanctum",
+                        "setup-dir-name": "build/build-sanctum",
                         "bb-layers": [
-                            "../../sources/meta-rauc"
+                            "meta-rauc"
                         ],
                         "oe-fragments": [
                             "core/yocto/root-login-with-empty-password",

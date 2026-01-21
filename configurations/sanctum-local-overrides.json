@@ -1,5 +1,10 @@
 {
     "sources": {
+        "meta-sanctum": {
+            "local": {
+                "path": "../"
+            }
+        },
         "openembedded-core": {
             "local": {
                 "path": "../sources/openembedded-core"
