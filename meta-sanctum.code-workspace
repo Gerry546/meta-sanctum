@@ -65,8 +65,13 @@
 		"bitbake.buildConfigurations": [
 			{
 				"name": "HomeAssistant",
-				"pathToBuildFolder": "${workspaceFolder}/build-homeassistant/build",
-				"pathToEnvScript": "${workspaceFolder}/build-homeassistant/build/init-build-env"
+				"pathToBuildFolder": "${workspaceFolder}/build/build-homeassistant/build",
+				"pathToEnvScript": "${workspaceFolder}/build/build-homeassistant/build/init-build-env"
+			},
+			{
+				"name": "Sanctum",
+				"pathToBuildFolder": "${workspaceFolder}/build/build-sanctum/build",
+				"pathToEnvScript": "${workspaceFolder}/build/build-sanctum/build/init-build-env"
 			}
 		],
 		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/bitbake",
