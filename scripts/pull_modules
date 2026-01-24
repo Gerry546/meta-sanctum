@@ -1,63 +1,60 @@
 #!/bin/bash
+// filepath: /home/tom/projects/meta-sanctum/scripts/pull_modules
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 echo "Updating modules..."
 
-# echo "--- meta-browser"
-# cd sources/meta-browser
-# git fetch --all --prune
+# Resolve repo root from this script's location, so it works from any CWD.
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+SOURCES_DIR="${REPO_ROOT}/sources"
 
-# echo "--- meta-clang"
-# cd ../meta-clang
-# git fetch --all --prune
+if [[ ! -d "${SOURCES_DIR}" ]]; then
+  echo "ERROR: sources directory not found: ${SOURCES_DIR}" >&2
+  exit 1
+fi
 
-cd sources/meta-openembedded
+failures=0
 
-echo "--- meta-openembedded"
-cd ../meta-openembedded
-git fetch --all --prune
+fetch_repo() {
+  local dir="$1"
+  local name
+  name="$(basename -- "${dir}")"
 
-# echo "--- meta-raspberrypi"
-# cd ../meta-raspberrypi
-# git fetch --all --prune
+  # Only act on git repos.
+  if ! git -C "${dir}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    return 0
+  fi
 
-echo "--- meta-rauc"
-cd ../meta-rauc
-git fetch --all --prune
+  echo "--- ${name}"
+  if ! git -C "${dir}" fetch --all --prune; then
+    echo "ERROR: fetch failed for ${dir}" >&2
+    failures=$((failures + 1))
+  fi
+}
 
-echo "--- meta-yocto"
-cd ../meta-yocto
-git fetch --all --prune  
+# Fetch every immediate subfolder in sources/
+while IFS= read -r -d '' d; do
+  fetch_repo "${d}"
+done < <(find "${SOURCES_DIR}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 
-echo "--- meta-virtualization"
-cd ../meta-virtualization
-git fetch --all --prune
+# Optional: fetch nested Homeassistant repo if present (not an immediate sources/ child)
+HA_DIR="${SOURCES_DIR}/meta-homeassistant/scripts/HA"
+if [[ -d "${HA_DIR}" ]]; then
+  echo "--- Homeassistant (scripts/HA)"
+  if git -C "${HA_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    if ! git -C "${HA_DIR}" fetch --all --prune; then
+      echo "ERROR: fetch failed for ${HA_DIR}" >&2
+      failures=$((failures + 1))
+    fi
+  fi
+fi
 
-echo "--- openembedded-core"
-cd ../openembedded-core
-git fetch --all --prune
-
-echo "--- meta-homeassistant"
-cd ../meta-homeassistant
-git fetch --all --prune
-
-echo "--- meta-python-ai"
-cd ../meta-python-ai
-git fetch --all --prune
-
-echo "meta-sca"
-cd ../meta-sca
-git fetch --all --prune
-
-echo "--- meta-clang-revival"
-cd ../meta-clang-revival
-git fetch --all --prune
-
-cd ../..
-echo "--- Homeassistant"
-cd sources/meta-homeassistant/scripts/HA
-git fetch --all --prune
-cd ../../../..
+if [[ "${failures}" -ne 0 ]]; then
+  echo "Done (with ${failures} failure(s))"
+  exit 1
+fi
 
 echo "Done"
