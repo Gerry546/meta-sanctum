@@ -11,7 +11,7 @@ part --fixed-size 50M --ondisk sda --align 4096 --no-table
 part --fixed-size 50M --source rawcopy --sourceparams="file=sanctum-grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv --align 1024
 
 # Rootfs
-part / --fixed-size 2G --source rootfs --ondisk vda --fstype=ext4 --label root_A --align 4096 --exclude-path=data/ 
-part / --fixed-size 2G --source empty  --ondisk vda --fstype=ext4 --label root_B --align 4096
+part / --fixed-size 4G --source rootfs --ondisk vda --fstype=ext4 --label root_A --align 4096 --exclude-path=data/ 
+part / --fixed-size 4G --source empty  --ondisk vda --fstype=ext4 --label root_B --align 4096
 
 part /data --fixed-size 100M --source rootfs --ondisk vda --fstype=ext4 --rootfs-dir=${IMAGE_ROOTFS}/data --label data --align 4096
