@@ -84,6 +84,15 @@
             ],
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "label": "RunQemu Yocto Target",
+            "type": "shell",
+            "command": [
+                "clear && source /home/tom/projects/meta-sanctum/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic kvm ovmf ${input:graphicalTarget}"
+            ],
+            "group": "test",
+            "problemMatcher": []
         }
     ],
     "inputs": [
@@ -155,6 +164,16 @@
                 "sanctum-rootfs"
             ],
             "default": "sanctum-bundle"
+        },
+        {
+            "id": "graphicalTarget",
+            "description": "Select graphical target for runqemu",
+            "type":"pickString",
+            "options": [
+                "nographic",
+                "egl-headless publicvnc",
+            ],
+            "default": "nographic"
         }
     ]
 }
