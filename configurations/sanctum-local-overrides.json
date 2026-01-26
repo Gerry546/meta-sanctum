@@ -49,6 +49,31 @@
             "local": {
                 "path": "../sources/meta-rauc"
             }
+        },
+        "meta-gnome-image": {
+            "local": {
+                "path": "../sources/meta-gnome-image"
+            }
+        },
+        "meta-image": {
+            "local": {
+                "path": "../sources/meta-image"
+            }
+        },
+        "meta-wayland": {
+            "local": {
+                "path": "../sources/meta-wayland"
+            }
+        },
+        "meta-security": {
+            "local": {
+                "path": "../sources/meta-security"
+            }
+        },
+        "meta-intel": {
+            "local": {
+                "path": "../sources/meta-intel"
+            }
         }
     }
 }

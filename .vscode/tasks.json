@@ -129,7 +129,8 @@
             "options": [
                 "homeassistant",
                 "sanctum",
-                "openembedded-test"
+                "openembedded-test",
+                "gnome-image"
             ],
             "default": "sanctum"
         },
@@ -161,7 +162,8 @@
             "options": [
                 "core-image-homeassistant-full",
                 "sanctum-bundle",
-                "sanctum-rootfs"
+                "sanctum-rootfs",
+                "sanctum-gnome-image"
             ],
             "default": "sanctum-bundle"
         },

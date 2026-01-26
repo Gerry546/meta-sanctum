@@ -120,6 +120,66 @@
                 "rev": "master"
             },
             "path": "meta-rauc"
+        },
+        "meta-security": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.yoctoproject.org/meta-security;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-security"
+        },
+        "meta-gnome-image": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://codeberg.org/flk/meta-gnome-image.git;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-gnome-image"
+        },
+        "meta-image": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://codeberg.org/flk/meta-image.git;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-image"
+        },
+        "meta-wayland": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://codeberg.org/flk/meta-wayland.git;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-wayland"
+        },
+        "meta-intel": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.yoctoproject.org/meta-intel;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-intel"
         }
     },
     "bitbake-setup": {
@@ -192,6 +252,20 @@
                             "core/yocto/root-login-with-empty-password",
                             "meta-sanctum/testing/rauc-qemu-testing"
                         ]
+                    },
+                    {
+                        "name": "gnome-image",
+                        "description": "GNOME Image Build Configuration",
+                        "bb-layers": [
+                            "meta-openembedded/meta-gnome",
+                            "meta-openembedded/meta-python",
+                            "meta-openembedded/meta-networking",
+                            "meta-openembedded/meta-multimedia"
+                        ],
+                        "oe-fragments": [
+                            "meta-sanctum/graphical/gnome-dependencies"
+                        ],
+                        "setup-dir-name": "build/build-gnome-image"
                     }
                 ]
             }

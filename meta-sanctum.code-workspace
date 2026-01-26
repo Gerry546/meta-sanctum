@@ -59,6 +59,26 @@
 		{
 			"name": "meta-virtualization",
 			"path": "sources/meta-virtualization"
+		},
+		{
+			"name": "meta-security",
+			"path": "sources/meta-security"
+		},
+		{
+			"name": "meta-gnome-image",
+			"path": "sources/meta-gnome-image"
+		},
+		{
+			"name": "meta-image",
+			"path": "sources/meta-image"
+		},
+		{
+			"name": "meta-wayland",
+			"path": "sources/meta-wayland"
+		},
+		{
+			"name": "meta-intel",
+			"path": "sources/meta-intel"
 		}
 	],
 	"settings": {
