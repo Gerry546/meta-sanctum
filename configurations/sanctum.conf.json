@@ -227,7 +227,7 @@
                             "meta-sanctum/testing/qemu-testing",
                             "core/yocto/root-login-with-empty-password"
                         ],
-                        "setup-dir-name": "build-homeassistant"
+                        "setup-dir-name": "build/build-homeassistant"
                     },
                     {
                         "name": "openembedded-test",
@@ -239,7 +239,7 @@
                             "meta-sanctum/testing/qemu-testing",
                             "core/yocto/root-login-with-empty-password"
                         ],
-                        "setup-dir-name": "build-openembedded-test"
+                        "setup-dir-name": "build/build-openembedded-test"
                     },
                     {
                         "name": "sanctum",
