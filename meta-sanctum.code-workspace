@@ -5,10 +5,6 @@
 			"path": "."
 		},
 		{
-			"name": "homeassistant workspace",
-			"path": "build-homeassistant/build/workspace"
-		},
-		{
 			"name": "meta-homeassistant",
 			"path": "sources/meta-homeassistant"
 		},
