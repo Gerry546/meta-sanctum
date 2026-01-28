@@ -2,16 +2,14 @@
     "description": "Sanctum - 'core image minimal' configuration",
     "sources": {
         "meta-sanctum": {
-            "git-remote": {
-                "remotes": {
-                    "origin": {
-                        "uri": "https://github.com/Gerry546/meta-sanctum.git;protocol=https"
-                    }
-                },
-                "branch": "main",
-                "rev": "main"
-            },
-            "path": "meta-sanctum"
+            "local": {
+                "path": "../../../"
+            }
+        },
+        "bitbake": {
+            "local": {
+                "path": "../../../sources/bitbake"
+            }
         },
         "openembedded-core": {
             "git-remote": {
