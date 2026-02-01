@@ -13,7 +13,7 @@ RECIPE_NAME="$2"
 BUILD_DIR="build-$3"
 
 # Source the Yocto build environment in the 'build' directory
-source "$BUILD_DIR/build/init-build-env"
+source "build/$BUILD_DIR/build/init-build-env"
 
 if [ "$ACTION" != "add" ] && [ "$ACTION" != "finish" ]; then
     echo "Invalid action: $ACTION. Use 'add' or 'finish'."
