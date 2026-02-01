@@ -18,7 +18,7 @@
         {
             "label": "Devtool Helper",
             "type": "shell",
-            "command": "${workspaceFolder}/scripts/devtool-pypi-helper.sh ${input:devtoolAddAction} ${input:recipeName} ${input:buildDirectory}",
+            "command": "${workspaceFolder}/scripts/devtool-pypi-helper.sh ${input:devtoolAction} ${input:recipeName} ${input:buildDirectory}",
             "group": "none",
             "problemMatcher": []
         },
@@ -102,12 +102,13 @@
             "type": "promptString"
         },
         {
-            "id": "devtoolAddAction",
+            "id": "devtoolAction",
             "description": "devtool action (add/finish)",
             "type":"pickString",
             "options": [
                 "add",
-                "finish"
+                "finish",
+                "upgrade"
             ],
             "default": "add"
         },
