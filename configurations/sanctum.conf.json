@@ -15,7 +15,7 @@
             "git-remote": {
                 "remotes": {
                     "origin": {
-                        "uri": "https://git.openembedded.org/openembedded-core;protocol=https"
+                        "uri": "https://github.com/Gerry546/openembedded-core.git;protocol=https"
                     }
                 },
                 "branch": "master",
