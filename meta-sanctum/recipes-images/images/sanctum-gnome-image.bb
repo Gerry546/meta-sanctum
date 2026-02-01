@@ -7,12 +7,6 @@ IMAGE_INSTALL:append = "\
     openssh \
 "
 
-IMAGE_FSTYPES = "\
-    wic \
-    wic.bmap \
-    ext4 \
-"
-
 #############################
 # GNOME Configuration
 #############################
