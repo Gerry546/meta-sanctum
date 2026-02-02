@@ -34,10 +34,6 @@
             "type": "shell",
             "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
             "group": "test",
-            "dependsOn": [
-                "Build Sanctum Qemuarm64-a72"
-            ],
-            "dependsOrder": "sequence",
             "problemMatcher": []
         },
         {
@@ -45,10 +41,20 @@
             "type": "shell",
             "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
             "group": "test",
-            "dependsOn": [
-                "Build Sanctum QemuX86n-64n"
-            ],
-            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "HomeAssistant Pip Check",
+            "type": "shell",
+            "command": "${workspaceFolder}/tests/pip-check-test.sh qemux86-64n",
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "PTest Test",
+            "type": "shell",
+            "command": "${workspaceFolder}/tests/ptest-test.sh ${input:recipeName} ${input:bitbakeSetupMachine}",
+            "group": "test",
             "problemMatcher": []
         },
         {
