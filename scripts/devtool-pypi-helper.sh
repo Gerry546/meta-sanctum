@@ -12,6 +12,9 @@ ACTION="$1"
 RECIPE_NAME="$2"
 BUILD_DIR="build-$3"
 
+# Resolve workspace root (script lives in scripts/)
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 # Strip leading "python3" from recipe name (e.g. python3-foo -> foo)
 if [[ "$RECIPE_NAME" == python3* ]]; then
     RECIPE_NAME_STRIPPED="${RECIPE_NAME#python3-}"
@@ -34,6 +37,6 @@ if [ "$ACTION" == "add" ]; then
 fi
 if [ "$ACTION" == "finish" ]; then
     # Run the finish helper
-    devtool finish -r -f $RECIPE_NAME ../../../../sources/meta-homeassistant/recipes-devtools/python/
+    devtool finish -r -f $RECIPE_NAME "$ROOT/sources/meta-homeassistant/recipes-devtools/python/"
     exit 0
 fi
