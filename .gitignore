@@ -23,3 +23,4 @@ scripts/upgrade_logs/
 pip-check-missing.txt
 pip-check-upgrade.txt
 tests/ptest-run.log
+ptest-run.log
