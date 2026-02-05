@@ -61,7 +61,7 @@
             "label": "Test HomeAssistant Layer",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-all"
+                "clear && source ${workspaceFolder}/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-all"
             ],
             "group": "test",
             "problemMatcher": []
@@ -70,7 +70,7 @@
             "label": "Test HomeAssistant Package",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-ptest-${input:recipeName}"
+                "clear && source ${workspaceFolder}/build/build-homeassistant/build/init-build-env && bitbake meta-${input:meta-layer}-image-ptest-${input:recipeName}"
             ],
             "group": "test",
             "problemMatcher": []
@@ -127,6 +127,11 @@
         {
             "id": "recipeName",
             "description": "Enter the Recipe name",
+            "type": "promptString"
+        },
+        {
+            "id": "meta-layer",
+            "description": "Enter the Layer name",
             "type": "promptString"
         },
         {
