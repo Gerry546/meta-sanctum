@@ -9,9 +9,16 @@
             "problemMatcher": []
         },
         {
+            "label": "HomeAssistant: analyze integrations",
+            "type": "shell",
+            "command": "python3 ${workspaceFolder}/sources/meta-homeassistant/scripts/parse_requirement.py -v ${input:haVersion} -c n",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
             "label": "HomeAssistant: upgrade integrations",
             "type": "shell",
-            "command": "python3 ${workspaceFolder}/scripts/run_ha_upgrades_from_csv.py -v ${input:haVersions}",
+            "command": "python3 ${workspaceFolder}/scripts/run_ha_upgrades_from_csv.py -v ${input:haVersion}",
             "group": "none",
             "problemMatcher": []
         },
@@ -51,7 +58,7 @@
             "problemMatcher": []
         },
         {
-            "label": "PTest Test",
+            "label": "Test HomeAssistant PTest",
             "type": "shell",
             "command": "${workspaceFolder}/tests/ptest-test.sh ${input:recipeName} ${input:bitbakeSetupMachine}",
             "group": "test",
@@ -103,8 +110,8 @@
     ],
     "inputs": [
         {
-            "id": "haVersions",
-            "description": "Enter Home Assistant versions (comma separated)",
+            "id": "haVersion",
+            "description": "Enter Home Assistant version (comma separated)",
             "type": "promptString"
         },
         {
