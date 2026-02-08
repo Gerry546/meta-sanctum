@@ -5,6 +5,10 @@
 			"path": "."
 		},
 		{
+			"name": "homeassistant ptest results",
+			"path": "build/build-homeassistant/build/tmp/work/qemux86_64n-oe-linux/core-image-homeassistant-full/1.0/testimage"
+		},
+		{
 			"name": "meta-homeassistant",
 			"path": "sources/meta-homeassistant"
 		},
