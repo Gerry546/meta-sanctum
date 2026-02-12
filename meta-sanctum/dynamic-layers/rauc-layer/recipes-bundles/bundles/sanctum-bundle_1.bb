@@ -16,8 +16,9 @@ RAUC_BUNDLE_SLOTS:qemuarm64 = "rootfs boot"
 
 RAUC_SLOT_rootfs = "sanctum-rootfs"
 RAUC_SLOT_rootfs[fstype] = "ext4"
-RAUC_SLOT_rootfs[file] = "sanctum-rootfs.ext4"
+RAUC_SLOT_rootfs[file] = "sanctum-rootfs.ext4.zst"
 RAUC_SLOT_rootfs[adaptive] = "block-hash-index"
+RAUC_SLOT_rootfs[unpack] = "zst"
 
 RAUC_SLOT_boot = "sanctum-bootfs"
 RAUC_SLOT_boot[fstype] = "vfat"
