@@ -32,7 +32,7 @@
         {
             "label": "Auto Upgrade Helper",
             "type": "shell",
-            "command": "source /home/tom/projects/meta-sanctum/build/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:recipeName}",
+            "command": "source ${workspaceFolder}/build/build-${input:buildDirectory}/build/init-build-env &&  ${workspaceFolder}/auto-upgrade-helper/upgrade-helper.py -c ${workspaceFolder}/utils/upgrade-helper.conf ${input:recipeName}",
             "group": "none",
             "problemMatcher": []
         },
@@ -93,7 +93,7 @@
             "label": "Build Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
             ],
             "group": "build",
             "problemMatcher": []
@@ -102,7 +102,7 @@
             "label": "RunQemu Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source /home/tom/projects/meta-sanctum/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic kvm ovmf ${input:graphicalTarget}"
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic kvm ovmf ${input:graphicalTarget}"
             ],
             "group": "test",
             "problemMatcher": []
