@@ -67,7 +67,7 @@
                     }
                 },
                 "branch": "main",
-                "rev": "main"
+                "rev": "0c2fcf131346e2abc65ec5f49c5452bf3040870a"
             },
             "path": "meta-clang-revival"
         },
