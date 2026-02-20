@@ -59,18 +59,6 @@
             },
             "path": "meta-python-ai"
         },
-        "meta-clang-revival": {
-            "git-remote": {
-                "remotes": {
-                    "origin": {
-                        "uri": "https://github.com/zboszor/meta-clang-revival;protocol=https"
-                    }
-                },
-                "branch": "main",
-                "rev": "0c2fcf131346e2abc65ec5f49c5452bf3040870a"
-            },
-            "path": "meta-clang-revival"
-        },
         "meta-homeassistant": {
             "git-remote": {
                 "remotes": {
@@ -210,7 +198,6 @@
                         "name": "homeassistant",
                         "description": "HomeAssistant Build Configuration",
                         "bb-layers": [
-                            "meta-clang-revival",
                             "meta-homeassistant",
                             "meta-openembedded/meta-filesystems",
                             "meta-openembedded/meta-multimedia",
