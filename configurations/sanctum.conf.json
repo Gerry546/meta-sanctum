@@ -218,11 +218,8 @@
                         "name": "openembedded-test",
                         "description": "Openembedded testing environment",
                         "bb-layers": [
-                            "meta-openembedded/meta-python"
                         ],
                         "oe-fragments": [
-                            "meta-sanctum/testing/qemu-testing",
-                            "core/yocto/root-login-with-empty-password"
                         ],
                         "setup-dir-name": "build/build-openembedded-test"
                     },
