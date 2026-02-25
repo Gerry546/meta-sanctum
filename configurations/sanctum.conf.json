@@ -19,7 +19,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "74ba238ff1ba1e9b612aece1989b828f3a8f8770"
             },
             "path": "openembedded-core"
         },
@@ -31,7 +31,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "2486ce2889062500e39446bc07c7d21120a0345e"
             },
             "path": "meta-yocto"
         },
@@ -43,7 +43,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "4d60ca97ec2f0a7a22ac35a97f716544b54fbe39"
             },
             "path": "meta-openembedded"
         },
@@ -55,7 +55,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "e92ecad6e1bebc921bf02726592addd0bb8ed44f"
             },
             "path": "meta-python-ai"
         },
@@ -79,7 +79,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "6ca808298261b4e407c435454cf33f043135b842"
             },
             "path": "meta-sca"
         },
@@ -91,7 +91,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "master"
+                "rev": "30c5d74db7489b5938453bfcd3ef9151704e2bd0"
             },
             "path": "meta-virtualization"
         },
