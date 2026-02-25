@@ -33,7 +33,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum homeassistant machine/qemux86-64 distro/sanctum
+            sanctum homeassistant machine/qemux86-64 distro/homeassistant
           echo "Sourcing environment"
           source build/build-homeassistant/build/init-build-env
           echo "Starting build"
@@ -88,7 +88,7 @@ jobs:
             init \
             --non-interactive \
             --source-overrides ${{ gitea.workspace }}/configurations/homeassistant-dev-overrides.json \
-            sanctum homeassistant machine/qemux86-64 distro/sanctum
+            sanctum homeassistant machine/qemux86-64 distro/homeassistant
           echo "Sourcing environment"
           source build/build-homeassistant/build/init-build-env
           echo "Starting build"
