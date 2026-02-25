@@ -150,8 +150,7 @@
                 "sanctum",
                 "openembedded-test",
                 "gnome-image"
-            ],
-            "default": "sanctum"
+            ]
         },
         {
             "id": "bitbakeSetupMachine",
@@ -162,17 +161,16 @@
                 "qemux86-64n",
                 "qemuriscv64",
                 "qemuarm64-a72",
-            ],
-            "default": "qemux86-64n"
+            ]
         },
         {
             "id": "bitbakeSetupDistro",
             "description": "Enter the distro name for bitbake-setup",
             "type": "pickString",
             "options": [
-                "sanctum"
-            ],
-            "default": "sanctum"
+                "sanctum",
+                "homeassistant"
+            ]
         },
         {
             "id": "buildTarget",
@@ -183,8 +181,7 @@
                 "sanctum-bundle",
                 "sanctum-rootfs",
                 "sanctum-gnome-image"
-            ],
-            "default": "sanctum-bundle"
+            ]
         },
         {
             "id": "graphicalTarget",
