@@ -189,7 +189,8 @@
                     "distro": {
                         "description": "Distribution configuration variant",
                         "options": [
-                            "distro/sanctum"
+                            "distro/sanctum",
+                            "distro/homeassistant"
                         ]
                     }
                 },
@@ -199,6 +200,7 @@
                         "description": "HomeAssistant Build Configuration",
                         "bb-layers": [
                             "meta-homeassistant",
+                            "meta-yocto/meta-poky",
                             "meta-openembedded/meta-filesystems",
                             "meta-openembedded/meta-multimedia",
                             "meta-openembedded/meta-networking",
