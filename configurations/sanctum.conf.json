@@ -183,6 +183,7 @@
                             "machine/qemux86-64",
                             "machine/qemux86-64n",
                             "machine/qemuarm64",
+                            "machine/qemuarm64-a72",
                             "machine/qemuriscv64"
                         ]
                     },

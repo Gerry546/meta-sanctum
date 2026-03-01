@@ -307,19 +307,21 @@
 
 	intc@8000000 {
 		phandle = <0x8005>;
-		reg = <0x00 0x8000000 0x00 0x10000 0x00 0x8010000 0x00 0x10000>;
-		compatible = "arm,cortex-a15-gic";
+		reg = <0x00 0x8000000 0x00 0x10000 0x00 0x80a0000 0x00 0xf60000>;
+		#redistributor-regions = <0x01>;
+		compatible = "arm,gic-v3";
 		ranges;
 		#size-cells = <0x02>;
 		#address-cells = <0x02>;
 		interrupt-controller;
 		#interrupt-cells = <0x03>;
 
-		v2m@8020000 {
+		its@8080000 {
 			phandle = <0x8006>;
-			reg = <0x00 0x8020000 0x00 0x1000>;
+			reg = <0x00 0x8080000 0x00 0x20000>;
+			#msi-cells = <0x01>;
 			msi-controller;
-			compatible = "arm,gic-v2m-frame";
+			compatible = "arm,gic-v3-its";
 		};
 	};
 
@@ -340,26 +342,58 @@
 				cluster0 {
 
 					core0 {
-						cpu = <0x8004>;
+						cpu = <0x8001>;
 					};
 
 					core1 {
-						cpu = <0x8003>;
-					};
-
-					core2 {
 						cpu = <0x8002>;
 					};
 
+					core2 {
+						cpu = <0x8003>;
+					};
+
 					core3 {
-						cpu = <0x8001>;
+						cpu = <0x8004>;
+					};
+
+					core4 {
+						cpu = <0x8007>;
+					};
+
+					core5 {
+						cpu = <0x8008>;
+					};
+
+					core6 {
+						cpu = <0x8009>;
+					};
+
+					core7 {
+						cpu = <0x800a>;
+					};
+
+					core8 {
+						cpu = <0x800b>;
+					};
+
+					core9 {
+						cpu = <0x800c>;
+					};
+
+					core10 {
+						cpu = <0x800d>;
+					};
+
+					core11 {
+						cpu = <0x800e>;
 					};
 				};
 			};
 		};
 
 		cpu@0 {
-			phandle = <0x8004>;
+			phandle = <0x8001>;
 			reg = <0x00>;
 			enable-method = "psci";
 			compatible = "arm,cortex-a72";
@@ -367,7 +401,7 @@
 		};
 
 		cpu@1 {
-			phandle = <0x8003>;
+			phandle = <0x8002>;
 			reg = <0x01>;
 			enable-method = "psci";
 			compatible = "arm,cortex-a72";
@@ -375,7 +409,7 @@
 		};
 
 		cpu@2 {
-			phandle = <0x8002>;
+			phandle = <0x8003>;
 			reg = <0x02>;
 			enable-method = "psci";
 			compatible = "arm,cortex-a72";
@@ -383,8 +417,72 @@
 		};
 
 		cpu@3 {
-			phandle = <0x8001>;
+			phandle = <0x8004>;
 			reg = <0x03>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@4 {
+			phandle = <0x8007>;
+			reg = <0x04>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@5 {
+			phandle = <0x8008>;
+			reg = <0x05>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@6 {
+			phandle = <0x8009>;
+			reg = <0x06>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@7 {
+			phandle = <0x800a>;
+			reg = <0x07>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@8 {
+			phandle = <0x800b>;
+			reg = <0x08>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@9 {
+			phandle = <0x800c>;
+			reg = <0x09>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@a {
+			phandle = <0x800d>;
+			reg = <0x0a>;
+			enable-method = "psci";
+			compatible = "arm,cortex-a72";
+			device_type = "cpu";
+		};
+
+		cpu@b {
+			phandle = <0x800e>;
+			reg = <0x0b>;
 			enable-method = "psci";
 			compatible = "arm,cortex-a72";
 			device_type = "cpu";
@@ -411,7 +509,7 @@
 	};
 
 	chosen {
-		bootargs = "root=/dev/vda rw  mem=8192M ip=dhcp console=ttyAMA0 console=hvc0 swiotlb=0 ";
+		bootargs = "root=/dev/vda rw  mem=8192M ip=dhcp console=ttyAMA0 swiotlb=0 earlycon=pl011,0x9000000 ignore_loglevel loglevel=8 ";
 		stdout-path = "/pl011@9000000";
 		rng-seed = <0x7112143c 0xd78a871a 0x490360cf 0x75945115 0x28f2d764 0xdb6de24c 0x8cbdeee2 0x2217be68>;
 		kaslr-seed = <0x8912fd83 0x7e5c0438>;

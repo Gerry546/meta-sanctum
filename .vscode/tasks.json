@@ -99,7 +99,16 @@
             "problemMatcher": []
         },
         {
-            "label": "RunQemu Yocto Target",
+            "label": "RunQemu Yocto Arm Target",
+            "type": "shell",
+            "command": [
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic ${input:graphicalTarget}"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "RunQemu Yocto X86 Target",
             "type": "shell",
             "command": [
                 "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic kvm ovmf ${input:graphicalTarget}"

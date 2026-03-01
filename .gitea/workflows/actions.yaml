@@ -199,7 +199,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum sanctum machine/qemux86-64n distro/sanctum
+            sanctum sanctum machine/qemuarm64-a72 distro/sanctum
           echo "Sourcing environment"
           source build/build-sanctum/build/init-build-env
           echo "Starting build"
