@@ -37,23 +37,16 @@
             "problemMatcher": []
         },
         {
-            "label": "Rauc Test: qemuarm64-a72",
+            "label": "Rauc Test",
             "type": "shell",
-            "command": "${workspaceFolder}/tests/rauc-test.sh qemuarm64-a72",
+            "command": "${workspaceFolder}/tests/rauc-test.sh ${input:bitbakeSetupMachine}",
             "group": "test",
             "problemMatcher": []
         },
         {
-            "label": "Rauc Test: qemux86-64n",
+            "label": "Test HomeAssistant Pip Check",
             "type": "shell",
-            "command": "${workspaceFolder}/tests/rauc-test.sh qemux86-64n",
-            "group": "test",
-            "problemMatcher": []
-        },
-        {
-            "label": "HomeAssistant Pip Check",
-            "type": "shell",
-            "command": "${workspaceFolder}/tests/pip-check-test.sh qemux86-64n",
+            "command": "${workspaceFolder}/tests/pip-check-test.sh ${input:bitbakeSetupMachine}",
             "group": "test",
             "problemMatcher": []
         },
@@ -83,7 +76,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Initialize Yocto Environment",
+            "label": "Initialize Yocto Build Environment",
             "type": "shell",
             "command": "clear && ${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry . --setting default top-dir-prefix ../ --setting default top-dir-name meta-sanctum init --non-interactive --source-overrides ${workspaceFolder}/configurations/sanctum-local-overrides.json sanctum ${input:bitbakeSetupConfiguration} machine/${input:bitbakeSetupMachine} distro/${input:bitbakeSetupDistro}",
             "group": "none",
@@ -99,19 +92,10 @@
             "problemMatcher": []
         },
         {
-            "label": "RunQemu Yocto Arm Target",
+            "label": "RunQemu Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic ${input:graphicalTarget}"
-            ],
-            "group": "test",
-            "problemMatcher": []
-        },
-        {
-            "label": "RunQemu Yocto X86 Target",
-            "type": "shell",
-            "command": [
-                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic kvm ovmf ${input:graphicalTarget}"
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic ${input:qemuParameters}"
             ],
             "group": "test",
             "problemMatcher": []
@@ -157,6 +141,7 @@
             "options": [
                 "homeassistant",
                 "sanctum",
+                "raspberrypi",
                 "openembedded-test",
                 "gnome-image"
             ]
@@ -170,6 +155,7 @@
                 "qemux86-64n",
                 "qemuriscv64",
                 "qemuarm64-a72",
+                "reterminal"
             ]
         },
         {
@@ -193,12 +179,14 @@
             ]
         },
         {
-            "id": "graphicalTarget",
+            "id": "qemuParameters",
             "description": "Select graphical target for runqemu",
             "type":"pickString",
             "options": [
                 "nographic",
+                "kvm ovmf nographic",
                 "egl-headless publicvnc",
+                "kvm ovmf egl-headless publicvnc"
             ],
             "default": "nographic"
         }

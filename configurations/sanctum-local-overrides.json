@@ -74,6 +74,11 @@
             "local": {
                 "path": "../sources/meta-intel"
             }
+        },
+        "meta-raspberrypi": {
+            "local": {
+                "path": "../sources/meta-raspberrypi"
+            }
         }
     }
 }

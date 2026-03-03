@@ -15,9 +15,7 @@ IMAGE_INSTALL:append:reterminal = "\
     evtest \
     i2c-tools \
     curl \
-    \
     kernel-modules \
-    \
     button-handler \
 "
 

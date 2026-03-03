@@ -166,6 +166,18 @@
                 "rev": "master"
             },
             "path": "meta-intel"
+        },
+        "meta-raspberrypi": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://git.yoctoproject.org/meta-raspberrypi;protocol=https"
+                    }
+                },
+                "branch": "master",
+                "rev": "master"
+            },
+            "path": "meta-raspberrypi"
         }
     },
     "bitbake-setup": {
@@ -184,7 +196,8 @@
                             "machine/qemux86-64n",
                             "machine/qemuarm64",
                             "machine/qemuarm64-a72",
-                            "machine/qemuriscv64"
+                            "machine/qemuriscv64",
+                            "machine/reterminal"
                         ]
                     },
                     "distro": {
@@ -251,6 +264,19 @@
                             "meta-sanctum/graphical/gnome-dependencies"
                         ],
                         "setup-dir-name": "build/build-gnome-image"
+                    },
+                    {
+                        "name": "raspberrypi",
+                        "description": "Build configuration for a Raspberry Pi device",
+                        "bb-layers": [
+                            "meta-raspberrypi",
+                            "meta-rauc"
+                        ],
+                        "oe-fragments": [
+                             "meta-sanctum/infrastructure/commercial-license",
+                             "core/yocto/root-login-with-empty-password"
+                        ],
+                        "setup-dir-name": "build/build-raspberrypi"
                     }
                 ]
             }
