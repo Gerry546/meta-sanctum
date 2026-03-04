@@ -78,7 +78,7 @@
         {
             "label": "Initialize Yocto Build Environment",
             "type": "shell",
-            "command": "clear && ${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry . --setting default top-dir-prefix ../ --setting default top-dir-name meta-sanctum init --non-interactive --source-overrides ${workspaceFolder}/configurations/sanctum-local-overrides.json sanctum ${input:bitbakeSetupConfiguration} machine/${input:bitbakeSetupMachine} distro/${input:bitbakeSetupDistro}",
+            "command": "clear && ${workspaceFolder}/sources/bitbake/bin/bitbake-setup --setting default registry . --setting default top-dir-prefix ../ --setting default top-dir-name meta-sanctum init --source-overrides ${workspaceFolder}/configurations/sanctum-local-overrides.json",
             "group": "none",
             "problemMatcher": []
         },
@@ -86,7 +86,7 @@
             "label": "Build Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake-config-build enable-fragment distro/${input:bitbakeSetupDistro} && bitbake -k ${input:buildTarget}"
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && bitbake-config-build enable-fragment machine/${input:bitbakeSetupMachine} && bitbake -k ${input:buildTarget}"
             ],
             "group": "build",
             "problemMatcher": []
@@ -155,16 +155,8 @@
                 "qemux86-64n",
                 "qemuriscv64",
                 "qemuarm64-a72",
-                "reterminal"
-            ]
-        },
-        {
-            "id": "bitbakeSetupDistro",
-            "description": "Enter the distro name for bitbake-setup",
-            "type": "pickString",
-            "options": [
-                "sanctum",
-                "homeassistant"
+                "reterminal",
+                "raspberrypi2-64"
             ]
         },
         {

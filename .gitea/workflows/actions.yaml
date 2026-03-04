@@ -33,7 +33,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum homeassistant machine/qemux86-64 distro/homeassistant
+            sanctum homeassistant machine/qemux86-64
           echo "Sourcing environment"
           source build/build-homeassistant/build/init-build-env
           echo "Starting build"
@@ -88,7 +88,7 @@ jobs:
             init \
             --non-interactive \
             --source-overrides ${{ gitea.workspace }}/configurations/homeassistant-dev-overrides.json \
-            sanctum homeassistant machine/qemux86-64 distro/homeassistant
+            sanctum homeassistant machine/qemux86-64
           echo "Sourcing environment"
           source build/build-homeassistant/build/init-build-env
           echo "Starting build"
@@ -142,7 +142,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum sanctum machine/qemux86-64n distro/sanctum
+            sanctum sanctum machine/qemux86-64n
           echo "Sourcing environment"
           source build/build-sanctum/build/init-build-env
           echo "Starting build"
@@ -199,7 +199,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum sanctum machine/qemuarm64-a72 distro/sanctum
+            sanctum sanctum machine/qemuarm64-a72
           echo "Sourcing environment"
           source build/build-sanctum/build/init-build-env
           echo "Starting build"
@@ -257,7 +257,7 @@ jobs:
             --setting default top-dir-name "meta-sanctum" \
             init \
             --non-interactive \
-            sanctum raspberrypi machine/reterminal distro/sanctum
+            sanctum raspberrypi machine/reterminal
           echo "Sourcing environment"
           source build/build-raspberrypi/build/init-build-env
           echo "Starting build"
