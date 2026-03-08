@@ -164,7 +164,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "74ba238ff1ba1e9b612aece1989b828f3a8f8770"
+                "rev": "7ffb9451f28190107e43322a88a97c55db021416"
             },
             "path": "openembedded-core"
         },
@@ -176,7 +176,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "2486ce2889062500e39446bc07c7d21120a0345e"
+                "rev": "3f03fdabf81f13971e73b4441927cf2953426f9f"
             },
             "path": "meta-yocto"
         },
@@ -188,7 +188,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "4d60ca97ec2f0a7a22ac35a97f716544b54fbe39"
+                "rev": "0bc67b61ca52e85a5a882d809ba0c98d21cceac8"
             },
             "path": "meta-openembedded"
         },
@@ -200,7 +200,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "e92ecad6e1bebc921bf02726592addd0bb8ed44f"
+                "rev": "fbb65fa18e75006314d570d33f405520888a033d"
             },
             "path": "meta-python-ai"
         },
@@ -224,7 +224,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "6ca808298261b4e407c435454cf33f043135b842"
+                "rev": "f0e05d505c31ff41491c9fc7179e63a8d7b90e9b"
             },
             "path": "meta-sca"
         },
@@ -236,7 +236,7 @@
                     }
                 },
                 "branch": "master",
-                "rev": "30c5d74db7489b5938453bfcd3ef9151704e2bd0"
+                "rev": "a1e1a021b49f5257d8908aa9b8c2ee9c083e674c"
             },
             "path": "meta-virtualization"
         },
