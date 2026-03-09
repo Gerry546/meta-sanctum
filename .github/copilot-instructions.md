@@ -207,6 +207,11 @@ When preparing commits (or suggested commit messages):
 - If applicable, you **should** reference Yocto bugs as `Fixes [YOCTO #<id>]` in the commit body.
 - If applicable, you **may** add contributor credit tags (`Reported-by`, `Suggested-by`, `Tested-by`, `Reviewed-by`, `Cc`).
 
+Important: commit-message format
+- You **MUST NOT** use Conventional Commit style prefixes such as `fix(<scope>):`, `feat(<scope>):`, or other `type(scope):` forms when preparing commits for this repo. These differ from the project's historical commit format and cause inconsistent history entries.
+- Always start the one-line summary with the recipe name or short path followed by a colon and a space. Example: `python3-siobrultech-protocols: remove conflicting tests package during installation`.
+- Keep the recipe-name prefix short and use the upstream recipe name where applicable (e.g., `python3-<name>:`). This helps automated tooling and searching by package name.
+
 Note: do not create commits unless the user explicitly asks for committing changes.
 
 ## Guidance for Copilot edits
@@ -216,3 +221,4 @@ When asked to change recipes or images:
 - Keep recipe variables and overrides consistent with existing style.
 - Avoid introducing new layers or restructuring directories unless explicitly requested.
 - When referencing files in explanations, use repo-relative paths.
+- When generating commit messages (including suggestions by Copilot), always format the one-line summary as `recipe-name: short description` and avoid `type(scope):` or other Conventional Commit-style prefixes.
