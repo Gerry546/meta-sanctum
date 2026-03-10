@@ -18,7 +18,7 @@ build-*/
 build/
 build
 # upgrade logs
-scripts/upgrade_logs/
+scripts/homeassistant/upgrade_logs/
 
 pip-check-missing.txt
 pip-check-upgrade.txt
