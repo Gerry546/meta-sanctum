@@ -1,6 +1,6 @@
 # Copilot instructions for this repository (meta-sanctum)
 
-Last reviewed: 2026-03-01
+Last reviewed: 2026-03-10
 
 This repository is a Yocto Project workspace centered around the `meta-sanctum` layer and related upstream layers in `sources/`.
 
@@ -16,6 +16,7 @@ When making changes:
 - Do **not** edit generated build output (`build/`, `tmp/`, `sstate-cache/`, `downloads/`) except for debugging locally.
 - You **should** change local layers (`meta-sanctum/`, `sources/meta-homeassistant/`) instead of upstream layers unless explicitly requested.
 - When repository workflows, paths, layers, or tooling change, you **should** update this instructions file in the same change set.
+- When documentation changes, you **should** update the wiki under `meta-sanctum.wiki/` and keep `README.md` focused on high-level orientation and links into the wiki.
 
 ## Repo setup
 
@@ -30,35 +31,37 @@ This repo is commonly configured to share Yocto caches across builds:
   - `./scripts/pull_modules`
 
 ### Development environment
-- This repo supports building with `kas` (recommended for a reproducible toolchain).
-- See the top-level README for the Docker-based workflow and kas entry points.
+- This repo is documented around the Yocto-native `bitbake-setup` plus BitBake workflow.
+- `kas` is deprecated in this repository and should not be the default workflow suggested in new documentation or commands.
+- See the wiki for the Docker-based workflow and the repository build initialization flow.
 
 Key files/directories:
-- `README.md`: high-level project overview and build/run examples.
+- `README.md`: high-level landing page and links into the wiki.
+- `meta-sanctum.wiki/`: canonical project documentation and operational memory.
 - `meta-sanctum/`: the main layer (recipes, images, configs).
 - `sources/meta-homeassistant/`: Home Assistant layer and many Python recipes.
+- `scripts/homeassistant/`: Home Assistant dependency parsing and upgrade automation.
 - `configurations/`: repo-specific build configuration inputs.
+
+## Documentation policy
+
+- Detailed setup steps, workflows, rationale, and restart-oriented notes belong in `meta-sanctum.wiki/`.
+- `README.md` **should** stay concise and act as an eye-catching entry point rather than the full manual.
+- If a change affects workflow, architecture, testing, or repository structure, update the relevant wiki page in the same change set when practical.
 
 ## Building (keep it working)
 
-There are two common workflows.
+The documented workflow is the Yocto-native repository layout using `bitbake-setup` plus BitBake.
 
-Before proposing substantial recipe changes, you **must** identify which workflow the user is currently using and keep commands consistent with that workflow.
+Before proposing substantial recipe changes, you **must** identify which build directory and machine configuration the user is currently using and keep commands consistent with that workflow.
 
-### A) Build with kas
-- Choose a kas config under `kas/` (machine-specific).
-- Run:
-  - `kas build kas/<machine>/<config>.yml`
-
-This fetches layers and runs BitBake with the right configuration.
-
-### B) Build with BitBake directly (using this repo’s build dir layout)
+### Build with BitBake directly (using this repo’s build dir layout)
 - Build directories live under `build/` (e.g., `build/build-homeassistant/`).
 - The environment init script is at `build/build-<name>/build/init-build-env`.
 
 Creating a build directory (repo-supported approach):
 - The repo includes BitBake’s `bitbake-setup` and VS Code tasks wrap it.
-- The underlying command is `sources/bitbake/bin/bitbake-setup ... init ...` with repo settings (see the VS Code task “Initialize Yocto Environment”).
+- The underlying command is `sources/bitbake/bin/bitbake-setup ... init ...` with repo settings (see the VS Code task “Initialize Yocto Build Environment”).
 
 Typical usage:
 - `source build/build-homeassistant/build/init-build-env`

@@ -11,14 +11,28 @@
         {
             "label": "HomeAssistant: analyze integrations",
             "type": "shell",
-            "command": "python3 ${workspaceFolder}/sources/meta-homeassistant/scripts/parse_requirement.py -v ${input:haVersion} -c n",
+            "command": "uv run --project ${workspaceFolder} python ${workspaceFolder}/scripts/homeassistant/ha_workflow.py parse -v ${input:haVersion}",
             "group": "none",
             "problemMatcher": []
         },
         {
             "label": "HomeAssistant: upgrade integrations",
             "type": "shell",
-            "command": "python3 ${workspaceFolder}/scripts/run_ha_upgrades_from_csv.py -v ${input:haVersion}",
+            "command": "uv run --project ${workspaceFolder} python ${workspaceFolder}/scripts/homeassistant/ha_workflow.py upgrade -v ${input:haVersion}",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "HomeAssistant: patch layer from CSV",
+            "type": "shell",
+            "command": "uv run --project ${workspaceFolder} python ${workspaceFolder}/scripts/homeassistant/ha_workflow.py patch -v ${input:haVersion}",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "HomeAssistant: full upgrade workflow",
+            "type": "shell",
+            "command": "uv run --project ${workspaceFolder} python ${workspaceFolder}/scripts/homeassistant/ha_workflow.py all -v ${input:haVersion} --branch ${input:haBranch}",
             "group": "none",
             "problemMatcher": []
         },
@@ -106,6 +120,12 @@
             "id": "haVersion",
             "description": "Enter Home Assistant version (comma separated)",
             "type": "promptString"
+        },
+        {
+            "id": "haBranch",
+            "description": "Enter the branch name for sources/meta-homeassistant",
+            "type": "promptString",
+            "default": "ha-upgrade"
         },
         {
             "id": "devtoolAction",

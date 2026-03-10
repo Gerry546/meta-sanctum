@@ -1,149 +1,49 @@
 # Meta-Sanctum
 
-meta-sanctum is a Yocto layer designed to provide a flexible platform for home automation projects. It offers custom machines, distributions, and recipes to support experimentation, learning, and practical deployments in home automation environments.
+Meta-Sanctum is a Yocto workspace for home automation systems. It combines a local layer, a curated set of upstream layers, machine-specific build flows, and a Home Assistant integration workflow that is designed for repeatable release updates.
 
-## Project Goals
+This README is intentionally short. It should help you understand what the repository is, what it can do, and where to go next. The canonical operational documentation lives in the wiki under [meta-sanctum.wiki/Home.md](meta-sanctum.wiki/Home.md).
 
-- **Provide a Platform for Home Automation:**
+## What This Repository Contains
 
-  - Build and maintain images tailored for home automation devices and gateways.
-  - Integrate and test open source home automation software, such as Home Assistant.
+- A local Yocto layer in `meta-sanctum/`
+- A maintained Home Assistant layer in `sources/meta-homeassistant/`
+- Build and run workflows for QEMU and hardware targets such as reTerminal
+- RAUC-enabled images and testing flows
+- Automation for Home Assistant dependency analysis and recipe upgrades in `scripts/homeassistant/`
 
-- **Experimentation and Learning:**
-  - Explore the Yocto Project build system, layer structure, and recipe creation.
-  - Develop and test custom recipes, overlays, and configurations.
+## Quick Overview
 
-## Supported Machines
+- Build workflow: `bitbake-setup` and direct BitBake using the repository build layout
+- Main active project area: Home Assistant integration and packaging
+- Main targets: QEMU, reTerminal, Raspberry Pi related work, and platform experiments
+- Main documentation: the wiki, not the README
 
-- Qemuarm64
-- Qemux86-64
-- reTerminal
+## Start Here
 
-## Features
+- Repository overview and navigation: [meta-sanctum.wiki/Home.md](meta-sanctum.wiki/Home.md)
+- First-time and returning setup: [meta-sanctum.wiki/Other/Getting-Started.md](meta-sanctum.wiki/Other/Getting-Started.md)
+- Build and run workflows: [meta-sanctum.wiki/Other/Build-Workflows.md](meta-sanctum.wiki/Other/Build-Workflows.md)
+- Repository structure and rationale: [meta-sanctum.wiki/Other/Repository-Layout.md](meta-sanctum.wiki/Other/Repository-Layout.md)
+- Home Assistant maintenance workflow: [meta-sanctum.wiki/Projects/HomeAssistant.md](meta-sanctum.wiki/Projects/HomeAssistant.md)
+- Testing strategy and commands: [meta-sanctum.wiki/Other/Testing.md](meta-sanctum.wiki/Other/Testing.md)
 
-- Custom machine and distribution definitions for various hardware targets
-- Integration with upstream Yocto layers (meta-openembedded, meta-browser, etc.)
-- Recipes for Home Assistant and related Python packages
-- Example images for QEMU and real hardware
-- RAUC integration
+## If You Just Want To Build Something
 
-## Setup
+Use the wiki page [meta-sanctum.wiki/Other/Build-Workflows.md](meta-sanctum.wiki/Other/Build-Workflows.md). It covers:
 
-1. **Create recommended cache directories:**
-   It is advised to create the following folders on your host system to speed up builds and share downloads between builds:
+- recommended host cache setup
+- build environment initialization with `bitbake-setup`
+- direct BitBake builds
+- QEMU launch commands
+- Docker-based development environment
 
-   - `/cache/downloads` — used for storing downloaded source files
-   - `/cache/sstate` — used for sharing sstate-cache objects
-     (Both directories are referenced in the Yocto configuration and will help avoid repeated downloads and rebuilds.)
+## Documentation Policy
 
-   ```sh
-   sudo mkdir -p /cache/downloads /cache/sstate
-   sudo chown $(id -u):$(id -g) /cache/downloads /cache/sstate
-   ```
-
-2. **Clone this repository:**
-
-   ```sh
-   git clone https://github.com/Gerry546/meta-sanctum.git
-   cd meta-sanctum
-   ```
-
-3. **(Optional) Install kas:**
-   If you prefer not to use the provided Docker container, you can install kas directly on your system:
-
-   ```sh
-   pip install kas
-   # or
-   pipx install kas
-   ```
-
-   **Recommended:** Use the development Docker container described below, which includes kas and all required tools pre-installed.
-
-## Building the Project (with kas)
-
-1: **Choose a kas configuration file:**
-
-- Example: `kas/reterminal/reterminal.yml` or another file in the `kas/` directory.
-
-The Kas files are structured based on machine type (Qemu, Reterminal etc.). The include directory contains specific snippets which enable more features.
-
-2: **Build the image:**
-
-   ```sh
-   kas build kas/reterminal/reterminal.yml
-   ```
-
-   This will fetch all required layers and build the selected image for the target machine.
-
-## Running in QEMU
-
-1. **Locate the built image:**
-
-   - Images are typically found in `build/tmp/deploy/images/<machine>/`.
-
-2. **Run the image in QEMU:**
-   There are several options you can use with `runqemu` to tailor the emulation environment:
-
-   - `publicvnc` — Enables VNC server for graphical output (connect with a VNC client)
-   - `nographic` — No graphical output, serial console only
-   - `kvm` — Enables hardware virtualization (recommended for x86/x86_64 hosts)
-   - `slirp` — User-mode networking (default, easy setup)
-   - `ovmf` — UEFI firmware (useful for modern x86 images)
-   - `wic` — Use the generated .wic disk image
-
-   **Example for x86-qemu-reterminal-kas.yml:**
-
-   ```sh
-   runqemu build/tmp/deploy/images/reterminal-qemux86-64/reterminal-image.qemuboot.conf slirp ovmf kvm publicvnc wic
-   ```
-
-   This command will start the reTerminal x86 QEMU image with UEFI, VNC graphical output, KVM acceleration, and the .wic disk image.
-
-   **Example for Home Assistant builds:**
-
-   ```sh
-   runqemu build/tmp/deploy/images/qemux86-64/core-image-homeassistant-full.qemuboot.conf slirp kvm nographic
-   ```
-
-   This command will start the Home Assistant QEMU image with KVM acceleration and serial console only (no graphical output).
-
-   - You can mix and match these options depending on your needs and hardware support.
-   - Port forwarding and memory settings can be adjusted in `kas/include/common-kas.yml`.
-
-## Using the Development Docker Container
-
-A pre-configured Docker container is provided to facilitate easier building and debugging. This container includes all the necessary tools and dependencies for working with Yocto and meta-sanctum, ensuring a consistent and reproducible development environment.
-
-### Building the Docker Container
-
-From the project root, build the container with:
-
-```sh
-docker build -t meta-sanctum-dev utils/dockerfile
-```
-
-### Using the Container
-
-You can start an interactive shell in the container with:
-
-```sh
-docker run --rm -it -v "$PWD:/workspace" -v /cache:/cache -w /workspace meta-sanctum-dev /bin/bash
-```
-
-This mounts your project directory into the container and also mounts your host's `/cache` directory under `/cache` in the container, allowing you to build and debug as if you were on your host system and to share downloads and sstate cache efficiently.
-
-The container is especially useful for:
-
-- Building images with kas or bitbake
-- Running Yocto development tools
-- Ensuring all dependencies are available and up to date
-
-## Contributing
-
-Contributions are welcome! If you have improvements, bug fixes, or new features, please open a pull request on GitHub. All contributions—whether for new machines, recipes, documentation, or build improvements—are appreciated. Please ensure your changes are well-documented and tested where possible.
-
-For questions or discussion, feel free to open an issue or join the conversation on the project's GitHub page.
+- The README is the landing page.
+- The wiki is the long-term memory of the project.
+- Detailed setup steps, workflows, architecture notes, and project rationale belong in the wiki.
 
 ## License
 
-This project is licensed under the Apache-2.0 License. See the LICENSE file for details.
+This project is licensed under the Apache-2.0 License. See [LICENSE](LICENSE).
