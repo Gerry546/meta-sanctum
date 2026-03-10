@@ -34,6 +34,7 @@ LAYERS_FILE = LAYER_SCRIPTS_DIR / "layers.json"
 INTEGRATIONS_FILE = LAYER_SCRIPTS_DIR / "integrations.json"
 DEFAULT_HA_CHECKOUT = HOMEASSISTANT_SCRIPT_DIR / "HA"
 LAYER_PATH_BASE = LAYER_SCRIPTS_DIR / "HA"
+SHELL = shutil.which("bash") or "/bin/bash"
 CSV_COLUMNS = [
     "Component",
     "Tests Available",
@@ -345,10 +346,10 @@ def run_recipe_upgrades(
 
         log_file = LOG_DIR / f"{candidate.package.replace('/', '_')}_{candidate.new_version}.log"
         with log_file.open("w", encoding="utf8") as handle:
-            handle.write(f"Running: {RUNNER} {candidate.package} {build_dir}\n\n")
+            handle.write(f"Running: {SHELL} {RUNNER} {candidate.package} {build_dir}\n\n")
             handle.flush()
             process = subprocess.Popen(
-                [str(RUNNER), candidate.package, str(build_dir)],
+                [SHELL, str(RUNNER), candidate.package, str(build_dir)],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
