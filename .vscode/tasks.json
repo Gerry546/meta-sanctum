@@ -65,7 +65,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Test HomeAssistant PTest",
+            "label": "Test Headless PTest",
             "type": "shell",
             "command": "${workspaceFolder}/tests/ptest-test.sh ${input:recipeName} ${input:bitbakeSetupMachine}",
             "group": "test",
@@ -84,7 +84,7 @@
             "label": "Test HomeAssistant Package",
             "type": "shell",
             "command": [
-                "clear && source ${workspaceFolder}/build/build-homeassistant/build/init-build-env && bitbake meta-${input:meta-layer}-image-ptest-${input:recipeName}"
+                "clear && source ${workspaceFolder}/build/build-homeassistant/build/init-build-env && bitbake meta-homeassistant-image-ptest-${input:recipeName}"
             ],
             "group": "test",
             "problemMatcher": []
@@ -147,11 +147,6 @@
         {
             "id": "recipeName",
             "description": "Enter the Recipe name",
-            "type": "promptString"
-        },
-        {
-            "id": "meta-layer",
-            "description": "Enter the Layer name",
             "type": "promptString"
         },
         {
