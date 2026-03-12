@@ -20,6 +20,7 @@
                             "meta-openembedded/meta-networking",
                             "meta-openembedded/meta-python",
                             "meta-python-ai",
+                            "meta-clang-revival",
                             "meta-sca",
                             "meta-virtualization"
                         ],
@@ -287,6 +288,18 @@
                 "rev": "master"
             },
             "path": "meta-raspberrypi"
+        },
+        "meta-clang-revival": {
+            "git-remote": {
+                "remotes": {
+                    "origin": {
+                        "uri": "https://github.com/zboszor/meta-clang-revival;protocol=https"
+                    }
+                },
+                "branch": "main",
+                "rev": "14e4c8830eb1f2537bca5c3ff32d86a9b96a35c7"
+            },
+            "path": "meta-clang-revival"
         }
     },
     "version": "1.0"
