@@ -100,7 +100,6 @@
 			"*.conf": "bitbake",
 			"*.inc": "bitbake"
 		},
-		"python.defaultInterpreterPath": ".venv/bin/python3",
 		"[python]": {
 			"diffEditor.ignoreTrimWhitespace": false,
 			"editor.formatOnType": true,
