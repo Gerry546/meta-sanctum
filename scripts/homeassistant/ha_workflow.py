@@ -28,6 +28,9 @@ HOMEASSISTANT_RECIPE_DIR = LAYER_DIR / "recipes-homeassistant" / "homeassistant"
 INTEGRATIONS_TESTS_FILE = (
     HOMEASSISTANT_RECIPE_DIR / "python3-homeassistant" / "integrations-tests.inc"
 )
+INTEGRATIONS_FILE_PATH = (
+    HOMEASSISTANT_RECIPE_DIR / "python3-homeassistant" / "integrations.inc"
+)
 RUNNER = HOMEASSISTANT_SCRIPT_DIR / "run-upgrade-helper.sh"
 LOG_DIR = HOMEASSISTANT_SCRIPT_DIR / "upgrade_logs"
 LAYERS_FILE = LAYER_SCRIPTS_DIR / "layers.json"
@@ -35,6 +38,7 @@ INTEGRATIONS_FILE = LAYER_SCRIPTS_DIR / "integrations.json"
 DEFAULT_HA_CHECKOUT = HOMEASSISTANT_SCRIPT_DIR / "HA"
 LAYER_PATH_BASE = LAYER_SCRIPTS_DIR / "HA"
 SHELL = shutil.which("bash") or "/bin/bash"
+SUMMARY_METADATA_SUFFIX = ".summary.json"
 CSV_COLUMNS = [
     "Component",
     "Tests Available",
@@ -64,6 +68,10 @@ def normalize_package_name(name: str) -> str:
 
 def normalize_component_name(name: str) -> str:
     return name.replace("-", "_")
+
+
+def integration_sort_key(name: str) -> str:
+    return name.replace("_", "-")
 
 
 def parse_version_safe(value: str):
@@ -262,6 +270,27 @@ def save_summary_csv(rows: list[dict[str, str]], version_name: str) -> Path:
     return output_path
 
 
+def save_summary_metadata(
+    version_name: str,
+    actual_version: str,
+    upgrade_only: bool,
+    integrations_only: bool,
+    rows: list[dict[str, str]],
+) -> Path:
+    output_path = SCRIPT_OUTPUT_DIR / f"{version_name}{SUMMARY_METADATA_SUFFIX}"
+    metadata = {
+        "requested_version": version_name,
+        "actual_version": actual_version,
+        "upgrade_only": upgrade_only,
+        "integrations_only": integrations_only,
+        "row_count": len(rows),
+        "component_count": len({row.get("Component", "").strip() for row in rows if row.get("Component", "").strip()}),
+    }
+    output_path.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n", encoding="utf8")
+    print(f"Saved summary metadata: {output_path}")
+    return output_path
+
+
 def cleanup_repo(ha_path: Path) -> None:
     if ha_path.exists():
         shutil.rmtree(ha_path)
@@ -281,6 +310,48 @@ def read_summary_rows(version_name: str) -> list[dict[str, str]]:
         print(f"Using legacy summary CSV location: {csv_path}")
     with csv_path.open(newline="", encoding="utf8") as file:
         return list(csv.DictReader(file))
+
+
+def read_summary_metadata(version_name: str) -> dict | None:
+    candidate_paths = [
+        SCRIPT_OUTPUT_DIR / f"{version_name}{SUMMARY_METADATA_SUFFIX}",
+        ROOT / "scripts" / f"{version_name}{SUMMARY_METADATA_SUFFIX}",
+        LAYER_SCRIPTS_DIR / f"{version_name}{SUMMARY_METADATA_SUFFIX}",
+    ]
+    metadata_path = next((path for path in candidate_paths if path.exists()), None)
+    if metadata_path is None:
+        return None
+    if metadata_path != candidate_paths[0]:
+        print(f"Using legacy summary metadata location: {metadata_path}")
+    return load_json(metadata_path)
+
+
+def summary_allows_component_sync(version_name: str) -> bool:
+    metadata = read_summary_metadata(version_name)
+    if metadata is None:
+        print(
+            "Skipping integration and test-package sync because summary metadata is missing. "
+            "Run the parse stage without filters to enable full component synchronization."
+        )
+        return False
+    if metadata.get("upgrade_only") or metadata.get("integrations_only"):
+        print(
+            "Skipping integration and test-package sync because the summary CSV was generated "
+            "with filters enabled. Run parse without --upgrade-only or --integrations-only."
+        )
+        return False
+    return True
+
+
+def group_summary_rows_by_component(version_name: str) -> dict[str, list[dict[str, str]]]:
+    grouped: dict[str, list[dict[str, str]]] = {}
+    for row in read_summary_rows(version_name):
+        component_name = row.get("Component", "").strip()
+        if not component_name:
+            continue
+        normalized_name = normalize_component_name(component_name)
+        grouped.setdefault(normalized_name, []).append(row)
+    return grouped
 
 
 def collect_upgrade_candidates(version_name: str) -> list[UpgradeCandidate]:
@@ -488,6 +559,121 @@ def find_append_block(lines: list[str], section_name: str) -> tuple[int, int]:
     return block_start, block_end
 
 
+def find_quoted_block(lines: list[str], variable_name: str) -> tuple[int, int]:
+    start_marker = f'{variable_name} = "\\'
+    block_start = None
+    block_end = None
+    for index, line in enumerate(lines):
+        if block_start is None and line.strip().startswith(start_marker):
+            block_start = index + 1
+            continue
+        if block_start is not None and line.strip() == '"':
+            block_end = index
+            break
+    if block_start is None or block_end is None:
+        raise RuntimeError(f"{variable_name} block not found in {INTEGRATIONS_FILE_PATH}")
+    return block_start, block_end
+
+
+def collect_ordered_packages(lines: list[str], start: int, end: int) -> list[str]:
+    packages: list[str] = []
+    seen: set[str] = set()
+    for line in lines[start:end]:
+        match = re.match(r"\s*\$\{PN\}-([a-z0-9_\-]+)\s*\\", line)
+        if not match:
+            continue
+        package_name = normalize_component_name(match.group(1))
+        if package_name in seen:
+            continue
+        seen.add(package_name)
+        packages.append(package_name)
+    return packages
+
+
+def read_current_integrations() -> set[str]:
+    lines = INTEGRATIONS_FILE_PATH.read_text(encoding="utf8").splitlines(keepends=True)
+    block_start, block_end = find_quoted_block(lines, "INTEGRATIONS")
+    return set(collect_ordered_packages(lines, block_start, block_end))
+
+
+def find_line_index(lines: list[str], prefix: str) -> int:
+    for index, line in enumerate(lines):
+        if line.strip().startswith(prefix):
+            return index
+    raise RuntimeError(f"Line starting with {prefix!r} not found in {INTEGRATIONS_FILE_PATH}")
+
+
+def parse_integration_sections(lines: list[str], start_index: int) -> dict[str, list[str]]:
+    sections: dict[str, list[str]] = {}
+    index = start_index
+    while index < len(lines):
+        while index < len(lines) and lines[index].strip() == "":
+            index += 1
+        if index >= len(lines):
+            break
+
+        section_start = index
+        while index < len(lines) and lines[index].strip() != "":
+            index += 1
+        section_lines = lines[section_start:index]
+
+        integration_name = None
+        for line in section_lines:
+            match = re.match(r'ALLOW_EMPTY:\$\{PN\}-([a-z0-9_\-]+)\s*=\s*"1"', line.strip())
+            if match:
+                integration_name = normalize_component_name(match.group(1))
+                break
+
+        if integration_name and integration_name not in sections:
+            sections[integration_name] = section_lines
+    return sections
+
+
+def render_integration_block(integration_names: list[str]) -> list[str]:
+    return [f"    ${{PN}}-{name.replace('_', '-')} \\\n" for name in integration_names]
+
+
+def extract_component_requirements(rows: list[dict[str, str]]) -> list[tuple[str, str]]:
+    requirements: list[tuple[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for row in rows:
+        package_name = row.get("Requirements", "").strip()
+        required_version = row.get("Required HA Version", "").strip()
+        if not package_name:
+            continue
+        key = (package_name, required_version)
+        if key in seen:
+            continue
+        seen.add(key)
+        requirements.append(key)
+    return requirements
+
+
+def can_auto_add_integration(rows: list[dict[str, str]]) -> bool:
+    for row in rows:
+        package_name = row.get("Requirements", "").strip()
+        available_version = row.get("Available Yocto/OE Version", "").strip()
+        if package_name and not available_version:
+            return False
+    return True
+
+
+def build_integration_section(component_name: str, rows: list[dict[str, str]]) -> list[str]:
+    rendered_name = component_name.replace("_", "-")
+    section_lines = [f'ALLOW_EMPTY:${{PN}}-{rendered_name} = "1"\n']
+    requirements = extract_component_requirements(rows)
+    if requirements:
+        section_lines.append(f'RDEPENDS:${{PN}}-{rendered_name} = "\\\n')
+        for package_name, required_version in requirements:
+            if required_version:
+                section_lines.append(f"    {package_name} (>={required_version}) \\\n")
+            else:
+                section_lines.append(f"    {package_name} \\\n")
+        section_lines.append('"\n')
+    section_lines.append("\n")
+    return section_lines
+
+
 def collect_block_packages(lines: list[str], start: int, end: int) -> set[str]:
     packages = set()
     for line in lines[start:end]:
@@ -504,22 +690,35 @@ def render_test_block(
     remove_tests: set[str],
     add_tests: set[str] | None = None,
 ) -> list[str]:
-    block_lines: list[str] = []
+    package_names: set[str] = set()
     for line in lines[start:end]:
         match = re.match(r"\s*\$\{PN\}-([a-z0-9_\-]+) \\", line)
-        package_name = normalize_component_name(match.group(1)) if match else ""
-        if package_name and package_name in remove_tests:
+        if not match:
             continue
-        if line.strip():
-            block_lines.append(line.rstrip("\n"))
+        package_name = normalize_component_name(match.group(1))
+        if package_name in remove_tests:
+            continue
+        package_names.add(package_name)
 
-    for package_name in sorted(add_tests or set()):
-        block_lines.append(f"    ${{PN}}-{package_name.replace('_', '-')} \\")
+    package_names.update(add_tests or set())
 
-    return [f"{line}\n" for line in block_lines]
+    return [
+        "    ${@bb.utils.contains('PACKAGECONFIG', 'integration-tests', '\\\n"
+    ] + [
+        f"    ${{PN}}-{package_name.replace('_', '-')} \\\n"
+        for package_name in sorted(package_names, key=integration_sort_key)
+    ]
 
 
-def patch_integration_tests(version_name: str) -> tuple[list[str], list[str]]:
+def patch_integration_tests(
+    version_name: str,
+    allowed_integrations: set[str] | None = None,
+) -> tuple[list[str], list[str]]:
+    if not summary_allows_component_sync(version_name):
+        return [], []
+
+    allowed_integrations = allowed_integrations or read_current_integrations()
+
     tests_lines = INTEGRATIONS_TESTS_FILE.read_text(encoding="utf8").splitlines(keepends=True)
     flaky_start, flaky_end = find_append_block(tests_lines, "COMPONENT_TEST_PACKAGES_FLAKY")
     main_start, main_end = find_append_block(tests_lines, "COMPONENT_TEST_PACKAGES")
@@ -536,10 +735,19 @@ def patch_integration_tests(version_name: str) -> tuple[list[str], list[str]]:
         if not component_name:
             continue
         normalized_name = normalize_component_name(component_name)
-        if tests_available == "y" and normalized_name not in all_current_packages:
+        if (
+            tests_available == "y"
+            and normalized_name in allowed_integrations
+            and normalized_name not in all_current_packages
+        ):
             add_tests.add(normalized_name)
-        if tests_available == "n" and normalized_name in all_current_packages:
+        if (
+            normalized_name in all_current_packages
+            and (tests_available == "n" or normalized_name not in allowed_integrations)
+        ):
             remove_tests.add(normalized_name)
+
+    remove_tests.update(all_current_packages - allowed_integrations)
 
     replacements = [
         (flaky_start, flaky_end, render_test_block(tests_lines, flaky_start, flaky_end, remove_tests)),
@@ -553,9 +761,68 @@ def patch_integration_tests(version_name: str) -> tuple[list[str], list[str]]:
     return sorted(add_tests), sorted(remove_tests)
 
 
+def patch_integrations(version_name: str) -> tuple[list[str], list[str], list[str]]:
+    if not summary_allows_component_sync(version_name):
+        return [], [], []
+
+    rows_by_component = group_summary_rows_by_component(version_name)
+    desired_components = set(rows_by_component)
+
+    lines = INTEGRATIONS_FILE_PATH.read_text(encoding="utf8").splitlines(keepends=True)
+    block_start, block_end = find_quoted_block(lines, "INTEGRATIONS")
+    current_block_order = collect_ordered_packages(lines, block_start, block_end)
+    current_block_set = set(current_block_order)
+
+    rrecommends_index = find_line_index(lines, 'RRECOMMENDS:${PN} += "${INTEGRATIONS}"')
+    sections = parse_integration_sections(lines, rrecommends_index + 1)
+    current_order = list(current_block_order)
+    for name in sections:
+        if name not in current_block_set:
+            current_order.append(name)
+
+    current_components = current_block_set | set(sections)
+    removed_integrations = sorted(current_components - desired_components)
+
+    added_integrations: list[str] = []
+    skipped_integrations: list[str] = []
+    for component_name in sorted(desired_components - current_components):
+        if can_auto_add_integration(rows_by_component[component_name]):
+            added_integrations.append(component_name)
+        else:
+            skipped_integrations.append(component_name)
+
+    final_order = [name for name in current_order if name not in removed_integrations]
+    for name in added_integrations:
+        if name not in final_order:
+            final_order.append(name)
+    final_order.sort(key=integration_sort_key)
+
+    new_block_lines = render_integration_block(final_order)
+    new_section_lines: list[str] = []
+    for component_name in final_order:
+        if component_name in sections and component_name not in added_integrations:
+            new_section_lines.extend([f"{line.rstrip()}\n" for line in sections[component_name]])
+            if not new_section_lines[-1].strip():
+                continue
+            new_section_lines.append("\n")
+            continue
+        new_section_lines.extend(build_integration_section(component_name, rows_by_component[component_name]))
+
+    new_lines = (
+        lines[:block_start]
+        + new_block_lines
+        + lines[block_end:rrecommends_index + 1]
+        + ["\n"]
+        + new_section_lines
+    )
+    INTEGRATIONS_FILE_PATH.write_text("".join(new_lines), encoding="utf8")
+    return added_integrations, removed_integrations, skipped_integrations
+
+
 def patch_layer(version_name: str) -> int:
     recipe_updates, recipe_path = patch_homeassistant_recipe(version_name)
-    added_tests, removed_tests = patch_integration_tests(version_name)
+    added_integrations, removed_integrations, skipped_integrations = patch_integrations(version_name)
+    added_tests, removed_tests = patch_integration_tests(version_name, read_current_integrations())
 
     print(f"Home Assistant recipe path: {recipe_path}")
 
@@ -573,6 +840,19 @@ def patch_layer(version_name: str) -> int:
     if removed_tests:
         print("Removed test packages:")
         for item in removed_tests:
+            print(item)
+
+    if added_integrations:
+        print("Added integrations:")
+        for item in added_integrations:
+            print(item)
+    if removed_integrations:
+        print("Removed integrations:")
+        for item in removed_integrations:
+            print(item)
+    if skipped_integrations:
+        print("Skipped integration additions due to missing dependency recipes:")
+        for item in skipped_integrations:
             print(item)
 
     return 0
@@ -594,6 +874,7 @@ def run_parse_command(args: argparse.Namespace) -> int:
     actual_version = get_repo(checkout_dir, args.version)
     rows = parse_manifests(checkout_dir, args.upgrade_only, args.integrations_only)
     save_summary_csv(rows, actual_version)
+    save_summary_metadata(actual_version, actual_version, args.upgrade_only, args.integrations_only, rows)
     if args.clean:
         cleanup_repo(checkout_dir)
     return 0
