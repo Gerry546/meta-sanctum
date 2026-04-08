@@ -111,7 +111,7 @@ def select_latest_tag(repo: Repo) -> str:
     return tags[-1].name
 
 
-def get_repo(ha_path: Path, requested_version: str = "") -> str:
+def get_repo(ha_path: Path, requested_version: str = "") -> tuple[str, str]:
     try:
         repo = (
             Repo(ha_path)
@@ -122,7 +122,7 @@ def get_repo(ha_path: Path, requested_version: str = "") -> str:
             repo.remotes.origin.fetch(tags=True)
         target_version = requested_version or select_latest_tag(repo)
         repo.git.checkout(target_version)
-        return target_version
+        return target_version, repo.head.commit.hexsha
     except GitCommandError as error:
         raise RuntimeError(f"Failed to checkout tag {requested_version or '<latest>'}: {error}") from error
 
@@ -273,6 +273,7 @@ def save_summary_csv(rows: list[dict[str, str]], version_name: str) -> Path:
 def save_summary_metadata(
     version_name: str,
     actual_version: str,
+    actual_srcrev: str,
     upgrade_only: bool,
     integrations_only: bool,
     rows: list[dict[str, str]],
@@ -281,6 +282,7 @@ def save_summary_metadata(
     metadata = {
         "requested_version": version_name,
         "actual_version": actual_version,
+        "actual_srcrev": actual_srcrev,
         "upgrade_only": upgrade_only,
         "integrations_only": integrations_only,
         "row_count": len(rows),
@@ -509,6 +511,10 @@ def sanitize_recipe_lines(lines: list[str]) -> list[str]:
 
 def patch_homeassistant_recipe(version_name: str) -> tuple[list[str], Path]:
     updates = build_update_map(version_name)
+    metadata = read_summary_metadata(version_name)
+    expected_srcrev = ""
+    if metadata is not None:
+        expected_srcrev = str(metadata.get("actual_srcrev", "")).strip()
     recipe_path = find_homeassistant_recipe(version_name)
     target_path = HOMEASSISTANT_RECIPE_DIR / f"python3-homeassistant_{version_name}.bb"
     original_lines = recipe_path.read_text(encoding="utf8").splitlines()
@@ -519,7 +525,21 @@ def patch_homeassistant_recipe(version_name: str) -> tuple[list[str], Path]:
 
     changed: list[str] = []
     new_lines: list[str] = []
+    srcrev_pattern = re.compile(r'^(\s*SRCREV\s*=\s*")([0-9a-f]{40})("\s*)$')
+    srcrev_updated = False
+
     for line in lines:
+        srcrev_match = srcrev_pattern.match(line)
+        if srcrev_match and expected_srcrev:
+            old_srcrev = srcrev_match.group(2)
+            if old_srcrev != expected_srcrev:
+                new_lines.append(f"{srcrev_match.group(1)}{expected_srcrev}{srcrev_match.group(3)}")
+                changed.append(f"SRCREV: {old_srcrev} -> {expected_srcrev}")
+            else:
+                new_lines.append(line)
+            srcrev_updated = True
+            continue
+
         match = pattern.match(line)
         if not match:
             new_lines.append(line)
@@ -533,6 +553,9 @@ def patch_homeassistant_recipe(version_name: str) -> tuple[list[str], Path]:
 
         new_lines.append(f"{match.group(1)}{package_name}{match.group(3)}{new_version}{match.group(5)}")
         changed.append(f"{package_name}: {match.group(4)} -> {new_version}")
+
+    if expected_srcrev and not srcrev_updated:
+        print("Warning: SRCREV line not found while applying expected revision from metadata.")
 
     if changed or recipe_path != target_path or lines != original_lines:
         target_path.write_text("\n".join(new_lines) + "\n", encoding="utf8")
@@ -871,10 +894,17 @@ def ensure_branch(branch_name: str) -> None:
 
 def run_parse_command(args: argparse.Namespace) -> int:
     checkout_dir = Path(args.ha_checkout_dir).expanduser().resolve()
-    actual_version = get_repo(checkout_dir, args.version)
+    actual_version, actual_srcrev = get_repo(checkout_dir, args.version)
     rows = parse_manifests(checkout_dir, args.upgrade_only, args.integrations_only)
     save_summary_csv(rows, actual_version)
-    save_summary_metadata(actual_version, actual_version, args.upgrade_only, args.integrations_only, rows)
+    save_summary_metadata(
+        actual_version,
+        actual_version,
+        actual_srcrev,
+        args.upgrade_only,
+        args.integrations_only,
+        rows,
+    )
     if args.clean:
         cleanup_repo(checkout_dir)
     return 0
