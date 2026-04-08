@@ -75,7 +75,7 @@ done
 echo "Running 'pip check' on SSH target and appending to $LOG_FILE..."
 # Allow non-zero exit from pip check so the script doesn't exit on package issues
 set +e
-ssh $SSH_OPTS $SSH_USER@localhost 'python3 -m pip check 2>&1 || pip check 2>&1 || true' >>"$LOG_FILE" 2>&1
+ssh $SSH_OPTS $SSH_USER@localhost 'pip check 2>&1 || true' >>"$LOG_FILE" 2>&1
 PIP_EXIT=$?
 set -e
 echo "pip check exit code: $PIP_EXIT" >>"$LOG_FILE"
