@@ -49,6 +49,8 @@ cd "$ROOT"
 echo "Launching QEMU in the background (headless)..."
 if [ "$MACHINE" = "qemux86-64n" ]; then
     runqemu "$QEMU_CONF" slirp kvm nographic snapshot wic ovmf >qemu.log 2>&1 &
+elif [ "$MACHINE" = "qemux86-64" ]; then
+    runqemu "$QEMU_CONF" slirp kvm nographic snapshot >qemu.log 2>&1 &
 elif [ "$MACHINE" = "qemuarm64-a72" ]; then
     runqemu "$QEMU_CONF" slirp nographic wic >qemu.log 2>&1 &
 else
