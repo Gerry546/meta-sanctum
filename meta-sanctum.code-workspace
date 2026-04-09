@@ -5,13 +5,6 @@
 			"path": "."
 		},
 		{
-			"name": "homeassistant package ptest results",
-			"path": "build/build-homeassistant/build/tmp/work/qemux86_64-poky-linux",
-			"search.exclude": {
-				"**": true
-			}
-		},
-		{
 			"name": "homeassistant ptest results",
 			"path": "build/build-homeassistant/build/tmp/work/qemux86_64n-oe-linux/core-image-homeassistant-full/1.0/testimage",
 			"search.exclude": {

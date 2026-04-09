@@ -12,6 +12,10 @@ echo "Root directory: $ROOT"
 
 # CONFIGURATION
 QEMU_CONF="${ROOT}/build/build-homeassistant/build/tmp/deploy/images/${MACHINE}/core-image-homeassistant-full.qemuboot.conf"
+IMAGE_DIR="$(dirname "$QEMU_CONF")"
+IMAGE_BASENAME="core-image-homeassistant-full"
+ROOTFS_EXT4_ZST="${IMAGE_DIR}/${IMAGE_BASENAME}.ext4.zst"
+ROOTFS_EXT4="${IMAGE_DIR}/${IMAGE_BASENAME}.ext4"
 
 echo "Using QEMU config: $QEMU_CONF"
 
@@ -23,6 +27,17 @@ SCP_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLeve
 QEMU_PID_FILE="qemu-test.pid"
 LOG_FILE="${ROOT}/pip-check.log"
 
+stop_running_qemu() {
+    echo "Stopping any running qemu-system processes..."
+    pkill -f 'qemu-system-' 2>/dev/null || true
+    for _ in {1..10}; do
+        if ! pgrep -f 'qemu-system-' >/dev/null 2>&1; then
+            break
+        fi
+        sleep 1
+    done
+    rm -f "$QEMU_PID_FILE"
+}
 
 # Ensure QEMU is shut down on exit (success or error)
 
@@ -46,13 +61,20 @@ cd "$ROOT"
 
 
 # 2. Start QEMU with runqemu in the background, log output to qemu.log
+stop_running_qemu
+if [ ! -f "$ROOTFS_EXT4_ZST" ]; then
+    echo "ERROR: Missing disk image $ROOTFS_EXT4_ZST" >&2
+    echo "Build ${IMAGE_BASENAME} with ext4.zst support before running this test." >&2
+    exit 1
+fi
+rm -f "$ROOTFS_EXT4"
 echo "Launching QEMU in the background (headless)..."
 if [ "$MACHINE" = "qemux86-64n" ]; then
     runqemu "$QEMU_CONF" slirp kvm nographic snapshot wic ovmf >qemu.log 2>&1 &
 elif [ "$MACHINE" = "qemux86-64" ]; then
     runqemu "$QEMU_CONF" slirp kvm nographic snapshot >qemu.log 2>&1 &
 elif [ "$MACHINE" = "qemuarm64-a72" ]; then
-    runqemu "$QEMU_CONF" slirp nographic wic >qemu.log 2>&1 &
+    runqemu "$QEMU_CONF" slirp nographic snapshot wic >qemu.log 2>&1 &
 else
     echo "ERROR: Unknown machine '$MACHINE'. Please update the script for this machine type." >&2
     exit 1
