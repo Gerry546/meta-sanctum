@@ -1,3 +1,5 @@
+inherit no-spdx
+
 IMAGE_INSTALL:append = " \
     openssh-sshd \
     openssh-scp \
