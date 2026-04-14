@@ -109,7 +109,7 @@
             "label": "RunQemu Yocto Target",
             "type": "shell",
             "command": [
-                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp wic ${input:qemuParameters}"
+                "clear && source ${workspaceFolder}/build/build-${input:bitbakeSetupConfiguration}/build/init-build-env && runqemu tmp/deploy/images/${input:bitbakeSetupMachine}/${input:buildTarget}.qemuboot.conf slirp ${input:qemuParameters}"
             ],
             "group": "test",
             "problemMatcher": []
@@ -190,9 +190,11 @@
             "description": "Select graphical target for runqemu",
             "type":"pickString",
             "options": [
-                "nographic",
-                "kvm ovmf nographic",
-                "egl-headless publicvnc",
+                "wic nographic",
+                "wic kvm nographic",
+                "kvm nographic snapshot",
+                "wic kvm ovmf nographic",
+                "wic egl-headless publicvnc",
                 "kvm ovmf egl-headless publicvnc"
             ],
             "default": "nographic"
